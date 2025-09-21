@@ -16,20 +16,20 @@
     --popover: 0 0% 100%;
     --popover-foreground: 25 20% 15%;
 
-    /* Primary: Sophisticated Olive Green */
-    --primary: 75 35% 25%;
+    /* Primary: Deep Forest Green #003319 */
+    --primary: 149 100% 10%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 75 35% 35%;
-    --primary-dark: 75 35% 15%;
+    --primary-light: 149 100% 15%;
+    --primary-dark: 149 100% 5%;
 
     /* Secondary: Warm Beige */
     --secondary: 45 30% 85%;
     --secondary-foreground: 25 20% 15%;
     --secondary-dark: 45 25% 75%;
 
-    /* Accent: Soft Sage */
-    --accent: 75 20% 70%;
-    --accent-foreground: 25 20% 15%;
+    /* Accent: Light Forest Green */
+    --accent: 149 50% 30%;
+    --accent-foreground: 0 0% 100%;
 
     --muted: 45 20% 95%;
     --muted-foreground: 25 15% 50%;
@@ -39,26 +39,38 @@
 
     --border: 45 20% 90%;
     --input: 45 20% 90%;
-    --ring: 75 25% 35%;
+    --ring: 149 100% 15%;
 
     --radius: 0.75rem;
 
     /* Design System Extensions */
     --glass-bg: 0 0% 100% / 0.8;
     --glass-border: 45 20% 90% / 0.3;
-    --hero-gradient: linear-gradient(135deg, hsl(75 25% 35%) 0%, hsl(75 25% 25%) 100%);
-    --section-gradient: linear-gradient(180deg, hsl(45 30% 98%) 0%, hsl(0 0% 100%) 100%);
-    --accent-gradient: linear-gradient(135deg, hsl(75 20% 70%) 0%, hsl(45 30% 85%) 100%);
-    
+    --hero-gradient: linear-gradient(
+      135deg,
+      hsl(149 100% 15%) 0%,
+      hsl(149 100% 10%) 100%
+    );
+    --section-gradient: linear-gradient(
+      180deg,
+      hsl(45 30% 98%) 0%,
+      hsl(0 0% 100%) 100%
+    );
+    --accent-gradient: linear-gradient(
+      135deg,
+      hsl(149 30% 92%) 0%,
+      hsl(45 30% 95%) 100%
+    );
+
     /* Shadows */
-    --shadow-soft: 0 4px 20px hsl(75 25% 35% / 0.08);
-    --shadow-medium: 0 8px 30px hsl(75 25% 35% / 0.12);
-    --shadow-glass: 0 8px 32px hsl(75 25% 35% / 0.15);
-    
+    --shadow-soft: 0 4px 20px hsl(149 100% 15% / 0.08);
+    --shadow-medium: 0 8px 30px hsl(149 100% 15% / 0.12);
+    --shadow-glass: 0 8px 32px hsl(149 100% 15% / 0.15);
+
     /* Typography */
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'Inter', sans-serif;
-    
+    --font-heading: "Playfair Display", serif;
+    --font-body: "Inter", sans-serif;
+
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-glass: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -74,16 +86,16 @@
     --popover: 25 20% 8%;
     --popover-foreground: 45 30% 95%;
 
-    --primary: 75 25% 55%;
-    --primary-foreground: 25 20% 8%;
-    --primary-light: 75 25% 65%;
-    --primary-dark: 75 25% 45%;
+    --primary: 149 70% 25%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 149 70% 35%;
+    --primary-dark: 149 70% 15%;
 
     --secondary: 45 15% 15%;
     --secondary-foreground: 45 30% 95%;
     --secondary-dark: 45 15% 12%;
 
-    --accent: 75 20% 25%;
+    --accent: 149 50% 35%;
     --accent-foreground: 45 30% 95%;
 
     --muted: 25 15% 15%;
@@ -91,7 +103,7 @@
 
     --border: 25 15% 20%;
     --input: 25 15% 20%;
-    --ring: 75 25% 55%;
+    --ring: 149 70% 25%;
 
     --glass-bg: 25 20% 8% / 0.8;
     --glass-border: 45 20% 30% / 0.3;
@@ -108,7 +120,12 @@
     font-family: var(--font-body);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
   }
 }
@@ -120,7 +137,8 @@
   }
 
   .glass-nav {
-    @apply bg-white/90 backdrop-blur-md border-b border-white/10;
+    background-color: #003319;
+    @apply backdrop-blur-md border-b border-white/10;
   }
 
   /* Modern Section Layouts */
@@ -161,7 +179,14 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent;
+    background: linear-gradient(
+      135deg,
+      hsl(75 35% 25%) 0%,
+      hsl(75 35% 35%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .shadow-soft {
@@ -201,7 +226,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import mpowhrLogo from "@/assets/mpowhr-logo.svg";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,26 +12,43 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl md:text-3xl font-bold text-primary">
-              Mpow<span className="text-accent">HR</span>
-            </h1>
+            <img
+              src={mpowhrLogo}
+              alt="MpowHR - People Brilliance"
+              className="h-12 md:h-16 w-auto"
+            />
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#services" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#services"
+              className="text-white hover:text-yellow-400 transition-colors font-medium"
+            >
               What We Provide
             </a>
-            <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#about"
+              className="text-white hover:text-yellow-400 transition-colors font-medium"
+            >
               About
             </a>
-            <a href="#approach" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#approach"
+              className="text-white hover:text-yellow-400 transition-colors font-medium"
+            >
               Approach
             </a>
-            <a href="#community" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#community"
+              className="text-white hover:text-yellow-400 transition-colors font-medium"
+            >
               Community
             </a>
-            <a href="#contact" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#contact"
+              className="text-white hover:text-yellow-400 transition-colors font-medium"
+            >
               Contact
             </a>
             <Button variant="default" size="lg">
@@ -44,6 +62,7 @@ const Navigation = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
+              className="text-white hover:text-yellow-400 hover:bg-white/10"
             >
               {isOpen ? <X /> : <Menu />}
             </Button>
@@ -52,21 +71,39 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden border-t border-white/10 bg-white/95 backdrop-blur-lg">
+          <div
+            className="md:hidden border-t border-white/10"
+            style={{ backgroundColor: "#003319" }}
+          >
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <a href="#services" className="block px-3 py-2 text-foreground hover:text-primary font-medium">
+              <a
+                href="#services"
+                className="block px-3 py-2 text-white hover:text-yellow-400 font-medium"
+              >
                 What We Provide
               </a>
-              <a href="#about" className="block px-3 py-2 text-foreground hover:text-primary font-medium">
+              <a
+                href="#about"
+                className="block px-3 py-2 text-white hover:text-yellow-400 font-medium"
+              >
                 About
               </a>
-              <a href="#approach" className="block px-3 py-2 text-foreground hover:text-primary font-medium">
+              <a
+                href="#approach"
+                className="block px-3 py-2 text-white hover:text-yellow-400 font-medium"
+              >
                 Approach
               </a>
-              <a href="#community" className="block px-3 py-2 text-foreground hover:text-primary font-medium">
+              <a
+                href="#community"
+                className="block px-3 py-2 text-white hover:text-yellow-400 font-medium"
+              >
                 Community
               </a>
-              <a href="#contact" className="block px-3 py-2 text-foreground hover:text-primary font-medium">
+              <a
+                href="#contact"
+                className="block px-3 py-2 text-white hover:text-yellow-400 font-medium"
+              >
                 Contact
               </a>
               <div className="px-3 py-2">
