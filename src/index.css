@@ -6,14 +6,14 @@
 
 @layer base {
   :root {
-    /* Core Colors - Olive Green & Beige Palette */
-    --background: 0 0% 100%;
+    /* Core Colors - Soft Pastel Palette */
+    --background: 45 40% 98%;
     --foreground: 25 20% 15%;
 
-    --card: 0 0% 100%;
+    --card: 45 40% 98%;
     --card-foreground: 25 20% 15%;
 
-    --popover: 0 0% 100%;
+    --popover: 45 40% 98%;
     --popover-foreground: 25 20% 15%;
 
     /* Primary: Deep Forest Green #003319 */
@@ -31,14 +31,14 @@
     --accent: 149 50% 30%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 45 20% 95%;
+    --muted: 45 30% 96%;
     --muted-foreground: 25 15% 50%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 45 40% 98%;
 
-    --border: 45 20% 90%;
-    --input: 45 20% 90%;
+    --border: 45 25% 92%;
+    --input: 45 30% 94%;
     --ring: 149 100% 15%;
 
     --radius: 0rem;
@@ -53,8 +53,8 @@
     );
     --section-gradient: linear-gradient(
       180deg,
-      hsl(45 30% 98%) 0%,
-      hsl(0 0% 100%) 100%
+      hsl(45 40% 98%) 0%,
+      hsl(45 35% 96%) 100%
     );
     --accent-gradient: linear-gradient(
       135deg,
@@ -69,7 +69,8 @@
 
     /* Typography */
     --font-heading: "Playfair Display", serif;
-    --font-body: "Inter", sans-serif;
+    --font-subheading: "Poppins", sans-serif;
+    --font-body: "Poppins", sans-serif;
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -120,20 +121,52 @@
     font-family: var(--font-body);
   }
 
+  /* Hero Titles and Section Titles - Serif */
   h1,
-  h2,
+  h2 {
+    font-family: var(--font-heading);
+  }
+
+  /* Sub-heads and FAQ headings - Sans-serif */
   h3,
   h4,
   h5,
   h6 {
-    font-family: var(--font-heading);
+    font-family: var(--font-subheading);
   }
 }
 
 @layer components {
+  /* Typography Components */
+  .hero-title {
+    font-family: var(--font-heading);
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight;
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    @apply text-3xl md:text-4xl font-bold leading-tight;
+  }
+
+  .subheading {
+    font-family: var(--font-subheading);
+    @apply text-xl md:text-2xl font-semibold leading-relaxed;
+  }
+
+  .body-text {
+    font-family: var(--font-body);
+    @apply text-base md:text-lg font-normal leading-relaxed;
+  }
+
+  .cta-button {
+    font-family: var(--font-body);
+    @apply text-base font-medium uppercase tracking-wider;
+  }
+
   /* Glass Effect Components */
   .glass-card {
-    @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-glass;
+    background: hsl(45 40% 98% / 0.85);
+    @apply backdrop-blur-lg border border-white/20 shadow-glass;
   }
 
   .glass-nav {
