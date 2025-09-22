@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Star, Award, Users, Target, TrendingUp } from "lucide-react";
 import heroCoach from "@/assets/hero-coach.jpg";
 
 const Hero = () => {
@@ -12,8 +12,72 @@ const Hero = () => {
 
       <div className="container-width relative z-10 px-4 md:px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left Column - Content */}
-          <div className="text-center lg:text-left space-y-8 fade-in-up">
+          {/* Left Column - Image */}
+          <div className="relative slide-in-right order-2 lg:order-1">
+            <div className="relative">
+              {/* Main Image with Arch Top Border */}
+              <div className="relative z-10 overflow-hidden shadow-glass hover-lift" 
+                   style={{
+                     borderTopLeftRadius: '50% 25%',
+                     borderTopRightRadius: '50% 25%',
+                     borderBottomLeftRadius: '1rem',
+                     borderBottomRightRadius: '1rem'
+                   }}>
+                <img
+                  src={heroCoach}
+                  alt="Professional life coach and HR consultant"
+                  className="w-full h-[600px] object-cover"
+                  style={{
+                    borderTopLeftRadius: '50% 25%',
+                    borderTopRightRadius: '50% 25%',
+                    borderBottomLeftRadius: '1rem',
+                    borderBottomRightRadius: '1rem'
+                  }}
+                />
+                
+                {/* Overlay Elements - directly on image */}
+                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-soft">
+                  <div className="text-sm font-medium text-primary">Available for Consultation</div>
+                  <div className="text-xs text-muted-foreground">Remote & In-Person Sessions</div>
+                </div>
+                
+                <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm p-4 text-center rounded-lg shadow-soft">
+                  <div className="text-lg font-bold text-primary">4.9/5</div>
+                  <div className="text-xs text-muted-foreground">Client Rating</div>
+                </div>
+              </div>
+
+              {/* Overlaying Icons - positioned relative to the image container */}
+              <div className="absolute -top-4 -right-4 w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-glass float-animation z-20">
+                <Star className="w-8 h-8 text-primary fill-current" />
+              </div>
+              
+              <div className="absolute top-20 -left-4 w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-soft float-animation z-20" 
+                   style={{ animationDelay: '2s' }}>
+                <Award className="w-6 h-6 text-primary" />
+              </div>
+
+              <div className="absolute top-40 -right-6 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-soft float-animation z-20" 
+                   style={{ animationDelay: '4s' }}>
+                <Users className="w-5 h-5 text-primary" />
+              </div>
+
+              <div className="absolute bottom-32 -left-4 w-14 h-14 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-soft float-animation z-20" 
+                   style={{ animationDelay: '1s' }}>
+                <Target className="w-6 h-6 text-primary" />
+              </div>
+
+              <div className="absolute bottom-16 -right-4 w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-soft float-animation z-20" 
+                   style={{ animationDelay: '3s' }}>
+                <TrendingUp className="w-7 h-7 text-primary" />
+              </div>
+              
+              <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-primary/20 rounded-full blur-xl"></div>
+            </div>
+          </div>
+
+          {/* Right Column - Content */}
+          <div className="text-center lg:text-left space-y-8 fade-in-up order-1 lg:order-2">
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/20 text-sm font-medium text-primary">
               <Star className="w-4 h-4 fill-current" />
@@ -57,41 +121,6 @@ const Hero = () => {
                 <div className="text-3xl font-bold text-primary">95%</div>
                 <div className="text-sm text-muted-foreground">Success Rate</div>
               </div>
-            </div>
-          </div>
-
-          {/* Right Column - Image */}
-          <div className="relative slide-in-right">
-            <div className="relative">
-              {/* Glass Card Effect */}
-              <div className="absolute inset-4 glass-card"></div>
-              
-              {/* Main Image */}
-              <div className="relative z-10 overflow-hidden shadow-glass hover-lift">
-                <img
-                  src={heroCoach}
-                  alt="Professional life coach and HR consultant"
-                  className="w-full h-[600px] object-cover"
-                />
-                
-                {/* Overlay Elements */}
-                <div className="absolute top-6 left-6 glass-card p-4">
-                  <div className="text-sm font-medium text-primary">Available for Consultation</div>
-                  <div className="text-xs text-muted-foreground">Remote & In-Person Sessions</div>
-                </div>
-                
-                <div className="absolute bottom-6 right-6 glass-card p-4 text-center">
-                  <div className="text-lg font-bold text-primary">4.9/5</div>
-                  <div className="text-xs text-muted-foreground">Client Rating</div>
-                </div>
-              </div>
-
-              {/* Floating Elements */}
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-accent rounded-full flex items-center justify-center shadow-glass float-animation">
-                <Star className="w-8 h-8 text-primary fill-current" />
-              </div>
-              
-              <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-primary/20 rounded-full blur-xl"></div>
             </div>
           </div>
         </div>

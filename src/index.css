@@ -6,30 +6,30 @@
 
 @layer base {
   :root {
-    /* Core Colors - Soft Pastel Palette */
-    --background: 45 40% 98%;
+    /* Core Colors - Pale Olive & Beige Palette */
+    --background: 40 25% 96%;
     --foreground: 25 20% 15%;
 
-    --card: 45 40% 98%;
+    --card: 40 25% 96%;
     --card-foreground: 25 20% 15%;
 
-    --popover: 45 40% 98%;
+    --popover: 40 25% 96%;
     --popover-foreground: 25 20% 15%;
 
-    /* Primary: Deep Forest Green #003319 */
-    --primary: 149 100% 10%;
+    /* Primary: Darker Olive Green */
+    --primary: 75 35% 35%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 149 100% 15%;
-    --primary-dark: 149 100% 5%;
+    --primary-light: 75 35% 45%;
+    --primary-dark: 75 35% 25%;
 
     /* Secondary: Warm Beige */
-    --secondary: 45 30% 85%;
+    --secondary: 45 35% 88%;
     --secondary-foreground: 25 20% 15%;
-    --secondary-dark: 45 25% 75%;
+    --secondary-dark: 45 30% 80%;
 
-    /* Accent: Light Forest Green */
-    --accent: 149 50% 30%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent: Light Sage */
+    --accent: 75 20% 70%;
+    --accent-foreground: 25 20% 15%;
 
     --muted: 45 30% 96%;
     --muted-foreground: 25 15% 50%;
@@ -39,33 +39,33 @@
 
     --border: 45 25% 92%;
     --input: 45 30% 94%;
-    --ring: 149 100% 15%;
+    --ring: 75 35% 35%;
 
     --radius: 0rem;
 
     /* Design System Extensions */
-    --glass-bg: 0 0% 100% / 0.8;
+    --glass-bg: 0 0% 100% / 0.85;
     --glass-border: 45 20% 90% / 0.3;
     --hero-gradient: linear-gradient(
       135deg,
-      hsl(149 100% 15%) 0%,
-      hsl(149 100% 10%) 100%
+      hsl(75 35% 35%) 0%,
+      hsl(75 35% 25%) 100%
     );
     --section-gradient: linear-gradient(
       180deg,
-      hsl(45 40% 98%) 0%,
-      hsl(45 35% 96%) 100%
+      hsl(40 25% 96%) 0%,
+      hsl(45 35% 88%) 100%
     );
     --accent-gradient: linear-gradient(
       135deg,
-      hsl(149 30% 92%) 0%,
-      hsl(45 30% 95%) 100%
+      hsl(75 20% 85%) 0%,
+      hsl(45 35% 90%) 100%
     );
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px hsl(149 100% 15% / 0.08);
-    --shadow-medium: 0 8px 30px hsl(149 100% 15% / 0.12);
-    --shadow-glass: 0 8px 32px hsl(149 100% 15% / 0.15);
+    --shadow-soft: 0 4px 20px hsl(75 35% 25% / 0.08);
+    --shadow-medium: 0 8px 30px hsl(75 35% 25% / 0.12);
+    --shadow-glass: 0 8px 32px hsl(75 35% 25% / 0.15);
 
     /* Typography */
     --font-heading: "Playfair Display", serif;
@@ -165,13 +165,13 @@
 
   /* Glass Effect Components */
   .glass-card {
-    background: hsl(45 40% 98% / 0.85);
-    @apply backdrop-blur-lg border border-white/20 shadow-glass;
+    background: hsl(40 25% 96% / 0.9);
+    @apply backdrop-blur-lg border border-white/30 shadow-glass;
   }
 
   .glass-nav {
-    background-color: #003319;
-    @apply backdrop-blur-md border-b border-white/10;
+    background: hsl(75 35% 35% / 0.95);
+    @apply backdrop-blur-md border-b border-white/20;
   }
 
   /* Modern Section Layouts */
@@ -214,8 +214,8 @@
   .text-gradient {
     background: linear-gradient(
       135deg,
-      hsl(75 35% 25%) 0%,
-      hsl(75 35% 35%) 100%
+      hsl(75 35% 35%) 0%,
+      hsl(75 35% 45%) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;

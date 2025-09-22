@@ -56,46 +56,50 @@ const Services = () => {
           </p>
         </div>
 
-        {/* Main Services */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-20">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <div
-                key={index}
-                className={`relative glass-card p-8 hover-lift ${
-                  service.popular ? "ring-2 ring-primary/20" : ""
-                }`}
-              >
+        {/* Main Services - Horizontal List */}
+        <div className="mb-20">
+          <div className="flex flex-col lg:flex-row gap-6 justify-center items-stretch lg:overflow-x-auto lg:pb-4 pt-6">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <div
+                  key={index}
+                  className={`relative glass-card p-6 hover-lift flex-shrink-0 w-full lg:w-80 lg:min-w-80 ${
+                    service.popular ? "ring-2 ring-primary/20" : ""
+                  }`}
+                >
                 {service.popular && (
-                  <div className="absolute -top-3 left-6 bg-primary text-primary-foreground px-4 py-1 text-sm font-medium">
+                  <div className="absolute -top-3 left-6 bg-primary text-primary-foreground px-4 py-1 text-sm font-medium rounded-full">
                     Most Popular
                   </div>
                 )}
                 
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-accent/20 rounded-2xl flex items-center justify-center mb-4">
-                    <Icon className="w-8 h-8 text-primary" />
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{service.description}</p>
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{service.description}</p>
+                  </div>
                 </div>
 
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-2 mb-6 ml-16">
                   {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-3">
-                      <div className="w-1.5 h-1.5 bg-primary"></div>
-                      <span className="text-sm">{feature}</span>
+                    <li key={idx} className="flex items-center gap-2">
+                      <div className="w-1 h-1 bg-primary rounded-full"></div>
+                      <span className="text-xs">{feature}</span>
                     </li>
                   ))}
                 </ul>
 
-                <Button variant={service.popular ? "default" : "outline"} className="w-full">
-                  Learn More
-                </Button>
-              </div>
-            );
-          })}
+                  <Button variant={service.popular ? "default" : "outline"} size="sm" className="w-full">
+                    Learn More
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Benefits Section */}

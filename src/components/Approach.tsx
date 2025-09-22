@@ -95,8 +95,36 @@ const Approach = () => {
 
         {/* Principles & Image Section */}
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column - Principles */}
-          <div className="space-y-8">
+          {/* Left Column - Image */}
+          <div className="relative order-2 lg:order-1">
+            <div className="relative">
+              <div className="overflow-hidden shadow-glass hover-lift rounded-2xl">
+                <img
+                  src={hrMeeting}
+                  alt="Professional team meeting and collaboration"
+                  className="w-full h-[500px] object-cover rounded-2xl"
+                />
+                
+                {/* Overlay Elements */}
+                <div className="absolute top-6 right-6 glass-card p-4 text-center">
+                  <div className="text-lg font-bold text-primary">95%</div>
+                  <div className="text-xs text-muted-foreground">Success Rate</div>
+                </div>
+                
+                <div className="absolute bottom-6 left-6 glass-card p-4">
+                  <div className="text-sm font-medium text-primary">Proven Process</div>
+                  <div className="text-xs text-muted-foreground">8+ Years Refined</div>
+                </div>
+              </div>
+
+              {/* Floating Elements */}
+              <div className="absolute -top-4 -left-4 w-20 h-20 bg-accent/30 rounded-full blur-2xl"></div>
+              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary/20 rounded-full blur-2xl"></div>
+            </div>
+          </div>
+
+          {/* Right Column - Principles */}
+          <div className="space-y-8 order-1 lg:order-2">
             <div>
               <h3 className="text-3xl font-bold mb-6">Core Principles</h3>
               <p className="text-muted-foreground leading-relaxed mb-8">
@@ -122,34 +150,6 @@ const Approach = () => {
               <Button variant="outline" size="lg">
                 Download Framework Guide
               </Button>
-            </div>
-          </div>
-
-          {/* Right Column - Image */}
-          <div className="relative">
-            <div className="relative">
-              <div className="overflow-hidden shadow-glass hover-lift">
-                <img
-                  src={hrMeeting}
-                  alt="Professional team meeting and collaboration"
-                  className="w-full h-[500px] object-cover"
-                />
-                
-                {/* Overlay Elements */}
-                <div className="absolute top-6 right-6 glass-card p-4 text-center">
-                  <div className="text-lg font-bold text-primary">95%</div>
-                  <div className="text-xs text-muted-foreground">Success Rate</div>
-                </div>
-                
-                <div className="absolute bottom-6 left-6 glass-card p-4">
-                  <div className="text-sm font-medium text-primary">Proven Process</div>
-                  <div className="text-xs text-muted-foreground">8+ Years Refined</div>
-                </div>
-              </div>
-
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -left-4 w-20 h-20 bg-accent/30 rounded-full blur-2xl"></div>
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary/20 rounded-full blur-2xl"></div>
             </div>
           </div>
         </div>

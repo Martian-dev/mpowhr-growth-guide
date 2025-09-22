@@ -17,7 +17,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         glass: "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 shadow-glass",
         hero: "bg-white text-primary hover:bg-secondary shadow-medium hover:shadow-glass hover:-translate-y-1",
-        navbar: "bg-yellow-400 text-black hover:bg-yellow-300 shadow-soft hover:shadow-medium font-semibold",
+        navbar: "bg-[#CBB59A] text-white hover:bg-[#BCA483] shadow-soft hover:shadow-medium font-semibold",
       },
       size: {
         default: "h-10 px-4 py-2",
