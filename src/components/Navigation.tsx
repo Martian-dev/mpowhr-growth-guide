@@ -52,8 +52,8 @@ const Navigation = () => {
               Contact
             </a>
             <Button
+              variant="navbar"
               size="lg"
-              className="bg-[#93801d] hover:bg-[#7a6b19] text-white"
             >
               Book Consultation
             </Button>
@@ -110,7 +110,7 @@ const Navigation = () => {
                 Contact
               </a>
               <div className="px-3 py-2">
-                <Button className="w-full bg-[#93801d] hover:bg-[#7a6b19] text-white">
+                <Button variant="navbar" className="w-full">
                   Book Consultation
                 </Button>
               </div>

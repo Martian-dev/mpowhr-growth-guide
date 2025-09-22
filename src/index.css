@@ -41,7 +41,7 @@
     --input: 45 20% 90%;
     --ring: 149 100% 15%;
 
-    --radius: 0.75rem;
+    --radius: 0rem;
 
     /* Design System Extensions */
     --glass-bg: 0 0% 100% / 0.8;
@@ -133,7 +133,7 @@
 @layer components {
   /* Glass Effect Components */
   .glass-card {
-    @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-glass rounded-2xl;
+    @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-glass;
   }
 
   .glass-nav {

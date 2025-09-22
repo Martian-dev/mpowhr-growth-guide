@@ -15,7 +15,7 @@ const Hero = () => {
           {/* Left Column - Content */}
           <div className="text-center lg:text-left space-y-8 fade-in-up">
             {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/20 rounded-full text-sm font-medium text-primary">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/20 text-sm font-medium text-primary">
               <Star className="w-4 h-4 fill-current" />
               Founded by Anne Anshumathi Raj - Senior HR Manager & Life Coach
             </div>
@@ -67,7 +67,7 @@ const Hero = () => {
               <div className="absolute inset-4 glass-card"></div>
               
               {/* Main Image */}
-              <div className="relative z-10 rounded-2xl overflow-hidden shadow-glass hover-lift">
+              <div className="relative z-10 overflow-hidden shadow-glass hover-lift">
                 <img
                   src={heroCoach}
                   alt="Professional life coach and HR consultant"

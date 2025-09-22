@@ -62,7 +62,7 @@ const Contact = () => {
 
                 <div>
                   <label className="block text-sm font-medium mb-2">Preferred Session Type</label>
-                  <select className="w-full px-3 py-2 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring">
+                  <select className="w-full px-3 py-2 bg-background border border-input focus:outline-none focus:ring-2 focus:ring-ring">
                     <option>In-Person Coaching</option>
                     <option>Virtual Coaching</option>
                     <option>HR Consulting</option>
@@ -140,7 +140,7 @@ const Contact = () => {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-accent-gradient rounded-2xl p-8 text-center">
+            <div className="bg-accent-gradient p-8 text-center">
               <h4 className="text-xl font-bold mb-4">Ready to Start Today?</h4>
               <p className="text-foreground/80 mb-6 text-sm">
                 Join our community newsletter for weekly insights and exclusive resources.

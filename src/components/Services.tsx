@@ -68,7 +68,7 @@ const Services = () => {
                 }`}
               >
                 {service.popular && (
-                  <div className="absolute -top-3 left-6 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute -top-3 left-6 bg-primary text-primary-foreground px-4 py-1 text-sm font-medium">
                     Most Popular
                   </div>
                 )}
@@ -84,7 +84,7 @@ const Services = () => {
                 <ul className="space-y-3 mb-8">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center gap-3">
-                      <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                      <div className="w-1.5 h-1.5 bg-primary"></div>
                       <span className="text-sm">{feature}</span>
                     </li>
                   ))}
@@ -99,7 +99,7 @@ const Services = () => {
         </div>
 
         {/* Benefits Section */}
-        <div className="bg-accent-gradient rounded-3xl p-8 md:p-12">
+        <div className="bg-accent-gradient p-8 md:p-12">
           <h3 className="text-3xl font-bold text-center mb-12">Why Choose MpowHR?</h3>
           
           <div className="grid md:grid-cols-3 gap-8">

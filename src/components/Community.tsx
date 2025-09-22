@@ -60,7 +60,7 @@ const Community = () => {
             </div>
 
             {/* Coming Soon Badge */}
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 border border-primary/20 rounded-full">
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 border border-primary/20">
               <Clock className="w-5 h-5 text-primary" />
               <span className="text-primary font-semibold text-lg">Coming Soon</span>
             </div>
@@ -83,7 +83,7 @@ const Community = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-background/50 rounded-lg">
+                  <div className="flex items-center justify-between p-4 bg-background/50">
                     <span className="text-sm font-medium">Expected Launch</span>
                     <span className="text-sm text-primary font-semibold">Q2 2025</span>
                   </div>

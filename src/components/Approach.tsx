@@ -81,7 +81,7 @@ const Approach = () => {
                     <ul className="space-y-2">
                       {step.details.map((detail, idx) => (
                         <li key={idx} className="flex items-center gap-2 text-xs">
-                          <div className="w-1 h-1 bg-primary rounded-full"></div>
+                          <div className="w-1 h-1 bg-primary"></div>
                           <span>{detail}</span>
                         </li>
                       ))}
@@ -128,7 +128,7 @@ const Approach = () => {
           {/* Right Column - Image */}
           <div className="relative">
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-glass hover-lift">
+              <div className="overflow-hidden shadow-glass hover-lift">
                 <img
                   src={hrMeeting}
                   alt="Professional team meeting and collaboration"

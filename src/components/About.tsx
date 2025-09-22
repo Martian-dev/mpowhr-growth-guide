@@ -79,7 +79,7 @@ const About = () => {
           <div className="relative">
             <div className="relative">
               {/* Main Image */}
-              <div className="rounded-3xl overflow-hidden shadow-glass hover-lift">
+              <div className="overflow-hidden shadow-glass hover-lift">
                 <img
                   src={coachingSession}
                   alt="Life coaching session in progress"
