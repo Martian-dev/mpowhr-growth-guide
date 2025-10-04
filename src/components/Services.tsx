@@ -5,22 +5,40 @@ const Services = () => {
   const services = [
     {
       icon: Heart,
-      title: "Personal Life Coaching",
-      description: "One-on-one sessions focused on personal growth, goal setting, and overcoming challenges.",
-      features: ["Career Transition Support", "Work-Life Balance", "Confidence Building", "Stress Management"],
+      title: "Life Coaching- Empowered Life Coaching",
+      description:
+        "Individual, one-on-one sessions focused on navigating life's most meaningful and often stressful transitions. This is your safe space to Pause, Realign, and Rise, empowering you with courage and clear personal choice.",
+      features: [
+        "Relationship Reimagined",
+        "Burnout & Stress Recovery",
+        "Decisive Confidence",
+        "Purpose & Fulfillment Mapping",
+      ],
       popular: true,
     },
     {
       icon: Users,
-      title: "HR Consulting",
-      description: "Strategic human resources solutions for growing organizations and teams.",
-      features: ["Talent Acquisition", "Performance Management", "Employee Relations", "Compliance"],
+      title: "Corporate Training Strategy",
+      description:
+        "Customized programs that develop essential leadership skills and build high-impact teams. We focus on transforming organizational challenges into collective focus and sustained performance",
+      features: [
+        "Executive & Leadership Coaching",
+        "Team Resilience Workshops",
+        "Organizational Strategy Alignment",
+        "High-Impact Communication",
+      ],
     },
     {
       icon: Target,
-      title: "Leadership Development",
-      description: "Develop effective leadership skills and build high-performing teams.",
-      features: ["Executive Coaching", "Team Building", "Communication Skills", "Strategic Planning"],
+      title: "Dedicated Growth Programes",
+      description:
+        "Short-term, high-intensity formats designed to deliver rapid progress and immediate, actionable takeaways for specific individual or group goals.",
+      features: [
+        "The Pause. Realign. Rise. Intensive",
+        "Workshops for Team Alignment",
+        "Personal Branding for Leaders",
+        "Group Coaching for Professionals",
+      ],
     },
   ];
 
@@ -28,12 +46,14 @@ const Services = () => {
     {
       icon: TrendingUp,
       title: "Proven Results",
-      description: "95% of clients report significant improvement within 3 months",
+      description:
+        "95% of clients report significant improvement within 3 months",
     },
     {
       icon: Clock,
       title: "Flexible Scheduling",
-      description: "Evening and weekend sessions available to fit your lifestyle",
+      description:
+        "Evening and weekend sessions available to fit your lifestyle",
     },
     {
       icon: Award,
@@ -51,8 +71,9 @@ const Services = () => {
             What We <span className="text-gradient">Provide</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Comprehensive life coaching and HR consulting services designed to unlock your potential 
-            and drive sustainable growth in both personal and professional spheres.
+            Strategic coaching and development services designed to foster
+            personal clarity and fulfillment while cultivating high-performing,
+            resilient teams in the professional sphere.
           </p>
         </div>
 
@@ -64,58 +85,45 @@ const Services = () => {
               return (
                 <div
                   key={index}
-                  className={`relative glass-card p-4 hover-lift flex-shrink-0 w-full lg:w-72 lg:min-w-72 ${
-                    service.popular ? "ring-2 ring-primary/20" : ""
-                  }`}
+                  className={`relative glass-card p-4 hover-lift flex-shrink-0 w-full lg:w-72 lg:min-w-72 ${service.popular ? "ring-2 ring-primary/20" : ""
+                    }`}
                 >
-                {service.popular && (
-                  <div className="absolute -top-3 left-6 bg-primary text-primary-foreground px-4 py-1 text-sm font-medium rounded-full">
-                    Most Popular
-                  </div>
-                )}
-                
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold mb-2">{service.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{service.description}</p>
-                  </div>
-                </div>
+                  {service.popular && (
+                    <div className="absolute -top-3 left-6 bg-primary text-primary-foreground px-4 py-1 text-sm font-medium rounded-full">
+                      Most Popular
+                    </div>
+                  )}
 
-                <ul className="space-y-2 mb-6 ml-16">
-                  {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <div className="w-1 h-1 bg-primary rounded-full"></div>
-                      <span className="text-xs">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold mb-2">
+                        {service.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        {service.description}
+                      </p>
+                    </div>
+                  </div>
 
-                  <Button variant={service.popular ? "default" : "outline"} size="sm" className="w-full">
+                  <ul className="space-y-2 mb-6 ml-16">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center gap-2">
+                        <div className="w-1 h-1 bg-primary rounded-full"></div>
+                        <span className="text-xs">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    variant={service.popular ? "default" : "outline"}
+                    size="sm"
+                    className="w-full"
+                  >
                     Learn More
                   </Button>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Benefits Section */}
-        <div className="bg-accent-gradient p-6 md:p-8">
-          <h3 className="text-2xl font-bold text-center mb-8">Why Choose MpowHR?</h3>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {benefits.map((benefit, index) => {
-              const Icon = benefit.icon;
-              return (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-soft">
-                    <Icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <h4 className="text-lg font-semibold mb-3">{benefit.title}</h4>
-                  <p className="text-foreground/80 leading-relaxed">{benefit.description}</p>
                 </div>
               );
             })}
