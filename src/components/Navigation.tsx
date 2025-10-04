@@ -22,16 +22,16 @@ const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <a
-              href="#services"
-              className="text-white hover:text-nav-hover transition-colors font-medium"
-            >
-              What We Provide
-            </a>
-            <a
               href="#about"
               className="text-white hover:text-nav-hover transition-colors font-medium"
             >
               About
+            </a>
+            <a
+              href="#services"
+              className="text-white hover:text-nav-hover transition-colors font-medium"
+            >
+              Services
             </a>
             <a
               href="#approach"
@@ -45,15 +45,11 @@ const Navigation = () => {
             >
               Community
             </a>
-            <a
-              href="#contact"
-              className="text-white hover:text-nav-hover transition-colors font-medium"
-            >
-              Contact
+            <a href="#contact">
+              <Button variant="navbar" size="lg" className="rounded-xl">
+                Book Consultation
+              </Button>
             </a>
-            <Button variant="navbar" size="lg" className="rounded-xl">
-              Book Consultation
-            </Button>
           </div>
 
           {/* Mobile menu button */}
