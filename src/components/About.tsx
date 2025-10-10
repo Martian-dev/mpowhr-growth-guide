@@ -13,34 +13,55 @@ const About = () => {
           {/* Left Column - Content */}
           <div className="content-spacing">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold section-title-spacing">
-                About <span className="text-gradient">Anne Anshumathi Raj</span>
+              <h2
+                className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
+                style={{
+                  fontFamily: "Vinila, Inter, sans-serif",
+                  fontStyle: "normal",
+                  letterSpacing: "0.01em",
+                  fontWeight: "700",
+                }}
+              >
+                The{" "}
+                <span
+                  className="text-gradient"
+                  style={{
+                    fontFamily: "Vinila, Inter, sans-serif",
+                    fontWeight: "700",
+                  }}
+                >
+                  MpowHR
+                </span>{" "}
+                Story
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed section-title-spacing">
-                Let's be real: life doesn't come with a roadmap, and sometimes
-                you just need a safe space to hit the pause button. That's
-                exactly what MpowHR is. It’s the place you come to when you need
-                to pause, realign, and rise
+              <p
+                className="text-lg text-gray-600 leading-relaxed section-title-spacing"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                MpowHR was founded on the belief that life doesn't come with a
+                roadmap, and everyone deserves a safe space to hit the pause
+                button. It is the destination for those ready to pause, realign,
+                and rise.
                 <br />
-                Hi! I’m Anne, an internationally certified Life Coach and a
-                Corporate Trainer. But more than the titles, I see my job as
-                being your dedicated guide, helping you find your way through
-                the messy, exhilarating, or downright tough transitions that
-                life throws at you.
                 <br />
-                For the last 10+ years, I’ve been coaching individuals and teams
-                through everything from massive career shifts and relationship
-                reboots to finding clarity after a major life change. I'm
-                equipped with 5+ certifications and a decade of hands-on
-                experience, but the true measure of my work is watching people
-                like you restart with clarity, courage, and choice.
+                Anne, the founder, is an internationally certified Life Coach
+                and Corporate Trainer. With over 10 years of hands-on experience
+                and 5+ certifications, she is MpowHR's dedicated guide,
+                specializing in navigating the messy, exhilarating, or downright
+                tough transitions life presents.
                 <br />
-                You are the expert of your own life. I’m here to provide the
-                framework, the tools, and the unwavering support to help you cut
-                through the noise and figure out what you truly want. Whether
-                you're feeling lost, ready to pivot, or simply need to build a
-                better strategy for your team, I'm here to ensure you rise again
-                on your terms.
+                <br />
+                Anne's expertise lies in coaching individuals and teams through
+                everything from massive career shifts and relationship reboots
+                to finding clarity after major life changes. She provides the
+                framework, tools, and unwavering support necessary to help
+                clients cut through the noise and figure out what they truly
+                want.
+                <br />
+                <br />
+                The true measure of her work is watching clients restart with
+                clarity, courage, and choice, ensuring they rise again on their
+                own terms.
               </p>
             </div>
 
@@ -83,8 +104,11 @@ const About = () => {
                   <div className="text-sm font-medium text-primary">
                     Currently Accepting
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    New Clients
+                  <div
+                    className="text-xs text-gray-600"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    Senior Manager - People at Introlligent
                   </div>
                 </div>
               </div>

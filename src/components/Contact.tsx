@@ -10,11 +10,30 @@ const Contact = () => {
       <div className="container-width">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto section-header-spacing">
-          <h2 className="text-2xl md:text-3xl font-bold section-title-spacing">
+          <h2
+            className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
+            style={{
+              fontFamily: "Vinila, Inter, sans-serif",
+              fontStyle: "normal",
+              letterSpacing: "0.01em",
+              fontWeight: "700",
+            }}
+          >
             Ready to Begin Your{" "}
-            <span className="text-gradient">Transformation?</span>
+            <span
+              className="text-gradient"
+              style={{
+                fontFamily: "Vinila, Inter, sans-serif",
+                fontWeight: "700",
+              }}
+            >
+              Transformation?
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
+          <p
+            className="text-lg text-gray-600 leading-relaxed"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
             Take the first step towards unlocking your potential. Book a
             complimentary discovery call to explore how we can work together.
           </p>
@@ -24,10 +43,16 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="content-spacing">
             <div>
-              <h3 className="text-xl font-bold mb-3">
+              <h3
+                className="text-xl font-bold mb-3"
+                style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+              >
                 Schedule Your Discovery Call
               </h3>
-              <p className="text-muted-foreground mb-6">
+              <p
+                className="text-gray-600 mb-6"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 Let's discuss your goals and explore how coaching can accelerate
                 your journey.
               </p>
@@ -98,8 +123,16 @@ const Contact = () => {
           {/* Contact Information */}
           <div className="content-spacing">
             <div>
-              <h3 className="text-2xl font-bold mb-4">Get In Touch</h3>
-              <p className="text-muted-foreground mb-8">
+              <h3
+                className="text-2xl font-bold mb-4"
+                style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+              >
+                Get In Touch
+              </h3>
+              <p
+                className="text-gray-600 mb-8"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 I'm here to support your journey. Reach out through any of these
                 channels.
               </p>
@@ -113,8 +146,18 @@ const Contact = () => {
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold">Email</h4>
-                    <p className="text-muted-foreground">sarah@mpowhr.com</p>
+                    <h4
+                      className="font-semibold"
+                      style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                    >
+                      Email
+                    </h4>
+                    <p
+                      className="text-gray-600"
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                    >
+                      sarah@mpowhr.com
+                    </p>
                   </div>
                 </div>
               </Card>
@@ -125,8 +168,18 @@ const Contact = () => {
                     <Phone className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold">Phone</h4>
-                    <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                    <h4
+                      className="font-semibold"
+                      style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                    >
+                      Phone
+                    </h4>
+                    <p
+                      className="text-gray-600"
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                    >
+                      +1 (555) 123-4567
+                    </p>
                   </div>
                 </div>
               </Card>
@@ -137,8 +190,16 @@ const Contact = () => {
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold">Location</h4>
-                    <p className="text-muted-foreground">
+                    <h4
+                      className="font-semibold"
+                      style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                    >
+                      Location
+                    </h4>
+                    <p
+                      className="text-gray-600"
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                    >
                       San Francisco Bay Area
                       <br />
                       Virtual sessions worldwide
@@ -153,8 +214,16 @@ const Contact = () => {
                     <Clock className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold">Availability</h4>
-                    <p className="text-muted-foreground">
+                    <h4
+                      className="font-semibold"
+                      style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                    >
+                      Availability
+                    </h4>
+                    <p
+                      className="text-gray-600"
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                    >
                       Mon-Fri: 9AM-7PM PST
                       <br />
                       Weekends by appointment
@@ -166,7 +235,12 @@ const Contact = () => {
 
             {/* Quick Actions */}
             <div className="bg-gradient-to-br from-[hsl(75_20%_85%)] to-[hsl(45_35%_90%)] p-8 text-center">
-              <h4 className="text-xl font-bold mb-4">Ready to Start Today?</h4>
+              <h4
+                className="text-xl font-bold mb-4"
+                style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+              >
+                Ready to Start Today?
+              </h4>
               <p className="text-foreground/80 mb-6 text-sm">
                 Join our community newsletter for weekly insights and exclusive
                 resources.

@@ -49,15 +49,21 @@ const Hero = () => {
                   <div className="text-sm font-medium text-primary">
                     Available for Consultation
                   </div>
-                  <div className="text-xs text-muted-foreground">
-                    Remote & In-Person Sessions
+                  <div
+                    className="text-xs text-gray-600"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    Next Available: Today
                   </div>
                 </div>
 
                 <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm p-4 text-center rounded-lg shadow-soft">
                   <div className="text-lg font-bold text-primary">4.9/5</div>
-                  <div className="text-xs text-muted-foreground">
-                    Client Rating
+                  <div
+                    className="text-xs text-gray-600"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    Client Testimonials
                   </div>
                 </div>
               </div>
@@ -109,13 +115,22 @@ const Hero = () => {
 
             {/* Main Heading */}
             <div className="space-y-4">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+              <h1
+                className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
+                style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+              >
                 Time to Restart.
-                <span className="text-gradient block">
+                <span
+                  className="text-gradient block"
+                  style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                >
                   With Clarity & Courage.
                 </span>
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+              <p
+                className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 From leadership pivots to personal breakthroughs, unlock your
                 potential.
                 <br />
@@ -140,25 +155,37 @@ const Hero = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-6 border-t border-border/50">
               <div className="text-center lg:text-left">
                 <div className="text-2xl font-bold text-primary">10+</div>
-                <div className="text-sm text-muted-foreground">
+                <div
+                  className="text-sm text-gray-600"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
                   Years crafting clarity
                 </div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-2xl font-bold text-primary">5+</div>
-                <div className="text-sm text-muted-foreground">
+                <div
+                  className="text-sm text-gray-600"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
                   Certifications
                 </div>
               </div>
               <div className="text-center lg:text-left col-span-2 md:col-span-1">
                 <div className="text-2xl font-bold text-primary">100+</div>
-                <div className="text-sm text-muted-foreground">
+                <div
+                  className="text-sm text-gray-600"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
                   Journeys Restarted
                 </div>
               </div>
               <div className="text-center lg:text-left col-span-2 md:col-span-1">
                 <div className="text-2xl font-bold text-primary">100%</div>
-                <div className="text-sm text-muted-foreground">
+                <div
+                  className="text-sm text-gray-600"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
                   Owned on your terms
                 </div>
               </div>

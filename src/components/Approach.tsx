@@ -78,10 +78,30 @@ const Approach = () => {
       <div className="container-width">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto section-header-spacing">
-          <h2 className="text-2xl md:text-3xl font-bold section-title-spacing">
-            My <span className="text-gradient">Approach</span>
+          <h2
+            className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
+            style={{
+              fontFamily: "Vinila, Inter, sans-serif",
+              fontStyle: "normal",
+              letterSpacing: "0.01em",
+              fontWeight: "700",
+            }}
+          >
+            My{" "}
+            <span
+              className="text-gradient"
+              style={{
+                fontFamily: "Vinila, Inter, sans-serif",
+                fontWeight: "700",
+              }}
+            >
+              Approach
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
+          <p
+            className="text-lg text-gray-600 leading-relaxed"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
             A structured yet flexible methodology designed to create lasting
             transformation through personalized coaching and strategic support.
           </p>
@@ -89,7 +109,10 @@ const Approach = () => {
 
         {/* Process Steps */}
         <div className="section-subtitle-spacing">
-          <h3 className="text-2xl font-bold text-center content-spacing mb-8">
+          <h3
+            className="text-2xl font-bold text-center content-spacing mb-8"
+            style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+          >
             The Transformation Journey
           </h3>
 
@@ -111,10 +134,18 @@ const Approach = () => {
                       <div className="text-sm font-medium text-primary mb-2">
                         STEP {index + 1}
                       </div>
-                      <h4 className="text-lg font-bold">{step.title}</h4>
+                      <h4
+                        className="text-lg font-bold"
+                        style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                      >
+                        {step.title}
+                      </h4>
                     </div>
 
-                    <p className="text-muted-foreground text-sm mb-4 leading-relaxed flex-grow">
+                    <p
+                      className="text-gray-600 text-sm mb-4 leading-relaxed flex-grow"
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                    >
                       {step.description}
                     </p>
 
@@ -158,8 +189,16 @@ const Approach = () => {
           {/* Right Column - Principles */}
           <div className="space-y-8 order-1 lg:order-2">
             <div>
-              <h3 className="text-3xl font-bold mb-6">Imagine if you could</h3>
-              <p className="text-muted-foreground leading-relaxed mb-8">
+              <h3
+                className="text-3xl font-bold mb-6"
+                style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+              >
+                Imagine if you could
+              </h3>
+              <p
+                className="text-gray-600 leading-relaxed mb-8"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 Picture yourself achieving these meaningful transformations that
                 create lasting change in your daily life and overall well-being.
               </p>
@@ -169,7 +208,12 @@ const Approach = () => {
               {principles.map((principle, index) => (
                 <div key={index} className="flex items-start gap-4">
                   <Sparkles className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                  <span className="leading-relaxed">{principle}</span>
+                  <span
+                    className="leading-relaxed text-gray-600"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
+                    {principle}
+                  </span>
                 </div>
               ))}
             </div>

@@ -2,6 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Fonts */
+@font-face {
+  font-family: "Vinila";
+  src: url("/fonts/vinila/VinilaTest-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vinila";
+  src: url("/fonts/vinila/VinilaTest-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vinila";
+  src: url("/fonts/vinila/VinilaTest-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vinila";
+  src: url("/fonts/vinila/VinilaTest-ExtraBold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Vinila";
+  src: url("/fonts/vinila/VinilaTest-Black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* mpowHR Design System - Professional Life Coaching & HR */
 
 @layer base {
@@ -76,8 +117,8 @@
     --shadow-glass: 0 8px 32px hsl(75 35% 25% / 0.15);
 
     /* Typography */
-    --font-heading: "Playfair Display", serif;
-    --font-subheading: "Poppins", sans-serif;
+    --font-heading: "Vinila", "Inter", sans-serif;
+    --font-subheading: "Vinila", "Inter", sans-serif;
     --font-body: "Poppins", sans-serif;
 
     /* Transitions */
@@ -129,13 +170,18 @@
     font-family: var(--font-body);
   }
 
-  /* Hero Titles and Section Titles - Serif */
+  /* Set default font for paragraphs */
+  p {
+    font-family: var(--font-body);
+  }
+
+  /* Hero Titles and Section Titles - Vanilla Sans-serif */
   h1,
   h2 {
     font-family: var(--font-heading);
   }
 
-  /* Sub-heads and FAQ headings - Sans-serif */
+  /* Sub-heads and FAQ headings - Vanilla Sans-serif */
   h3,
   h4,
   h5,
@@ -163,7 +209,7 @@
 
   .body-text {
     font-family: var(--font-body);
-    @apply text-sm md:text-base font-normal leading-relaxed;
+    @apply text-sm md:text-base font-normal leading-relaxed text-gray-600;
   }
 
   .cta-button {

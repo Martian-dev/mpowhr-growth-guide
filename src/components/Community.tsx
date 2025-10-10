@@ -9,10 +9,30 @@ const Community = () => {
     >
       <div className="container-width">
         <div className="text-center section-header-spacing animate-[fadeInUp_0.6s_ease-out_forwards]">
-          <h2 className="text-2xl md:text-3xl font-bold section-title-spacing">
-            Join Our <span className="text-gradient">Community</span>
+          <h2
+            className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
+            style={{
+              fontFamily: "Vinila, Inter, sans-serif",
+              fontStyle: "normal",
+              letterSpacing: "0.01em",
+              fontWeight: "700",
+            }}
+          >
+            Join Our{" "}
+            <span
+              className="text-gradient"
+              style={{
+                fontFamily: "Vinila, Inter, sans-serif",
+                fontWeight: "700",
+              }}
+            >
+              Community
+            </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p
+            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
             A collaborative space bringing together professionals from multiple
             domains to connect, meet, and work on meaningful projects together.
           </p>
@@ -27,10 +47,16 @@ const Community = () => {
                   <Users className="w-6 h-6 text-orange-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">
+                  <h3
+                    className="text-xl font-semibold mb-2"
+                    style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                  >
                     Cross-Domain Networking
                   </h3>
-                  <p className="text-muted-foreground">
+                  <p
+                    className="text-gray-600"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
                     Connect with professionals from diverse industries and
                     backgrounds, fostering innovation through collaboration.
                   </p>
@@ -42,10 +68,16 @@ const Community = () => {
                   <Heart className="w-6 h-6 text-orange-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">
+                  <h3
+                    className="text-xl font-semibold mb-2"
+                    style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                  >
                     Meaningful Projects
                   </h3>
-                  <p className="text-muted-foreground">
+                  <p
+                    className="text-gray-600"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
                     Work together on projects that matter, combining different
                     expertise to create impactful solutions.
                   </p>
@@ -57,10 +89,16 @@ const Community = () => {
                   <Star className="w-6 h-6 text-orange-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">
+                  <h3
+                    className="text-xl font-semibold mb-2"
+                    style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                  >
                     Supportive Environment
                   </h3>
-                  <p className="text-muted-foreground">
+                  <p
+                    className="text-gray-600"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
                     A space designed for growth, learning, and mutual support
                     where everyone's contribution is valued.
                   </p>
@@ -86,10 +124,16 @@ const Community = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold mb-4 text-orange-700">
+                  <h3
+                    className="text-2xl font-bold mb-4 text-orange-700"
+                    style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                  >
                     MpowHR Community
                   </h3>
-                  <p className="text-muted-foreground mb-6">
+                  <p
+                    className="text-gray-600 mb-6"
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                  >
                     Be among the first to know when our collaborative community
                     space launches. Join the waitlist to get exclusive early
                     access.

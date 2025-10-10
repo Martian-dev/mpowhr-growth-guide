@@ -67,10 +67,30 @@ const Services = () => {
       <div className="container-width">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto section-header-spacing">
-          <h2 className="text-2xl md:text-3xl font-bold section-title-spacing">
-            What We <span className="text-gradient">Provide</span>
+          <h2
+            className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
+            style={{
+              fontFamily: "Vinila, Inter, sans-serif",
+              fontStyle: "normal",
+              letterSpacing: "0.01em",
+              fontWeight: "700",
+            }}
+          >
+            What We{" "}
+            <span
+              className="text-gradient"
+              style={{
+                fontFamily: "Vinila, Inter, sans-serif",
+                fontWeight: "700",
+              }}
+            >
+              Provide
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
+          <p
+            className="text-lg text-gray-600 leading-relaxed"
+            style={{ fontFamily: "Poppins, sans-serif" }}
+          >
             Strategic coaching and development services designed to foster
             personal clarity and fulfillment while cultivating high-performing,
             resilient teams in the professional sphere.
@@ -100,10 +120,16 @@ const Services = () => {
                       <Icon className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold mb-2">
+                      <h3
+                        className="text-lg font-bold mb-2"
+                        style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                      >
                         {service.title}
                       </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
+                      <p
+                        className="text-gray-600 text-sm leading-relaxed"
+                        style={{ fontFamily: "Poppins, sans-serif" }}
+                      >
                         {service.description}
                       </p>
                     </div>
