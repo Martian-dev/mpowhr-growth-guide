@@ -3,14 +3,18 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar, Mail, Phone, MapPin, Clock, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Contact = () => {
+  const { ref, isInView } = useScrollAnimation();
+
   return (
-    <section id="contact" className="section-padding bg-background">
+    <section id="contact" className="section-padding bg-background" ref={ref}>
       <div className="container-width">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto section-header-spacing">
-          <h2
+          <motion.h2
             className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
             style={{
               fontFamily: "Vinila, Inter, sans-serif",
@@ -18,6 +22,9 @@ const Contact = () => {
               letterSpacing: "0.01em",
               fontWeight: "700",
             }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             Ready to Begin Your{" "}
             <span
@@ -29,7 +36,7 @@ const Contact = () => {
             >
               Transformation?
             </span>
-          </h2>
+          </motion.h2>
           <p
             className="text-lg text-gray-600 leading-relaxed"
             style={{ fontFamily: "Poppins, sans-serif" }}

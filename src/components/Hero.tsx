@@ -1,10 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import mpowhrBanner from "@/assets/Mpowhr- Banner.svg";
 
 const Hero = () => {
+  const { ref, isInView } = useScrollAnimation();
+
   return (
     <section
+      ref={ref}
       className="relative min-h-screen bg-cover bg-right bg-fixed bg-no-repeat"
       style={{
         backgroundImage: `url(${mpowhrBanner})`,
@@ -18,32 +23,48 @@ const Hero = () => {
         <div className="text-left max-w-4xl">
           {/* Main Heading */}
           <div className="space-y-6">
-            <h1
+            <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-nav-hover"
               style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 1, delay: 0.2 }}
             >
               Time to Restart.
-              <span
+              <motion.span
                 className="block text-nav-hover"
                 style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={
+                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
+                }
+                transition={{ duration: 1, delay: 0.5 }}
               >
                 With Clarity & Courage.
-              </span>
-            </h1>
-            <p
+              </motion.span>
+            </motion.h1>
+            <motion.p
               className="text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed max-w-3xl"
               style={{ fontFamily: "Poppins, sans-serif" }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 1, delay: 0.8 }}
             >
               From leadership pivots to personal breakthroughs, unlock your
               potential.
               <br />
               Get 10+ years of expert coaching and strategic insights to build
               resilience and lasting success.
-            </p>
+            </motion.p>
           </div>
 
           {/* CTA Button */}
-          <div className="mt-8">
+          <motion.div
+            className="mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+          >
             <Button
               variant="outline"
               size="lg"
@@ -52,7 +73,7 @@ const Hero = () => {
               Start Your Journey
               <ArrowRight className="w-6 h-6 ml-2" />
             </Button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

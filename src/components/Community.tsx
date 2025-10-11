@@ -1,15 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Users, Clock, Heart, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const Community = () => {
+  const { ref, isInView } = useScrollAnimation();
+
   return (
     <section
       id="community"
       className="section-padding bg-gradient-to-br from-[hsl(75_20%_85%)] to-[hsl(45_35%_90%)]"
+      ref={ref}
     >
       <div className="container-width">
         <div className="text-center section-header-spacing animate-[fadeInUp_0.6s_ease-out_forwards]">
-          <h2
+          <motion.h2
             className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
             style={{
               fontFamily: "Vinila, Inter, sans-serif",
@@ -17,6 +22,9 @@ const Community = () => {
               letterSpacing: "0.01em",
               fontWeight: "700",
             }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             Join Our{" "}
             <span
@@ -28,7 +36,7 @@ const Community = () => {
             >
               Community
             </span>
-          </h2>
+          </motion.h2>
           <p
             className="text-xl text-gray-600 max-w-3xl mx-auto"
             style={{ fontFamily: "Poppins, sans-serif" }}

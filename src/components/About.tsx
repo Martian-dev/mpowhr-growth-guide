@@ -1,19 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Quote, Calendar } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import anne1 from "@/assets/anne1.jpg";
 
 const About = () => {
+  const { ref, isInView } = useScrollAnimation();
+
   return (
     <section
       id="about"
       className="section-padding bg-gradient-to-b from-[hsl(40_25%_96%)] to-[hsl(45_35%_88%)]"
+      ref={ref}
     >
       <div className="container-width">
         <div className="grid lg:grid-cols-2 grid-spacing items-center">
           {/* Left Column - Content */}
           <div className="content-spacing">
             <div>
-              <h2
+              <motion.h2
                 className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
                 style={{
                   fontFamily: "Vinila, Inter, sans-serif",
@@ -21,6 +26,11 @@ const About = () => {
                   letterSpacing: "0.01em",
                   fontWeight: "700",
                 }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={
+                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
+                }
+                transition={{ duration: 0.8, delay: 0.2 }}
               >
                 The{" "}
                 <span
@@ -33,7 +43,7 @@ const About = () => {
                   MpowHR
                 </span>{" "}
                 Story
-              </h2>
+              </motion.h2>
               <p
                 className="text-lg text-gray-600 leading-relaxed section-title-spacing"
                 style={{ fontFamily: "Poppins, sans-serif" }}

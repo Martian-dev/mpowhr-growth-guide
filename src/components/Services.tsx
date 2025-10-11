@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Users, Target, Heart } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import coachingSessionImg from "@/assets/coaching-session.jpg";
 import hrMeetingImg from "@/assets/hr-meeting.jpg";
 import heroCoachImg from "@/assets/hero-coach.jpg";
 
 const Services = () => {
+  const { ref, isInView } = useScrollAnimation();
   const services = [
     {
       icon: Heart,
@@ -49,11 +52,11 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="section-padding bg-background">
+    <section id="services" className="section-padding bg-background" ref={ref}>
       <div className="container-width">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto section-header-spacing">
-          <h2
+          <motion.h2
             className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
             style={{
               fontFamily: "Vinila, Inter, sans-serif",
@@ -61,6 +64,9 @@ const Services = () => {
               letterSpacing: "0.01em",
               fontWeight: "700",
             }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             What We{" "}
             <span
@@ -72,7 +78,7 @@ const Services = () => {
             >
               Provide
             </span>
-          </h2>
+          </motion.h2>
           <p
             className="text-lg text-gray-600 leading-relaxed"
             style={{ fontFamily: "Poppins, sans-serif" }}

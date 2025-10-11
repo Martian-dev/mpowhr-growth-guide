@@ -7,9 +7,12 @@ import {
   Lightbulb,
   TrendingUp,
 } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import hrMeeting from "@/assets/hr-meeting.jpg";
 
 const Approach = () => {
+  const { ref, isInView } = useScrollAnimation();
   const steps = [
     {
       icon: Lightbulb,
@@ -74,11 +77,12 @@ const Approach = () => {
     <section
       id="approach"
       className="section-padding bg-gradient-to-b from-[hsl(40_25%_96%)] to-[hsl(45_35%_88%)]"
+      ref={ref}
     >
       <div className="container-width">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto section-header-spacing">
-          <h2
+          <motion.h2
             className="text-2xl sm:text-[2.5rem] font-normal mb-12 text-center leading-none tracking-wider"
             style={{
               fontFamily: "Vinila, Inter, sans-serif",
@@ -86,6 +90,9 @@ const Approach = () => {
               letterSpacing: "0.01em",
               fontWeight: "700",
             }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             My{" "}
             <span
@@ -97,7 +104,7 @@ const Approach = () => {
             >
               Approach
             </span>
-          </h2>
+          </motion.h2>
           <p
             className="text-lg text-gray-600 leading-relaxed"
             style={{ fontFamily: "Poppins, sans-serif" }}
