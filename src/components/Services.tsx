@@ -96,7 +96,7 @@ const Services = () => {
                 }`}
               >
                 {/* Content Side */}
-                <div className="flex-1 max-w-lg">
+                <div className="flex-1 max-w-lg order-2 lg:order-none">
                   {service.popular && (
                     <div className="inline-block bg-secondary text-secondary-foreground px-4 py-1 text-sm font-medium rounded-full mb-4">
                       Most Popular
@@ -133,7 +133,7 @@ const Services = () => {
                 </div>
 
                 {/* Image Side */}
-                <div className="flex-1 flex justify-center lg:justify-center max-w-sm">
+                <div className="flex-1 flex justify-center lg:justify-center max-w-sm order-1 lg:order-none">
                   <div className="relative">
                     {/* Circular Image Container */}
                     <div className="w-72 h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden bg-gray-100 border-4 border-white shadow-2xl">
