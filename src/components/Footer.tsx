@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Mail,
   Phone,
@@ -28,18 +27,6 @@ const Footer = () => {
                 potential through expert life coaching and strategic HR
                 management.
               </p>
-            </div>
-
-            <div className="flex gap-4">
-              <Button variant="glass" size="icon">
-                <Linkedin className="w-4 h-4" />
-              </Button>
-              <Button variant="glass" size="icon">
-                <Instagram className="w-4 h-4" />
-              </Button>
-              <Button variant="glass" size="icon">
-                <Twitter className="w-4 h-4" />
-              </Button>
             </div>
           </div>
 

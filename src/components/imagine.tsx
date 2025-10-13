@@ -20,13 +20,13 @@ export default function Imagine() {
   return (
     <motion.div
       ref={ref}
-      className="bg-primary text-primary-foreground w-full min-h-[85vh] flex flex-col items-center justify-center text-2xl px-4 py-16"
+      className="bg-primary text-primary-foreground w-full min-h-[85vh] flex flex-col items-center justify-center px-4 py-16"
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="text-center mb-8"
+        className="text-center mb-8 text-3xl md:text-4xl font-semibold"
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.6, delay: 0.2 }}
@@ -35,7 +35,7 @@ export default function Imagine() {
       </motion.div>
 
       <motion.div
-        className="max-w-4xl w-full text-left space-y-3 my-12"
+        className="max-w-4xl w-full text-left space-y-3 my-12 text-xl"
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.4, delay: 0.3 }}
@@ -96,7 +96,7 @@ export default function Imagine() {
         }}
       >
         <motion.span
-          className="inline-block"
+          className="inline-block text-3xl md:text-4xl font-semibold"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 1.2 }}

@@ -13,6 +13,7 @@ const Hero = () => {
       className="relative min-h-screen bg-cover bg-right bg-fixed bg-no-repeat"
       style={{
         backgroundImage: `url(${mpowhrBanner})`,
+        backgroundPosition: "right -12px",
       }}
     >
       {/* Dark Overlay with Subtle Green Tint for Better Text Readability */}
@@ -24,7 +25,7 @@ const Hero = () => {
           {/* Main Heading */}
           <div className="space-y-6">
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-nav-hover"
+              className="text-4xl md:text-5xl font-bold leading-tight text-nav-hover"
               style={{ fontFamily: "Vinila, Inter, sans-serif" }}
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
@@ -40,7 +41,7 @@ const Hero = () => {
                 }
                 transition={{ duration: 1, delay: 0.5 }}
               >
-                With Clarity & Courage.
+                with Clarity & Courage.
               </motion.span>
             </motion.h1>
             <motion.p
@@ -65,14 +66,16 @@ const Hero = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 1.1 }}
           >
-            <Button
-              variant="outline"
-              size="lg"
-              className="text-lg px-8 py-4 h-auto bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 hover:border-white/40 transition-all duration-300"
-            >
-              Start Your Journey
-              <ArrowRight className="w-6 h-6 ml-2" />
-            </Button>
+            <a href="#contact">
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-lg px-8 py-4 h-auto bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 hover:border-white/40 transition-all duration-300"
+              >
+                Book free consultation
+                <ArrowRight className="w-6 h-6 ml-2" />
+              </Button>
+            </a>
           </motion.div>
         </div>
       </div>

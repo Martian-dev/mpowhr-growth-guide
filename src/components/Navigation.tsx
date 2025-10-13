@@ -67,14 +67,6 @@ const Navigation = () => {
             >
               <Instagram className="w-5 h-5" />
             </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#D4AF37] hover:text-[#B8941F] transition-colors p-2"
-            >
-              <Twitter className="w-5 h-5" />
-            </a>
           </div>
 
           {/* Mobile menu button */}
