@@ -45,7 +45,7 @@ const Hero = () => {
               </motion.span>
             </motion.h1>
             <motion.p
-              className="text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed max-w-3xl"
+              className="text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl"
               style={{ fontFamily: "Poppins, sans-serif" }}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
