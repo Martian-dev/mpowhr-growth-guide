@@ -51,9 +51,6 @@ const Hero = () => {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 1, delay: 0.8 }}
             >
-              From leadership pivots to personal breakthroughs, unlock your
-              potential.
-              <br />
               Get 10+ years of expert coaching and strategic insights to build
               resilience and lasting success.
             </motion.p>
