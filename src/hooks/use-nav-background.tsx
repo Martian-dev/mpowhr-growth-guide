@@ -2,19 +2,28 @@ import { useState, useEffect } from "react";
 
 export const useNavBackground = () => {
   const [isInImagineSection, setIsInImagineSection] = useState(false);
+  const [isInTaglineSection, setIsInTaglineSection] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const imagineSection = document.getElementById("imagine-section");
-      if (!imagineSection) return;
-
-      const rect = imagineSection.getBoundingClientRect();
+      const taglineSection = document.getElementById("tagline-section");
       const navHeight = 80; // Approximate navigation height
 
-      // Check if the section is in view considering the navigation height
-      const isVisible = rect.top <= navHeight && rect.bottom >= navHeight;
+      // Check if in imagine section
+      if (imagineSection) {
+        const rect = imagineSection.getBoundingClientRect();
+        const isVisible = rect.top <= navHeight && rect.bottom >= navHeight;
+        setIsInImagineSection(isVisible);
+      }
 
-      setIsInImagineSection(isVisible);
+      // Check if currently in tagline section (not past it)
+      if (taglineSection) {
+        const rect = taglineSection.getBoundingClientRect();
+        // We're in tagline if the top has passed nav but bottom hasn't passed nav yet
+        const isInSection = rect.top <= navHeight && rect.bottom >= navHeight;
+        setIsInTaglineSection(isInSection);
+      }
     };
 
     // Add scroll listener
@@ -27,5 +36,5 @@ export const useNavBackground = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return { isInImagineSection };
+  return { isInImagineSection, isInTaglineSection };
 };

@@ -21,7 +21,7 @@ const Hero = () => {
 
       {/* Content Overlay */}
       <div className="relative z-10 min-h-screen flex items-center px-6 md:px-8 lg:px-12">
-        <div className="text-left max-w-4xl">
+        <div className="text-left max-w-4xl 2xl:pl-20 4xl:pl-48 5xl:pl-72">
           {/* Main Heading */}
           <div className="space-y-6">
             <div className="drop-shadow-5xl">
@@ -39,7 +39,7 @@ const Hero = () => {
                 }
                 transition={{ duration: 1, delay: 0.2 }}
               >
-                Time to Restart.
+                Time to Restart,
                 <motion.span
                   className="block text-3xl md:text-[2.5rem] bg-gradient-to-tr from-[#D4AF37] via-[#B8941F] to-[#8B7A1A] bg-clip-text text-transparent pb-2"
                   style={{

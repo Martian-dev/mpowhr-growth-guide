@@ -1,13 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Users, Target, Heart } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useRef } from "react";
 import coachingSessionImg from "@/assets/coaching-session.png";
 import hrMeetingImg from "@/assets/hr-meeting.png";
 import heroCoachImg from "@/assets/hero-coach.png";
 
 const Services = () => {
   const { ref, isInView } = useScrollAnimation();
+  const buttonRef = useRef(null);
+  const isButtonInView = useInView(buttonRef);
+
   const services = [
     {
       icon: Heart,
@@ -126,19 +130,37 @@ const Services = () => {
 
                   <div className="space-y-4">
                     {service.highlights.map((highlight, idx) => (
-                      <p
+                      <div
                         key={idx}
-                        className="text-gray-700 leading-relaxed"
+                        className="flex items-start gap-3 text-gray-700 leading-relaxed"
                         style={{ fontFamily: "Poppins, sans-serif" }}
                       >
-                        {highlight}
-                      </p>
+                        <span className="text-primary font-bold text-xl leading-none mt-1">
+                          •
+                        </span>
+                        <span>{highlight}</span>
+                      </div>
                     ))}
                   </div>
 
                   {/* Show button only for the last service */}
                   {index === services.length - 1 && (
-                    <div className="mt-8">
+                    <motion.div
+                      className="mt-8"
+                      ref={buttonRef}
+                      animate={
+                        isButtonInView
+                          ? {
+                              x: [0, -2, 2, -2, 2, 0],
+                              transition: {
+                                duration: 0.5,
+                                delay: 0.3,
+                                ease: "easeInOut",
+                              },
+                            }
+                          : {}
+                      }
+                    >
                       <Button
                         onClick={() =>
                           window.open(
@@ -151,7 +173,7 @@ const Services = () => {
                       >
                         Know More
                       </Button>
-                    </div>
+                    </motion.div>
                   )}
                 </div>
 

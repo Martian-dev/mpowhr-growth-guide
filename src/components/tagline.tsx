@@ -6,6 +6,7 @@ export default function Tagline() {
 
   return (
     <motion.div
+      id="tagline-section"
       ref={ref}
       className="bg-primary text-primary-foreground w-full min-h-[65vh] flex items-center justify-center text-center text-3xl px-4"
       initial={{ opacity: 0, y: 50 }}
