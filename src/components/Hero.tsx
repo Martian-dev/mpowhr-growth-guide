@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import bannerBW from "@/assets/banner_bw.jpeg";
-import mobileImage from "@/assets/mobile.jpeg";
+import bannerBW from "@/assets/banner-bw.svg";
+import mobileImage from "@/assets/mobile.svg";
 
 const Hero = () => {
   const { ref, isInView } = useScrollAnimation();
@@ -24,7 +24,7 @@ const Hero = () => {
         className="absolute inset-0 bg-cover bg-right bg-fixed bg-no-repeat hidden md:block"
         style={{
           backgroundImage: `url(${bannerBW})`,
-          backgroundPosition: "right top 20px",
+          backgroundPosition: "right top 40px",
         }}
       />
       {/* Dark Overlay with Subtle Green Tint for Better Text Readability */}
