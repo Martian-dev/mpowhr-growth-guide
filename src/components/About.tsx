@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Quote, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import anne1 from "@/assets/anne1.svg";
+import anne1 from "@/assets/anne.svg";
 
 const About = () => {
   const { ref, isInView } = useScrollAnimation();

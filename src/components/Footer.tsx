@@ -159,6 +159,18 @@ const Footer = () => {
                   />
                 </div>
               </div>
+
+              {/* View more certificates link */}
+              <div className="mt-3 flex justify-end pb-2 max-w-md">
+                <a
+                  href="https://drive.google.com/file/d/1XDdTDGoSp40j4k3Y8uFJ7jCxzZIZqNFo/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary-foreground/80 hover:text-white transition-colors text-sm underline underline-offset-2"
+                >
+                  View more Certificates
+                </a>
+              </div>
             </div>
           </div>
         </div>
