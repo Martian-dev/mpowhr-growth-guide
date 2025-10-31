@@ -53,11 +53,11 @@ const Footer = () => {
                 MpowHR
               </h3>
               <p className="text-primary-foreground/80 leading-relaxed">
-                You were built for more power. Let's prove it. We don't just
-                coach—we install the mental operating system of a
-                high-performer. By dissolving limiting beliefs and structuring
-                crystal-clear individual and organizational goals, we ensure you
-                effortlessly operate at the level of success you deserve.
+                You were built for more power. We don't just coach—we install
+                the mental operating system of a high-performer. By dissolving
+                limiting beliefs and structuring crystal-clear individual and
+                organizational goals, we ensure you effortlessly operate at the
+                level of success you deserve.
               </p>
             </div>
           </div>
@@ -75,7 +75,13 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-gradient" />
                 <span className="text-primary-foreground/80 text-sm">
-                  +91 76038 92152
+                  +91 76038 92152{" "}
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-gradient" />
+                <span className="text-primary-foreground/80 text-sm text-gray-400">
+                  +91 98410 56444 (Alternative Number)
                 </span>
               </li>
               <li className="flex items-center gap-3">
