@@ -103,6 +103,22 @@ const Footer = () => {
               </li>
             </ul>
 
+            {/* Map Section */}
+            <div className="mt-6 mb-8">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3888.493926926849!2d80.25052237507587!3d12.940214887372269!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTLCsDU2JzI0LjgiTiA4MMKwMTUnMTEuMiJF!5e0!3m2!1sen!2sin!4v1762181402625!5m2!1sen!2sin"
+                  width="100%"
+                  height="200"
+                  className="border-0 rounded-lg"
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="MpowHR Location Map"
+                />
+              </div>
+            </div>
+
             {/* Social Icons - Mobile Only */}
             <div className="lg:hidden mt-6">
               <h5 className="text-lg font-semibold mb-4">Follow Us</h5>
@@ -180,7 +196,7 @@ const Footer = () => {
               {/* View more certificates link */}
               <div className="mt-3 flex justify-end pb-2 max-w-md">
                 <a
-                  href="https://drive.google.com/file/d/1XDdTDGoSp40j4k3Y8uFJ7jCxzZIZqNFo/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1y0L0CPJ2tNnlVU04JrDCvrvRiJmuOQB3/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary-foreground/80 hover:text-white transition-colors text-sm underline underline-offset-2"
