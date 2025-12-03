@@ -132,14 +132,6 @@ const About = () => {
             {/* </div> */}
 
             {/* CTA */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#contact">
-                <Button variant="default" size="lg">
-                  <Calendar className="w-4 h-4" />
-                  Book a Free Consultation
-                </Button>
-              </a>
-            </div>
           </div>
 
           {/* Right Column - Image & Stats */}
