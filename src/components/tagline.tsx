@@ -16,6 +16,12 @@ export default function Tagline() {
       <div className="max-w-6xl">
         <motion.span
           className="px-2 py-1 rounded-lg"
+          style={{
+            background: "linear-gradient(135deg, #8B6914 0%, #D4AF37 25%, #FFD700 50%, #D4AF37 75%, #8B6914 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={
             isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }
