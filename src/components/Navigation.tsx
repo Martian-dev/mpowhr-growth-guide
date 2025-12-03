@@ -12,26 +12,26 @@ const Navigation = () => {
   const navClasses = isInImagineSection
     ? "bg-background/95 border-primary/20"
     : isInTaglineSection
-    ? "bg-background/95 border-primary/20"
-    : "bg-primary/95 border-white/20";
+      ? "bg-background/95 border-primary/20"
+      : "bg-primary/95 border-white/20";
 
   const textClasses = isInImagineSection
     ? "text-foreground hover:text-primary"
     : isInTaglineSection
-    ? "text-foreground hover:text-primary"
-    : "text-white hover:text-nav-hover";
+      ? "text-foreground hover:text-primary"
+      : "text-white hover:text-nav-hover";
 
   const mobileMenuClasses = isInImagineSection
     ? "bg-background/90 border-primary/10"
     : isInTaglineSection
-    ? "bg-background/90 border-primary/10"
-    : "bg-primary/90 border-white/10";
+      ? "bg-background/90 border-primary/10"
+      : "bg-primary/90 border-white/10";
 
   const mobileButtonClasses = isInImagineSection
     ? "text-foreground hover:text-primary hover:bg-primary/10"
     : isInTaglineSection
-    ? "text-foreground hover:text-primary hover:bg-primary/10"
-    : "text-white hover:text-nav-hover hover:bg-white/10";
+      ? "text-foreground hover:text-primary hover:bg-primary/10"
+      : "text-white hover:text-nav-hover hover:bg-white/10";
 
   return (
     <nav
@@ -80,7 +80,7 @@ const Navigation = () => {
             {/* Social Icons */}
             <div className="flex items-center space-x-4">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/anne-anshumathi-raj-b9b90848/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#D4AF37] hover:text-[#B8941F] transition-colors p-2"
@@ -88,7 +88,7 @@ const Navigation = () => {
                 <Linkedin className="w-6 h-6" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/mpowhr_restart"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#D4AF37] hover:text-[#B8941F] transition-colors p-2"
