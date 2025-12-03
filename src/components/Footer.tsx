@@ -98,7 +98,7 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-gradient" />
                 <span className="text-primary-foreground/80 text-sm">
-                  East Coast Road, Injambakkam, Chennai - 600115
+                  Injambakkam, Chennai - 600115
                 </span>
               </li>
             </ul>
