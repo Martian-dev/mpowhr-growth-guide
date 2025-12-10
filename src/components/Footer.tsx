@@ -21,6 +21,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 // Import footer banner image
 import footerBanner from "@/assets/footerbanner.png";
+import mpowhrText from "@/assets/MpowHR_text.png";
 
 // Import certificate images (original versions with backgrounds)
 import gecCert from "@/assets/mpowhr_certificates/GECCert.png";
@@ -57,17 +58,15 @@ const Footer = () => {
                   fontFamily: "'Playfair Display', serif",
                 }}
               >
-                <span
+                <img
+                  src={mpowhrText}
+                  alt="MpowHR"
+                  className="inline-block h-[1.5em] w-auto"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #8B6914 0%, #D4AF37 25%, #FFD700 50%, #D4AF37 75%, #8B6914 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
+                    verticalAlign: "middle",
+                    transform: "translateY(-0.05em)",
                   }}
-                >
-                  MpowHR
-                </span>
+                />
               </h3>
               <p className="text-primary-foreground/80 leading-relaxed">
                 You were built for More Power. We don't just coach—we install

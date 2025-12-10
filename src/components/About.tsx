@@ -3,6 +3,7 @@ import { Quote, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import anne1 from "@/assets/anne.svg";
+import mpowhrText from "@/assets/MpowHR_text.png";
 
 const About = () => {
   const { ref, isInView } = useScrollAnimation();
@@ -28,20 +29,15 @@ const About = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           The{" "}
-          <span
+          <img
+            src={mpowhrText}
+            alt="MpowHR"
+            className="inline-block h-[1.5em] w-auto mx-1"
             style={{
-              fontFamily: "'Playfair Display', serif",
-              fontWeight: "800",
-              background:
-                "linear-gradient(135deg, #8B6914 0%, #D4AF37 25%, #FFD700 50%, #D4AF37 75%, #8B6914 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              display: "inline",
+              verticalAlign: "middle",
+              transform: "translateY(-0.05em)",
             }}
-          >
-            MpowHR
-          </span>{" "}
+          />{" "}
           Story
         </motion.h2>
 

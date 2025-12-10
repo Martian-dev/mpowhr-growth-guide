@@ -1,22 +1,52 @@
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import logoIcon from "@/assets/logo-icon.png";
+import logoIcon from "@/assets/imagine_section.png";
 
 export default function Imagine() {
   const { ref, isInView } = useScrollAnimation();
 
+  const goldStyle = {
+    background:
+      "linear-gradient(135deg, #8B6914 0%, #D4AF37 25%, #FFD700 50%, #D4AF37 75%, #8B6914 100%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+    display: "inline",
+    fontWeight: "inherit",
+  };
+
   const items = [
-    "Forge Inner Certainty",
-    "Achieve Without Compromise",
-    "Establish Ironclad Boundaries",
-    "Engineer Your Fresh Start",
-    "Prioritize with Precision",
-    "Install New Habits",
-    "Own Your Mornings",
-    "Reclaim Your Joy",
-    "Clarify Your Trajectory",
-    "Lead with Resilience",
+    <span>
+      Forge Inner <span style={goldStyle}>Certainty</span>
+    </span>,
+    <span>
+      Achieve <span style={goldStyle}>Without Compromise</span>
+    </span>,
+    <span>
+      Establish Ironclad <span style={goldStyle}>Boundaries</span>
+    </span>,
+    <span>
+      Engineer Your <span style={goldStyle}>Fresh Start</span>
+    </span>,
+    <span>
+      Prioritize with <span style={goldStyle}>Precision</span>
+    </span>,
+    <span>
+      Install New <span style={goldStyle}>Habits</span>
+    </span>,
+    <span>
+      Own Your <span style={goldStyle}>Mornings</span>
+    </span>,
+    <span>
+      Reclaim Your <span style={goldStyle}>Joy</span>
+    </span>,
+    <span>
+      Clarify Your <span style={goldStyle}>Trajectory</span>
+    </span>,
+    <span>
+      Lead with <span style={goldStyle}>Resilience</span>
+    </span>,
   ];
 
   const leftItems = items.slice(0, 5);
@@ -39,7 +69,7 @@ export default function Imagine() {
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4">
-          Start Living the{" "}
+          This can be{" "}
           <span
             style={{
               background:
@@ -51,7 +81,7 @@ export default function Imagine() {
               fontWeight: "inherit",
             }}
           >
-            Upgraded You
+            Your Life
           </span>
           .
         </h2>
@@ -68,13 +98,13 @@ export default function Imagine() {
         transition={{ duration: 0.6, delay: 0.4 }}
       >
         {/* Desktop Layout */}
-        <div className="hidden lg:flex items-center justify-between gap-8 lg:gap-16">
+        <div className="hidden lg:flex items-center justify-between">
           {/* Left Points */}
-          <div className="flex-1 flex flex-col justify-center gap-4 lg:gap-6">
+          <div className="flex-[1.2] flex flex-col justify-center gap-4 lg:gap-6">
             {leftItems.map((item, index) => (
               <motion.div
                 key={index}
-                className="flex items-center gap-3 lg:gap-4 group"
+                className="flex items-center group"
                 initial={{ opacity: 0, x: -50 }}
                 animate={
                   isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }
@@ -133,26 +163,26 @@ export default function Imagine() {
               stiffness: 100,
             }}
           >
-            <div className="relative w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 flex items-center justify-center">
+            <div className="relative w-80 h-80 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] flex items-center justify-center">
               {/* Subtle glow effect */}
-              <div className="absolute inset-0 bg-accent/20 rounded-full blur-xl"></div>
+              {/* <div className="absolute inset-0 bg-accent/20 rounded-full blur-xl"></div> */}
               {/* Logo container with glass effect */}
-              <div className="relative w-full h-full bg-white/10 backdrop-blur-sm rounded-full border border-white/20 flex items-center justify-center">
+              <div className="relative w-full h-full  backdrop-blur-sm rounded-full flex items-center justify-center">
                 <img
                   src={logoIcon}
                   alt="MpowHR Phoenix Logo"
-                  className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain filter brightness-110"
+                  className="w-full h-full object-contain filter brightness-110"
                 />
               </div>
             </div>
           </motion.div>
 
           {/* Right Points */}
-          <div className="flex-1 flex flex-col justify-center gap-4 lg:gap-6">
+          <div className="flex-[1.2] flex flex-col justify-center gap-4 lg:gap-6">
             {rightItems.map((item, index) => (
               <motion.div
                 key={index}
-                className="flex items-center gap-3 lg:gap-4 group"
+                className="flex items-center group"
                 initial={{ opacity: 0, x: 50 }}
                 animate={
                   isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
@@ -214,17 +244,12 @@ export default function Imagine() {
               stiffness: 100,
             }}
           >
-            <div className="relative w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 bg-accent/20 rounded-full blur-lg"></div>
-              {/* Logo container with glass effect */}
-              <div className="relative w-full h-full bg-white/10 backdrop-blur-sm rounded-full border border-white/20 flex items-center justify-center">
-                <img
-                  src={logoIcon}
-                  alt="MpowHR Phoenix Logo"
-                  className="w-16 h-16 md:w-20 md:h-20 object-contain filter brightness-110"
-                />
-              </div>
+            <div className="relative w-72 h-72 sm:w-96 sm:h-96 md:w-[30rem] md:h-[30rem] flex items-center justify-center">
+              <img
+                src={logoIcon}
+                alt="MpowHR Phoenix Logo"
+                className="w-full h-full object-contain filter brightness-110"
+              />
             </div>
           </motion.div>
 
@@ -270,40 +295,6 @@ export default function Imagine() {
       </motion.div>
 
       {/* Footer Message */}
-      <motion.div
-        className="text-center mt-12 lg:mt-16"
-        initial={{ opacity: 0, y: 30, scale: 0.9 }}
-        animate={
-          isInView
-            ? { opacity: 1, y: 0, scale: 1 }
-            : { opacity: 0, y: 30, scale: 0.9 }
-        }
-        transition={{
-          duration: 0.6,
-          delay: 1.6,
-          type: "spring",
-          stiffness: 100,
-        }}
-      >
-        <h3
-          className="text-2xl md:text-3xl lg:text-4xl font-bold"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          <span
-            style={{
-              background:
-                "linear-gradient(135deg, #8B6914 0%, #D4AF37 25%, #FFD700 50%, #D4AF37 75%, #8B6914 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              display: "inline",
-              fontWeight: "inherit",
-            }}
-          >
-            This can be your life.
-          </span>
-        </h3>
-      </motion.div>
     </motion.div>
   );
 }
