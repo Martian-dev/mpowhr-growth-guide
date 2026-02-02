@@ -24,7 +24,6 @@ import footerBanner from "@/assets/footerbanner.png";
 import mpowhrText from "@/assets/MpowHR_text.png";
 
 // Import certificate images (original versions with backgrounds)
-import gecCert from "@/assets/mpowhr_certificates/GECCert.png";
 import cpdCert from "@/assets/mpowhr_certificates/cpdCert.png";
 import isoCert from "@/assets/mpowhr_certificates/isoCert.png";
 import proTouchCert from "@/assets/mpowhr_certificates/proTouchCert.png";
@@ -91,7 +90,7 @@ const Footer = () => {
               <li className="flex items-center gap-3">
                 <WhatsAppIcon className="w-4 h-4 text-gradient" />
                 <span className="text-primary-foreground/80 text-sm">
-                  +91 76038 92152 / +91 98410 56444 (Alt)
+                  +91 76038 92152
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -146,49 +145,48 @@ const Footer = () => {
           <div>
             <h4 className="text-xl font-semibold mb-6">Certifications</h4>
             <div className="space-y-4">
-              {/* Main certificates grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-3 max-w-md">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
-                  <img
-                    src={gecCert}
-                    alt="GEC Certification"
-                    className="w-full h-auto object-contain rounded"
-                  />
+              {/* Main certificates grid - 3 on top, 2 centered on bottom */}
+              <div className="flex flex-col gap-3 max-w-md">
+                {/* Top row - 3 certificates */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
+                    <img
+                      src={cpdCert}
+                      alt="CPD Certification"
+                      className="w-full h-auto object-contain rounded"
+                    />
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
+                    <img
+                      src={isoCert}
+                      alt="ISO Certification"
+                      className="w-full h-auto object-contain rounded"
+                    />
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
+                    <img
+                      src={proTouchCert}
+                      alt="ProTouch Certification"
+                      className="w-full h-auto object-contain rounded"
+                    />
+                  </div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
-                  <img
-                    src={cpdCert}
-                    alt="CPD Certification"
-                    className="w-full h-auto object-contain rounded"
-                  />
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
-                  <img
-                    src={isoCert}
-                    alt="ISO Certification"
-                    className="w-full h-auto object-contain rounded"
-                  />
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
-                  <img
-                    src={proTouchCert}
-                    alt="ProTouch Certification"
-                    className="w-full h-auto object-contain rounded"
-                  />
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
-                  <img
-                    src={shrmCert}
-                    alt="SHRM Certification"
-                    className="w-full h-auto object-contain rounded"
-                  />
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
-                  <img
-                    src={hrciCert}
-                    alt="HRCI Certification"
-                    className="w-full h-auto object-contain rounded"
-                  />
+                {/* Bottom row - 2 certificates centered */}
+                <div className="flex justify-center gap-3">
+                  <div className="w-[calc(33.333%-0.5rem)] bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
+                    <img
+                      src={shrmCert}
+                      alt="SHRM Certification"
+                      className="w-full h-auto object-contain rounded"
+                    />
+                  </div>
+                  <div className="w-[calc(33.333%-0.5rem)] bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
+                    <img
+                      src={hrciCert}
+                      alt="HRCI Certification"
+                      className="w-full h-auto object-contain rounded"
+                    />
+                  </div>
                 </div>
               </div>
 
