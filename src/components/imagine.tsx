@@ -18,34 +18,34 @@ export default function Imagine() {
 
   const items = [
     <span>
-      Forge Inner <span style={goldStyle}>Certainty</span>
-    </span>,
-    <span>
-      Achieve <span style={goldStyle}>Without Compromise</span>
-    </span>,
-    <span>
-      Establish Ironclad <span style={goldStyle}>Boundaries</span>
-    </span>,
-    <span>
-      Engineer Your <span style={goldStyle}>Fresh Start</span>
+      Lead with <span style={goldStyle}>Resilience</span>
     </span>,
     <span>
       Prioritize with <span style={goldStyle}>Precision</span>
     </span>,
     <span>
-      Install New <span style={goldStyle}>Habits</span>
+      Clarify Your <span style={goldStyle}>Trajectory</span>
     </span>,
     <span>
-      Own Your <span style={goldStyle}>Mornings</span>
+      Forge Inner <span style={goldStyle}>Certainty</span>
+    </span>,
+    <span>
+      Establish Ironclad <span style={goldStyle}>Boundaries</span>
+    </span>,
+    <span>
+      Achieve <span style={goldStyle}>Without Compromise</span>
+    </span>,
+    <span>
+      Engineer Your <span style={goldStyle}>Fresh Start</span>
     </span>,
     <span>
       Reclaim Your <span style={goldStyle}>Joy</span>
     </span>,
     <span>
-      Clarify Your <span style={goldStyle}>Trajectory</span>
+      Own Your <span style={goldStyle}>Mornings</span>
     </span>,
     <span>
-      Lead with <span style={goldStyle}>Resilience</span>
+      Install New <span style={goldStyle}>Habits</span>
     </span>,
   ];
 

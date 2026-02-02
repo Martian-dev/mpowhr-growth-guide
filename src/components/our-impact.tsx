@@ -107,7 +107,7 @@ const Impact = () => {
             viewport={{ once: true }}
           >
             <div className="flex items-baseline justify-center">
-              <AnimatedCounter target={250} />
+              <AnimatedCounter target={950} />
               <span className="text-4xl font-bold text-gray-700 ml-1">+</span>
             </div>
             <div className="text-gray-600 font-medium">Journeys Restarted</div>
@@ -124,6 +124,19 @@ const Impact = () => {
               <span className="text-4xl font-bold text-gray-700 ml-1">%</span>
             </div>
             <div className="text-gray-600 font-medium">Owned on your terms</div>
+          </motion.div>
+          <motion.div
+            className="text-center space-y-2"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.9 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-baseline justify-center">
+              <AnimatedCounter target={150} />
+              <span className="text-4xl font-bold text-gray-700 ml-1">+</span>
+            </div>
+            <div className="text-gray-600 font-medium">Students trained</div>
           </motion.div>
         </motion.div>{" "}
       </motion.div>

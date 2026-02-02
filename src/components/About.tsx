@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Quote, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import anne1 from "@/assets/anne.svg";
+import anne1 from "@/assets/about.jpeg";
 import mpowhrText from "@/assets/MpowHR_text.png";
 
 const About = () => {
@@ -109,6 +109,10 @@ const About = () => {
                   teams by identifying the problem, providing the necessary
                   skillset to rise and take decisive action within deadlines
                   independently with clarity and confidence.
+                  <br />
+                  Alongside this, Anne delivers soft-skills training that
+                  prepares students for the workplace and helps professionals
+                  enhance their impact.
                 </p>
               </div>
             </div>
@@ -131,7 +135,7 @@ const About = () => {
           </div>
 
           {/* Right Column - Image & Stats */}
-          <div className="relative order-1 lg:order-2">
+          <div className="relative order-1 lg:order-2 flex items-center justify-center">
             <div className="relative">
               {/* Main Image */}
               <div className="overflow-hidden shadow-[0_8px_32px_hsl(75_35%_25%/_0.15)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_8px_30px_hsl(75_35%_25%/_0.12)]">
