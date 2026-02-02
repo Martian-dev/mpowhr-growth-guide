@@ -108,11 +108,9 @@ const About = () => {
                   Anne's expertise lies in facilitating individuals, leaders and
                   teams by identifying the problem, providing the necessary
                   skillset to rise and take decisive action within deadlines
-                  independently with clarity and confidence.
-                  <br />
-                  Alongside this, Anne delivers soft-skills training that
-                  prepares students for the workplace and helps professionals
-                  enhance their impact.
+                  independently with clarity and confidence. Alongside this,
+                  Anne delivers soft-skills training that prepares students for
+                  the workplace and helps professionals enhance their impact.
                 </p>
               </div>
             </div>
