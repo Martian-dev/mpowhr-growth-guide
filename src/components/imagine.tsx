@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import logoIcon from "@/assets/imagine_section.png";
+import videoSrc from "@/assets/WebAIVEO-3.mp4";
 
 export default function Imagine() {
   const { ref, isInView } = useScrollAnimation();
@@ -107,11 +107,24 @@ export default function Imagine() {
                 className="flex items-center group"
                 initial={{ opacity: 0, x: -50 }}
                 animate={
-                  isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }
+                  isInView
+                    ? {
+                        opacity: 1,
+                        x: 0,
+                        scale: [1, 1.15, 1],
+                      }
+                    : { opacity: 0, x: -50 }
                 }
                 transition={{
-                  duration: 0.5,
-                  delay: 0.6 + index * 0.1,
+                  opacity: { duration: 0.5, delay: 0.6 + index * 0.1 },
+                  x: { duration: 0.5, delay: 0.6 + index * 0.1 },
+                  scale: {
+                    duration: 2,
+                    delay: index * 0.3,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    ease: "easeInOut",
+                  },
                 }}
               >
                 <div className="text-right flex-1">
@@ -149,7 +162,7 @@ export default function Imagine() {
             ))}
           </div>
 
-          {/* Center Logo */}
+          {/* Center Video */}
           <motion.div
             className="flex-shrink-0 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.5 }}
@@ -163,17 +176,16 @@ export default function Imagine() {
               stiffness: 100,
             }}
           >
-            <div className="relative w-80 h-80 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] flex items-center justify-center">
-              {/* Subtle glow effect */}
-              {/* <div className="absolute inset-0 bg-accent/20 rounded-full blur-xl"></div> */}
-              {/* Logo container with glass effect */}
-              <div className="relative w-full h-full  backdrop-blur-sm rounded-full flex items-center justify-center">
-                <img
-                  src={logoIcon}
-                  alt="MpowHR Phoenix Logo"
-                  className="w-full h-full object-contain filter brightness-110"
-                />
-              </div>
+            <div className="w-80 h-80 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] flex items-center justify-center">
+              <video
+                src={videoSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-contain rounded-lg"
+                style={{ pointerEvents: "none" }}
+              />
             </div>
           </motion.div>
 
@@ -185,11 +197,24 @@ export default function Imagine() {
                 className="flex items-center group"
                 initial={{ opacity: 0, x: 50 }}
                 animate={
-                  isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
+                  isInView
+                    ? {
+                        opacity: 1,
+                        x: 0,
+                        scale: [1, 1.15, 1],
+                      }
+                    : { opacity: 0, x: 50 }
                 }
                 transition={{
-                  duration: 0.5,
-                  delay: 0.6 + index * 0.1,
+                  opacity: { duration: 0.5, delay: 0.6 + index * 0.1 },
+                  x: { duration: 0.5, delay: 0.6 + index * 0.1 },
+                  scale: {
+                    duration: 2,
+                    delay: (5 + index) * 0.3,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    ease: "easeInOut",
+                  },
                 }}
               >
                 {/* Arrow pointing left */}
@@ -230,7 +255,7 @@ export default function Imagine() {
 
         {/* Mobile Layout */}
         <div className="lg:hidden flex flex-col items-center gap-8">
-          {/* Mobile Logo */}
+          {/* Mobile Video */}
           <motion.div
             className="flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.5 }}
@@ -244,11 +269,15 @@ export default function Imagine() {
               stiffness: 100,
             }}
           >
-            <div className="relative w-72 h-72 sm:w-96 sm:h-96 md:w-[30rem] md:h-[30rem] flex items-center justify-center">
-              <img
-                src={logoIcon}
-                alt="MpowHR Phoenix Logo"
-                className="w-full h-full object-contain filter brightness-110"
+            <div className="w-72 h-72 sm:w-96 sm:h-96 md:w-[30rem] md:h-[30rem] flex items-center justify-center">
+              <video
+                src={videoSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-contain rounded-lg"
+                style={{ pointerEvents: "none" }}
               />
             </div>
           </motion.div>
@@ -261,11 +290,24 @@ export default function Imagine() {
                 className="flex items-center justify-center gap-3 group"
                 initial={{ opacity: 0, y: 20 }}
                 animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+                  isInView
+                    ? {
+                        opacity: 1,
+                        y: 0,
+                        scale: [1, 1.15, 1],
+                      }
+                    : { opacity: 0, y: 20 }
                 }
                 transition={{
-                  duration: 0.4,
-                  delay: 0.6 + index * 0.05,
+                  opacity: { duration: 0.4, delay: 0.6 + index * 0.05 },
+                  y: { duration: 0.4, delay: 0.6 + index * 0.05 },
+                  scale: {
+                    duration: 2,
+                    delay: index * 0.3,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    ease: "easeInOut",
+                  },
                 }}
               >
                 <motion.span
