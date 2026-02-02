@@ -30,13 +30,13 @@ export default function Imagine() {
       Forge Inner <span style={goldStyle}>Certainty</span>
     </span>,
     <span>
-      Establish Ironclad <span style={goldStyle}>Boundaries</span>
+      Engineer Your <span style={goldStyle}>Fresh Start</span>
     </span>,
     <span>
       Achieve <span style={goldStyle}>Without Compromise</span>
     </span>,
     <span>
-      Engineer Your <span style={goldStyle}>Fresh Start</span>
+      Establish Ironclad <span style={goldStyle}>Boundaries</span>
     </span>,
     <span>
       Reclaim Your <span style={goldStyle}>Joy</span>
