@@ -25,8 +25,8 @@ import mpowhrText from "@/assets/MpowHR_text.png";
 
 // Import certificate images (original versions with backgrounds)
 import cpdCert from "@/assets/mpowhr_certificates/cpdCert.png";
-import isoCert from "@/assets/mpowhr_certificates/isoCert.png";
-import proTouchCert from "@/assets/mpowhr_certificates/proTouchCert.png";
+import coachesCert from "@/assets/mpowhr_certificates/coachesCert.png";
+import proTouchCert from "@/assets/mpowhr_certificates/proTouch.jpeg";
 import shrmCert from "@/assets/mpowhr_certificates/shrmCert.png";
 import hrciCert from "@/assets/mpowhr_certificates/hrciCert.png";
 
@@ -158,8 +158,8 @@ const Footer = () => {
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-all duration-300">
                     <img
-                      src={isoCert}
-                      alt="ISO Certification"
+                      src={coachesCert}
+                      alt="Coaches Certification"
                       className="w-full h-auto object-contain rounded"
                     />
                   </div>

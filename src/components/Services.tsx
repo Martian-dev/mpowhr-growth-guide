@@ -137,7 +137,7 @@ const ServiceCard = ({
                 onClick={() =>
                   window.open(
                     "https://drive.google.com/file/d/1lpPvI3eqIa6EVJzLvEg3X7hU3SW2f9lz/view?usp=drive_link",
-                    "_blank"
+                    "_blank",
                   )
                 }
                 className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 text-base font-medium shadow-md hover:shadow-lg transition-all duration-300"
@@ -218,7 +218,7 @@ const Services = () => {
       icon: Heart,
       title: "Empowered Life Coaching",
       description:
-        "Individual, one-on-one sessions focused on navigating life's most meaningful and often stressful transitions. This is your safe space to Pause, Realign, and Rise, empowering you with courage and clear personal choice.",
+        "Individual, one-on-one sessions focused on navigating life's most meaningful and often stressful transitions.\nThis is your safe space to Pause, Realign, and Rise, empowering you with courage and clear personal choice.",
       highlights: [
         "Relationship Reimagined",
         "Burnout & Stress Recovery",
@@ -236,7 +236,7 @@ const Services = () => {
       highlights: [
         "Executive & Leadership Coaching",
         "Team Resilience Workshops",
-        "Organizational Strategy Alignment",
+        "HR Team Coaching",
         "High-Impact Communication",
       ],
       image: hrMeetingImg,
