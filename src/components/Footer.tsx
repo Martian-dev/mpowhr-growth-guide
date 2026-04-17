@@ -74,6 +74,10 @@ const Footer = () => {
                 organizational goals, we ensure you effortlessly operate at the
                 level of success you deserve.
               </p>
+              <p className="text-primary-foreground/80 text-sm mt-4">
+                <span className="font-medium">GST NO. :</span>{" "}
+                33AGUPR1747B2ZA{" "}
+              </p>
             </div>
           </div>
 
@@ -88,9 +92,21 @@ const Footer = () => {
                 </span>
               </li>
               <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-gradient" />
+                <span className="text-primary-foreground/80 text-sm">
+                  +91 95008 97041
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
                 <WhatsAppIcon className="w-4 h-4 text-gradient" />
                 <span className="text-primary-foreground/80 text-sm">
                   +91 76038 92152
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-gradient" />
+                <span className="text-primary-foreground/80 text-sm">
+                  +91 44462 78164 (Landline)
                 </span>
               </li>
               <li className="flex items-center gap-3">

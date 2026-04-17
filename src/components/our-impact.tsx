@@ -133,10 +133,10 @@ const Impact = () => {
             viewport={{ once: true }}
           >
             <div className="flex items-baseline justify-center">
-              <AnimatedCounter target={1140} />
+              <AnimatedCounter target={1450} />
               <span className="text-4xl font-bold text-gray-700 ml-1">+</span>
             </div>
-            <div className="text-gray-600 font-medium">Students trained</div>
+            <div className="text-gray-600 font-medium">Students Coached</div>
           </motion.div>
         </motion.div>{" "}
       </motion.div>

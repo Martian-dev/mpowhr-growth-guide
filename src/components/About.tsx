@@ -53,7 +53,7 @@ const About = () => {
                   MpowHR was founded by Anne Anshumathi Raj with a vision that
                   everyone deserves a safe space to pause, unlearn, learn,
                   realign, and rise. She is an Internationally Certified Life
-                  Coach and Soft-skills Trainer with over 15 years of hands-on
+                  Coach and Soft-skills Trainer with over 15 years of industry
                   experience.
                 </p>
 
