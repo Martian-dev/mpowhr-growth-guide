@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Users, Target, Heart } from "lucide-react";
+import { Users, Target, Heart, GraduationCap } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useRef } from "react";
 import coachingSessionImg from "@/assets/coaching-session.png";
 import hrMeetingImg from "@/assets/hr-meeting.png";
 import heroCoachImg from "@/assets/hero-coach.png";
+import classroomToBoardroom from "@/assets/classroomToBoardroom.jpeg";
 
 // Individual service component for proper hook usage
 const ServiceCard = ({
@@ -252,6 +253,19 @@ const Services = () => {
         "Diversity, Equity, and Inclusion (DEI)",
       ],
       image: heroCoachImg,
+    },
+    {
+      icon: GraduationCap,
+      title: "Classroom to Boardroom: The Power Skills Revolution",
+      description:
+        'Hirable to Promotable. Technical skills get you the interview, but Power Skills get you the offer. MpowHR partners with academic institutions to bridge the "Readiness Gap," transforming students into high-impact professionals who don\'t just fit in they stand out.',
+      highlights: [
+        "Professional Persona",
+        "Interview Mastery",
+        'Roadmap for the "Corporate Honeymoon" period',
+        "Gen Z Emotional Intelligence",
+      ],
+      image: classroomToBoardroom,
     },
   ];
 

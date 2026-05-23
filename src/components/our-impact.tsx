@@ -107,7 +107,7 @@ const Impact = () => {
             viewport={{ once: true }}
           >
             <div className="flex items-baseline justify-center">
-              <AnimatedCounter target={950} />
+              <AnimatedCounter target={1000} />
               <span className="text-4xl font-bold text-gray-700 ml-1">+</span>
             </div>
             <div className="text-gray-600 font-medium">Journeys Restarted</div>
@@ -133,7 +133,7 @@ const Impact = () => {
             viewport={{ once: true }}
           >
             <div className="flex items-baseline justify-center">
-              <AnimatedCounter target={1450} />
+              <AnimatedCounter target={1470} />
               <span className="text-4xl font-bold text-gray-700 ml-1">+</span>
             </div>
             <div className="text-gray-600 font-medium">Students Coached</div>
