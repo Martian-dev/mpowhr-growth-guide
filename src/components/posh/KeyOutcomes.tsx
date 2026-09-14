@@ -1,43 +1,77 @@
 import { motion } from "framer-motion";
-import { CheckCircle2 } from "lucide-react";
-import { bodyFont, fadeInUp } from "./constants";
+import {
+  FileCheck2,
+  Handshake,
+  Scale,
+  ShieldCheck,
+  ShieldHalf,
+  Timer,
+} from "lucide-react";
+import { bodyFont } from "./constants";
 import { SectionHeader } from "./shared";
 
 const outcomes = [
-  "Protect your Business License & Eliminate Statutory Risk",
-  "Preserve Internal Jurisdiction & Avoid External Escalations",
-  "Deploy the Section 14 Shield Against False & Retaliatory Claims",
-  "Master Mandatory Timelines, IC Roles & External Member Rules",
-  "Secure Enterprise Contracts & Vendor Empanels",
-  "Immediate Executive & Deliverables Included",
+  {
+    icon: ShieldCheck,
+    text: "Protect your Business License & Eliminate Statutory Risk",
+  },
+  {
+    icon: Scale,
+    text: "Preserve Internal Jurisdiction & Avoid External Escalations",
+  },
+  {
+    icon: ShieldHalf,
+    text: "Deploy the Section 14 Shield Against False & Retaliatory Claims",
+  },
+  {
+    icon: Timer,
+    text: "Master Mandatory Timelines, IC Roles & External Member Rules",
+  },
+  { icon: Handshake, text: "Secure Enterprise Contracts & Vendor Empanels" },
+  { icon: FileCheck2, text: "Immediate Executive & Deliverables Included" },
 ];
 
 const KeyOutcomes = () => {
   return (
-    <section id="outcomes" className="section-padding bg-background w-full">
+    <section
+      id="outcomes"
+      className="section-padding bg-white border-y border-border w-full"
+    >
       <div className="container-width">
         <SectionHeader title="Key Outcomes & Benefits" />
 
-        <motion.ul
-          className="max-w-5xl mx-auto bg-white border border-primary/10 p-6 md:p-10 grid md:grid-cols-2 gap-x-12 gap-y-6"
-          {...fadeInUp}
-          transition={{ duration: 0.6 }}
-        >
-          {outcomes.map((outcome) => (
-            <li key={outcome} className="flex items-start gap-4">
-              <CheckCircle2
-                className="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
-                aria-hidden="true"
-              />
-              <span
-                className="text-lg font-medium text-gray-800 leading-snug"
+        {/* Hairline grid: the 1px gaps show the border colour behind the cells */}
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
+          {outcomes.map(({ icon: Icon, text }, index) => (
+            <motion.li
+              key={text}
+              className="bg-white p-6 md:p-8 flex flex-col gap-5"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: index * 0.06 }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center">
+                  <Icon className="w-6 h-6 text-[#D4AF37]" aria-hidden="true" />
+                </span>
+                <span
+                  className="text-sm font-semibold text-slate-400"
+                  style={bodyFont}
+                  aria-hidden="true"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <p
+                className="text-lg font-semibold text-foreground leading-snug"
                 style={bodyFont}
               >
-                {outcome}
-              </span>
-            </li>
+                {text}
+              </p>
+            </motion.li>
           ))}
-        </motion.ul>
+        </ul>
       </div>
     </section>
   );

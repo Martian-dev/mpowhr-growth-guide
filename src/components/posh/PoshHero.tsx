@@ -1,9 +1,15 @@
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { Check, Radio } from "lucide-react";
 import { AnimatedCounter } from "@/components/our-impact";
 import bannerBW from "@/assets/banner-bw.svg";
-import { BentoGrid, Tile, TileEyebrow } from "./bento";
-import { CONSULTATION_URL, goldGradientText, bodyFont } from "./constants";
+import {
+  CONSULTATION_URL,
+  PLANS,
+  PRICING_ANCHOR,
+  bodyFont,
+  goldGradientText,
+} from "./constants";
+import { CtaButton, Highlight } from "./shared";
 
 const stats = [
   { value: 14, label: "Years of Expertise" },
@@ -12,98 +18,163 @@ const stats = [
   { value: 100, label: "Professionals Trained" },
 ];
 
-// Banner and "We in Numbers" share the first board.
+// Offer facts taken from the FAQs and pricing details.
+const offerFacts = [
+  "Live Workshop",
+  "Certificate provided",
+  "Free 1-1 consultation with Anne",
+];
+
+const reveal = (delay: number) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, delay },
+});
+
+// Banner and "We in Numbers".
 const PoshHero = () => {
   return (
-    <BentoGrid className="pt-4">
-      {/* Banner */}
-      <Tile
-        variant="bare"
-        className="md:col-span-6 lg:col-span-8 lg:row-span-2 min-h-[520px] md:min-h-[580px] p-0 lg:p-0 flex items-end bg-primary"
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-no-repeat"
-          style={{
-            backgroundImage: `url(${bannerBW})`,
-            backgroundPosition: "72% top",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-green-950/10" />
-
-        <div className="relative p-6 md:p-10 max-w-2xl">
-          <h1
-            className="text-3xl md:text-[2.5rem] lg:text-[2.4rem] xl:text-[2.6rem]"
-            style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontWeight: 700,
-              lineHeight: "1.2",
-            }}
-          >
-            <span className="block text-white">
-              POSH ISN’T JUST AN HR MATTER.
-            </span>
-            <span className="block pb-2" style={goldGradientText}>
-              It’s a Leadership Responsibility.
-            </span>
-          </h1>
-
-          <p
-            className="mt-4 text-base md:text-lg text-white/90 leading-relaxed"
-            style={bodyFont}
-          >
-            Master the essentials of POSH compliance, IC processes, legal
-            exposure & leadership safeguards in 120 minutes.
-          </p>
-
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="mt-6 text-base md:text-lg px-6 md:px-8 py-4 h-auto min-h-[48px] bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 hover:border-white/40 focus-visible:ring-white"
-          >
-            <a
-              href={CONSULTATION_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+    <>
+      <section className="bg-primary text-primary-foreground overflow-hidden">
+        <div className="container-width px-4 md:px-8 lg:px-12 py-14 md:py-20 grid lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-7">
+            <motion.p
+              className="inline-flex items-center gap-2 border border-white/20 px-3 py-1.5 text-xs md:text-sm font-medium uppercase tracking-[0.15em] text-white/85"
+              style={bodyFont}
+              {...reveal(0)}
             >
-              Book Free Consultation
-              <ArrowRight className="w-6 h-6 ml-2" aria-hidden="true" />
-            </a>
-          </Button>
+              <Radio className="w-4 h-4 text-[#D4AF37]" aria-hidden="true" />
+              Live Masterclass · 120 Minutes
+            </motion.p>
+
+            <motion.h1
+              className="mt-6 text-[2rem] md:text-5xl lg:text-[3.25rem]"
+              style={{ ...bodyFont, fontWeight: 700, lineHeight: 1.15 }}
+              {...reveal(0.1)}
+            >
+              <span className="block text-white">
+                POSH ISN’T JUST AN HR MATTER.
+              </span>
+              <span className="block pb-2" style={goldGradientText}>
+                It’s a Leadership Responsibility.
+              </span>
+            </motion.h1>
+
+            <motion.p
+              className="mt-5 max-w-xl text-lg md:text-xl text-white/80 leading-relaxed"
+              style={bodyFont}
+              {...reveal(0.2)}
+            >
+              Master the essentials of POSH compliance, IC processes, legal
+              exposure & leadership safeguards in{" "}
+              <Highlight>120 minutes</Highlight>.
+            </motion.p>
+
+            <motion.div
+              className="mt-8 flex flex-col sm:flex-row gap-3"
+              {...reveal(0.3)}
+            >
+              <CtaButton href={PRICING_ANCHOR} variant="gold">
+                Secure your Seat · {PLANS[0].price}
+              </CtaButton>
+              <CtaButton
+                href={CONSULTATION_URL}
+                variant="outline-light"
+                showArrow={false}
+              >
+                Book Free Consultation
+              </CtaButton>
+            </motion.div>
+
+            <motion.ul
+              className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm md:text-base text-white/80"
+              style={bodyFont}
+              {...reveal(0.4)}
+            >
+              {offerFacts.map((fact) => (
+                <li key={fact} className="inline-flex items-center gap-2">
+                  <Check
+                    className="w-4 h-4 text-[#D4AF37]"
+                    aria-hidden="true"
+                  />
+                  {fact}
+                </li>
+              ))}
+              <li className="inline-flex items-center gap-2 font-semibold text-[#D4AF37]">
+                <span
+                  className="w-2 h-2 rounded-full bg-[#D4AF37]"
+                  aria-hidden="true"
+                />
+                Limited Seats Available
+              </li>
+            </motion.ul>
+          </div>
+
+          {/* Portrait - desktop only, so the offer stays above the fold on phones */}
+          <motion.div
+            className="hidden lg:block lg:col-span-5 relative"
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div
+              className="absolute -bottom-4 -left-4 w-full h-full border border-[#D4AF37]/60"
+              aria-hidden="true"
+            />
+            <div className="relative aspect-[4/5] overflow-hidden">
+              <img
+                src={bannerBW}
+                alt="Anne Anshumathi Raj, POSH facilitator"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: "72% 30%" }}
+              />
+            </div>
+          </motion.div>
         </div>
-      </Tile>
+      </section>
 
       {/* We in Numbers */}
-      {stats.map((stat, index) => (
-        <Tile
-          key={stat.label}
-          index={index + 1}
-          className="col-span-1 md:col-span-3 lg:col-span-2 flex flex-col justify-between gap-6 min-h-[150px]"
-        >
-          {index === 0 ? (
-            <TileEyebrow as="h2" className="text-gray-500">
-              We in Numbers
-            </TileEyebrow>
-          ) : (
-            <span aria-hidden="true" />
-          )}
-          <div>
-            <div className="flex items-baseline">
-              <AnimatedCounter
-                target={stat.value}
-                className="text-foreground md:text-5xl"
-              />
-              <span className="text-4xl md:text-5xl font-bold ml-1 text-foreground">
-                +
-              </span>
-            </div>
-            <p className="mt-1 font-medium text-gray-600" style={bodyFont}>
-              {stat.label}
-            </p>
-          </div>
-        </Tile>
-      ))}
-    </BentoGrid>
+      <section
+        aria-labelledby="numbers-heading"
+        className="bg-white border-b border-border"
+      >
+        <div className="container-width px-4 md:px-8 lg:px-12 py-8 md:py-10 grid lg:grid-cols-12 gap-6 items-center">
+          <h2
+            id="numbers-heading"
+            className="lg:col-span-2 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-[#8B6914]"
+            style={bodyFont}
+          >
+            We in Numbers
+          </h2>
+          <dl className="lg:col-span-10 grid grid-cols-2 md:grid-cols-4 gap-y-6">
+            {stats.map((stat, index) => (
+              <div
+                key={stat.label}
+                className={`flex flex-col-reverse px-4 md:px-6 ${
+                  index > 0 ? "md:border-l border-border" : ""
+                } ${index % 2 === 1 ? "border-l md:border-l" : ""}`}
+              >
+                <dt
+                  className="mt-1 text-sm md:text-base text-slate-600"
+                  style={bodyFont}
+                >
+                  {stat.label}
+                </dt>
+                <dd className="flex items-baseline">
+                  <AnimatedCounter
+                    target={stat.value}
+                    className="text-foreground md:text-5xl"
+                  />
+                  <span className="text-4xl md:text-5xl font-bold ml-1 text-[#D4AF37]">
+                    +
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    </>
   );
 };
 

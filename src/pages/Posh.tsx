@@ -42,7 +42,8 @@ const Posh = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen w-full overflow-x-hidden">
+      {/* theme-corporate swaps the brand colour variables for this page only */}
+      <div className="theme-corporate min-h-screen w-full overflow-x-hidden bg-background text-foreground">
         <Navigation
           links={poshLinks}
           cta={{ label: "Secure your Seat", href: PRICING_ANCHOR }}

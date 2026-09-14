@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { bodyFont } from "./constants";
 
 // Grid is 2 columns on phones, 6 on tablets and 12 on desktop. Tiles span the
 // full width on phones by default; pass md:/lg: col-span classes to place them.
@@ -56,26 +55,6 @@ export const Tile = ({
   >
     {children}
   </motion.div>
-);
-
-export const TileEyebrow = ({
-  as: Component = "p",
-  className,
-  children,
-}: {
-  as?: "p" | "h2" | "h3";
-  className?: string;
-  children: ReactNode;
-}) => (
-  <Component
-    className={cn(
-      "text-xs md:text-sm font-semibold uppercase tracking-[0.2em]",
-      className,
-    )}
-    style={bodyFont}
-  >
-    {children}
-  </Component>
 );
 
 export const TileHeading = ({

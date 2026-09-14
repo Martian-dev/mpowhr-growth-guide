@@ -47,7 +47,7 @@ const Navigation = ({
 
   const ctaClasses = isOverContrastSection
     ? "bg-primary text-primary-foreground hover:bg-primary/90"
-    : "bg-white text-primary hover:bg-white/90";
+    : "bg-[#D4AF37] text-[#0B1B33] hover:bg-[#C9A42F]";
 
   return (
     <nav

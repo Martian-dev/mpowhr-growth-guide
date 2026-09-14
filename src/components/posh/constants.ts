@@ -37,3 +37,8 @@ export const fadeInUp = {
 };
 
 export const bodyFont = { fontFamily: "Poppins, sans-serif" };
+
+export const headingFont = {
+  fontFamily: "Vinila, Inter, sans-serif",
+  letterSpacing: "0.01em",
+};

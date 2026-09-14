@@ -34,7 +34,7 @@ const Testimonials = () => {
                 aria-hidden="true"
               />
               <blockquote
-                className="text-gray-700 text-lg leading-relaxed flex-grow"
+                className="text-slate-700 text-lg leading-relaxed flex-grow"
                 style={bodyFont}
               >
                 {testimonial.quote}
@@ -44,7 +44,7 @@ const Testimonials = () => {
                   {testimonial.name}
                 </span>
                 {testimonial.designation && (
-                  <span className="block text-sm text-gray-600">
+                  <span className="block text-sm text-slate-600">
                     {testimonial.designation}
                   </span>
                 )}

@@ -38,7 +38,7 @@ const MobileStickyCta = () => {
       aria-hidden={!isVisible}
     >
       <div className="flex items-center justify-between gap-3" style={bodyFont}>
-        <p className="text-sm leading-tight text-gray-600">
+        <p className="text-sm leading-tight text-slate-600">
           {PLANS.map((plan) => (
             <span key={plan.seats} className="block">
               <span className="font-bold text-foreground">{plan.price}</span>{" "}

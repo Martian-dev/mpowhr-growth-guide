@@ -128,6 +128,37 @@
     --transition-glass: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Corporate navy blue + gold palette, scoped to the POSH workshop page */
+  .theme-corporate {
+    --background: 214 45% 97%;
+    --foreground: 216 65% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 216 65% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 216 65% 12%;
+
+    --primary: 213 70% 20%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 213 55% 32%;
+    --primary-dark: 216 65% 12%;
+
+    --secondary: 214 45% 94%;
+    --secondary-foreground: 216 65% 12%;
+    --secondary-dark: 214 35% 89%;
+
+    --accent: 214 45% 94%;
+    --accent-foreground: 216 65% 12%;
+
+    --muted: 214 45% 94%;
+    --muted-foreground: 215 16% 47%;
+
+    --border: 214 32% 89%;
+    --input: 214 32% 89%;
+    --ring: 213 70% 20%;
+  }
+
   .dark {
     --background: 25 20% 8%;
     --foreground: 151 80% 12%;

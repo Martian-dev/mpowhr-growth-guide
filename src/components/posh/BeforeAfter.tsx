@@ -70,14 +70,14 @@ const labelClasses =
   "flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]";
 
 const BeforeLabel = ({ className = "" }: { className?: string }) => (
-  <span className={`${labelClasses} text-gray-500 ${className}`}>
+  <span className={`${labelClasses} text-slate-500 ${className}`}>
     <HelpCircle className="w-4 h-4" aria-hidden="true" />
     Before
   </span>
 );
 
 const AfterLabel = ({ className = "" }: { className?: string }) => (
-  <span className={`${labelClasses} text-primary ${className}`}>
+  <span className={`${labelClasses} text-[#8B6914] ${className}`}>
     <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
     After
   </span>
@@ -117,15 +117,15 @@ const BeforeAfter = () => {
             >
               <div className="p-5 md:px-8 md:py-6">
                 <BeforeLabel className="mb-2 md:hidden" />
-                <p className="font-semibold text-gray-800">{before.quote}</p>
-                <p className="mt-1 text-gray-600 leading-relaxed">
+                <p className="font-semibold text-slate-800">{before.quote}</p>
+                <p className="mt-1 text-slate-600 leading-relaxed">
                   {before.text}
                 </p>
               </div>
               <div className="p-5 md:px-8 md:py-6 border-t md:border-t-0 md:border-l border-primary/10">
                 <AfterLabel className="mb-2 md:hidden" />
                 <p className="font-semibold text-primary">{after.quote}</p>
-                <p className="mt-1 text-gray-700 leading-relaxed">
+                <p className="mt-1 text-slate-700 leading-relaxed">
                   {after.text}
                 </p>
               </div>

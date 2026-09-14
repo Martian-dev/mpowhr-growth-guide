@@ -1,81 +1,149 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Gift } from "lucide-react";
-import { PLANS, bodyFont, registrationUrl } from "./constants";
-import { CtaButton } from "./shared";
+import { cn } from "@/lib/utils";
+import { PLANS, bodyFont, headingFont, registrationUrl } from "./constants";
+import { CtaButton, Highlight } from "./shared";
 
-// What every seat includes, as stated in the modules and FAQs.
-const included = ["Live Workshop", "120 minutes", "Certificate"];
+// Everything a seat includes, as described in the modules, Before/After section
+// and FAQs.
+const included = [
+  "120-minute Live Workshop",
+  "All 6 modules, including Live Q&A",
+  "IC Setup Checklist",
+  "Executive Assessment & Certificate",
+  "Free 1-1 Consultation with Anne after the workshop",
+];
 
 const Pricing = () => {
+  const [seats, setSeats] = useState(PLANS[0].seats);
+
   return (
     <section
       id="pricing"
-      className="section-padding bg-background w-full"
+      data-nav-contrast
+      className="section-padding bg-primary text-primary-foreground w-full"
       aria-labelledby="pricing-heading"
+      style={bodyFont}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="container-width grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        {/* Offer */}
         <motion.div
-          className="text-center section-header-spacing"
+          className="lg:col-span-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7 }}
         >
+          <p className="inline-flex items-center gap-2 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-[#D4AF37]">
+            <span
+              className="w-2 h-2 rounded-full bg-[#D4AF37]"
+              aria-hidden="true"
+            />
+            Limited Seats Available
+          </p>
           <h2
             id="pricing-heading"
-            className="text-2xl sm:text-[2.5rem] font-bold leading-tight"
-            style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+            className="mt-4 text-3xl sm:text-5xl font-bold leading-tight"
+            style={headingFont}
           >
             Secure your Seat
           </h2>
-          <p
-            className="mt-5 inline-flex items-center justify-center gap-3 text-lg md:text-xl font-medium text-primary"
-            style={bodyFont}
-          >
-            <Gift className="w-6 h-6 flex-shrink-0" aria-hidden="true" />
-            Free Consultation from Anne After workshop
+          <p className="mt-4 flex items-start gap-3 text-lg md:text-xl text-white/85">
+            <Gift
+              className="w-6 h-6 mt-0.5 flex-shrink-0 text-[#D4AF37]"
+              aria-hidden="true"
+            />
+            <span>
+              <Highlight>Free Consultation from Anne</Highlight> After workshop
+            </span>
           </p>
+
+          <p className="mt-10 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+            What’s included
+          </p>
+          <ul className="mt-4 space-y-3">
+            {included.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-white/90">
+                <Check
+                  className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#D4AF37]"
+                  aria-hidden="true"
+                />
+                {item}
+              </li>
+            ))}
+          </ul>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 gap-6">
-          {PLANS.map((plan, index) => (
-            <motion.div
-              key={plan.seats}
-              className="bg-white border border-primary/10 p-6 md:p-8 flex flex-col"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
-              style={bodyFont}
-            >
-              <p className="flex items-baseline gap-3">
-                <span className="text-5xl md:text-6xl font-bold text-foreground">
-                  {plan.price}
-                </span>
-                <span className="text-xl text-gray-600">{plan.label}</span>
-              </p>
-
-              <ul className="mt-6 mb-8 space-y-3">
-                {included.map((item) => (
-                  <li key={item} className="flex items-center gap-3">
-                    <Check
-                      className="w-5 h-5 text-primary flex-shrink-0"
-                      aria-hidden="true"
+        {/* Seat selection */}
+        <motion.div
+          className="lg:col-span-6 bg-white text-foreground border-t-4 border-[#D4AF37] p-6 md:p-10 shadow-2xl"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+        >
+          <fieldset>
+            <legend className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Choose your seats
+            </legend>
+            <div className="mt-5 space-y-3">
+              {PLANS.map((plan) => {
+                const isSelected = seats === plan.seats;
+                return (
+                  <label
+                    key={plan.seats}
+                    className={cn(
+                      "flex items-center gap-4 border p-4 md:p-5 cursor-pointer transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2",
+                      isSelected
+                        ? "border-primary bg-secondary"
+                        : "border-border hover:border-slate-400",
+                    )}
+                  >
+                    <input
+                      type="radio"
+                      name="seats"
+                      value={plan.seats}
+                      checked={isSelected}
+                      onChange={() => setSeats(plan.seats)}
+                      className="sr-only"
                     />
-                    <span className="text-gray-700">{item}</span>
-                  </li>
-                ))}
-              </ul>
+                    <span
+                      className={cn(
+                        "w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0",
+                        isSelected ? "border-primary" : "border-slate-300",
+                      )}
+                      aria-hidden="true"
+                    >
+                      {isSelected && (
+                        <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                      )}
+                    </span>
+                    <span className="flex-1 text-lg font-medium capitalize">
+                      {plan.label}
+                    </span>
+                    <span
+                      className="text-3xl md:text-4xl font-bold"
+                      style={headingFont}
+                    >
+                      {plan.price}
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
 
-              <CtaButton
-                href={registrationUrl(plan.seats)}
-                className="mt-auto w-full"
-              >
-                Secure your Seat
-              </CtaButton>
-            </motion.div>
-          ))}
-        </div>
+          <CtaButton
+            href={registrationUrl(seats)}
+            className="mt-6 w-full text-lg"
+          >
+            Secure your Seat
+          </CtaButton>
+          <p className="mt-3 text-center text-sm text-slate-500">
+            You’ll continue on WhatsApp to confirm your booking.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

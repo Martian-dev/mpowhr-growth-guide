@@ -1,7 +1,7 @@
 import { Briefcase, Building2, Crown, Rocket } from "lucide-react";
 import { BentoGrid, Tile, TileHeading } from "./bento";
 import { PRICING_ANCHOR, bodyFont } from "./constants";
-import { CtaButton } from "./shared";
+import { CtaButton, Highlight } from "./shared";
 
 const audiences = [
   {
@@ -53,7 +53,7 @@ const RoleTile = ({
       >
         {audience.role}
       </h3>
-      <p className="text-gray-600 leading-relaxed" style={bodyFont}>
+      <p className="text-slate-600 leading-relaxed" style={bodyFont}>
         {audience.description}
       </p>
     </Tile>
@@ -65,7 +65,7 @@ const WhoIsItFor = () => {
     <BentoGrid id="audience" className="pt-4 md:pt-8 pb-12 md:pb-16">
       <Tile className="md:col-span-6 lg:col-span-6 flex items-end min-h-[180px]">
         <TileHeading className="text-foreground">
-          This Masterclass Is For You If You Are A...
+          This Masterclass Is For You <Highlight>If You Are A...</Highlight>
         </TileHeading>
       </Tile>
 
@@ -78,8 +78,8 @@ const WhoIsItFor = () => {
         className="md:col-span-6 lg:col-span-6 flex flex-col justify-center items-start gap-3"
       >
         <CtaButton href={PRICING_ANCHOR}>Become a POSH Expert</CtaButton>
-        <p className="text-gray-600" style={bodyFont}>
-          Get Free Consultation after Workshop
+        <p className="text-slate-600" style={bodyFont}>
+          Get <Highlight>Free Consultation</Highlight> after Workshop
         </p>
       </Tile>
     </BentoGrid>

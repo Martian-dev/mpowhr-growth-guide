@@ -50,10 +50,10 @@ const WorkshopModules = () => {
             {facts.map(({ icon: Icon, label }) => (
               <li
                 key={label}
-                className="inline-flex items-center gap-2 bg-white border border-primary/15 text-gray-700 px-4 py-2 text-sm font-medium"
+                className="inline-flex items-center gap-2 bg-white border border-[#D4AF37]/60 text-slate-800 px-4 py-2 text-sm font-medium"
                 style={bodyFont}
               >
-                <Icon className="w-4 h-4 text-primary" aria-hidden="true" />
+                <Icon className="w-4 h-4 text-[#8B6914]" aria-hidden="true" />
                 {label}
               </li>
             ))}
@@ -90,7 +90,7 @@ const WorkshopModules = () => {
                 )}
                 <span
                   aria-hidden="true"
-                  className="absolute left-0 top-0 w-11 h-11 rounded-full bg-white border border-primary/25 text-primary flex items-center justify-center text-lg font-semibold"
+                  className="absolute left-0 top-0 w-11 h-11 rounded-full bg-white border-2 border-[#D4AF37] text-primary flex items-center justify-center text-lg font-semibold"
                   style={bodyFont}
                 >
                   {index + 1}
@@ -109,7 +109,7 @@ const WorkshopModules = () => {
                   {module.title}
                 </h3>
                 {module.detail && (
-                  <p className="mt-1 text-base text-gray-600" style={bodyFont}>
+                  <p className="mt-1 text-base text-slate-600" style={bodyFont}>
                     {module.detail}
                   </p>
                 )}
