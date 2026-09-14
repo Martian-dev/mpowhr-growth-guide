@@ -5,9 +5,13 @@ import AnimatedTitle2 from "@/components/ui/AnimatedTitle2";
 
 interface CounterProps {
   target: number;
+  className?: string;
 }
 
-export const AnimatedCounter = ({ target }: CounterProps) => {
+export const AnimatedCounter = ({
+  target,
+  className = "text-black",
+}: CounterProps) => {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {
@@ -32,7 +36,7 @@ export const AnimatedCounter = ({ target }: CounterProps) => {
   return (
     <motion.span
       ref={ref}
-      className="text-4xl font-black text-black counter tracking-tight leading-tight"
+      className={`text-4xl font-black counter tracking-tight leading-tight ${className}`}
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.5 }}

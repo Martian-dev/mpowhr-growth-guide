@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, HelpCircle } from "lucide-react";
-import { PRICING_ANCHOR, fadeInUp } from "./constants";
-import { CtaButton, SectionTitle } from "./shared";
+import { CheckCircle2, HelpCircle } from "lucide-react";
+import { PRICING_ANCHOR, bodyFont, fadeInUp } from "./constants";
+import { CtaButton, SectionHeader } from "./shared";
 
 const comparisons = [
   {
@@ -66,93 +66,76 @@ const comparisons = [
   },
 ];
 
-const ColumnLabel = ({
-  children,
-  active = false,
-}: {
-  children: string;
-  active?: boolean;
-}) => (
-  <span
-    className={`text-sm font-semibold tracking-[0.2em] ${
-      active ? "text-primary" : "text-gray-500"
-    }`}
-    style={{ fontFamily: "Poppins, sans-serif" }}
-  >
-    {children}
+const labelClasses =
+  "flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]";
+
+const BeforeLabel = ({ className = "" }: { className?: string }) => (
+  <span className={`${labelClasses} text-gray-500 ${className}`}>
+    <HelpCircle className="w-4 h-4" aria-hidden="true" />
+    Before
   </span>
 );
 
+const AfterLabel = ({ className = "" }: { className?: string }) => (
+  <span className={`${labelClasses} text-primary ${className}`}>
+    <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
+    After
+  </span>
+);
+
+// A two-column comparison on desktop; each row stacks into a single card on
+// phones with its own Before/After labels.
 const BeforeAfter = () => {
   return (
     <section id="before-after" className="section-padding bg-background w-full">
-      <div className="max-w-6xl mx-auto w-full">
-        <SectionTitle>
-          Still Confused? Here’s what changes after 120 Minutes?
-        </SectionTitle>
-
-        {/* Desktop column headers */}
-        <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] gap-4 lg:gap-6 mb-4 text-center">
-          <ColumnLabel>BEFORE</ColumnLabel>
-          <span className="w-8" />
-          <ColumnLabel active>AFTER</ColumnLabel>
-        </div>
-
-        <div className="space-y-6 md:space-y-4">
-          {comparisons.map(({ before, after }, index) => (
-            <motion.div
-              key={before.quote}
-              className="grid md:grid-cols-[1fr_auto_1fr] items-stretch gap-2 md:gap-4 lg:gap-6"
-              {...fadeInUp}
-              transition={{ duration: 0.6, delay: index * 0.05 }}
-            >
-              {/* Before */}
-              <div className="bg-white/60 border border-primary/10 p-5 lg:p-6 flex gap-4">
-                <HelpCircle className="w-6 h-6 text-gray-400 flex-shrink-0 mt-0.5" />
-                <div style={{ fontFamily: "Poppins, sans-serif" }}>
-                  <div className="md:hidden mb-1">
-                    <ColumnLabel>BEFORE</ColumnLabel>
-                  </div>
-                  <p className="font-semibold text-gray-800 mb-1">
-                    {before.quote}
-                  </p>
-                  <p className="text-gray-600 leading-relaxed">{before.text}</p>
-                </div>
-              </div>
-
-              {/* Arrow */}
-              <div className="flex items-center justify-center">
-                <ArrowRight className="w-6 h-6 text-[#D4AF37] rotate-90 md:rotate-0" />
-              </div>
-
-              {/* After */}
-              <div className="bg-primary text-primary-foreground p-5 lg:p-6 flex gap-4 shadow-[0_8px_32px_hsl(75_35%_25%/_0.15)]">
-                <CheckCircle2 className="w-6 h-6 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-                <div style={{ fontFamily: "Poppins, sans-serif" }}>
-                  <div className="md:hidden mb-1">
-                    <span className="text-sm font-semibold tracking-[0.2em] text-[#D4AF37]">
-                      AFTER
-                    </span>
-                  </div>
-                  <p className="font-semibold text-[#D4AF37] mb-1">
-                    {after.quote}
-                  </p>
-                  <p className="text-primary-foreground/85 leading-relaxed">
-                    {after.text}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+      <div className="container-width">
+        <SectionHeader title="Still Confused? Here’s what changes after 120 Minutes?" />
 
         <motion.div
-          className="mt-12 flex justify-center"
+          className="max-w-5xl mx-auto space-y-4 md:space-y-0 md:bg-white md:border md:border-primary/10"
+          style={bodyFont}
           {...fadeInUp}
           transition={{ duration: 0.6 }}
         >
-          <CtaButton href={PRICING_ANCHOR}>I’m Ready to Learn</CtaButton>
+          {/* Desktop column headings */}
+          <div
+            className="hidden md:grid grid-cols-2 border-b border-primary/10"
+            aria-hidden="true"
+          >
+            <div className="px-8 py-4">
+              <BeforeLabel />
+            </div>
+            <div className="px-8 py-4 border-l border-primary/10">
+              <AfterLabel />
+            </div>
+          </div>
+
+          {comparisons.map(({ before, after }) => (
+            <div
+              key={before.quote}
+              className="grid md:grid-cols-2 bg-white md:bg-transparent border border-primary/10 md:border-0 md:border-b md:last:border-b-0"
+            >
+              <div className="p-5 md:px-8 md:py-6">
+                <BeforeLabel className="mb-2 md:hidden" />
+                <p className="font-semibold text-gray-800">{before.quote}</p>
+                <p className="mt-1 text-gray-600 leading-relaxed">
+                  {before.text}
+                </p>
+              </div>
+              <div className="p-5 md:px-8 md:py-6 border-t md:border-t-0 md:border-l border-primary/10">
+                <AfterLabel className="mb-2 md:hidden" />
+                <p className="font-semibold text-primary">{after.quote}</p>
+                <p className="mt-1 text-gray-700 leading-relaxed">
+                  {after.text}
+                </p>
+              </div>
+            </div>
+          ))}
         </motion.div>
+
+        <div className="mt-10 flex justify-center">
+          <CtaButton href={PRICING_ANCHOR}>I’m Ready to Learn</CtaButton>
+        </div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
-import { fadeInUp } from "./constants";
-import { SectionTitle } from "./shared";
+import { bodyFont, fadeInUp } from "./constants";
+import { SectionHeader } from "./shared";
 
 const outcomes = [
   "Protect your Business License & Eliminate Statutory Risk",
@@ -14,31 +14,30 @@ const outcomes = [
 
 const KeyOutcomes = () => {
   return (
-    <section
-      id="outcomes"
-      className="section-padding bg-gradient-to-b from-[hsl(40_25%_96%)] to-[hsl(45_35%_88%)] w-full"
-    >
+    <section id="outcomes" className="section-padding bg-background w-full">
       <div className="container-width">
-        <SectionTitle>Key Outcomes & Benefits</SectionTitle>
+        <SectionHeader title="Key Outcomes & Benefits" />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {outcomes.map((outcome, index) => (
-            <motion.div
-              key={outcome}
-              className="flex items-start gap-4 bg-white/60 border-l-4 border-primary shadow-[0_4px_20px_hsl(75_35%_25%/_0.08)] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_hsl(75_35%_25%/_0.12)]"
-              {...fadeInUp}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <CheckCircle2 className="w-7 h-7 text-primary flex-shrink-0 mt-0.5" />
-              <p
-                className="text-gray-800 text-lg font-medium leading-snug"
-                style={{ fontFamily: "Poppins, sans-serif" }}
+        <motion.ul
+          className="max-w-5xl mx-auto bg-white border border-primary/10 p-6 md:p-10 grid md:grid-cols-2 gap-x-12 gap-y-6"
+          {...fadeInUp}
+          transition={{ duration: 0.6 }}
+        >
+          {outcomes.map((outcome) => (
+            <li key={outcome} className="flex items-start gap-4">
+              <CheckCircle2
+                className="w-6 h-6 text-primary flex-shrink-0 mt-0.5"
+                aria-hidden="true"
+              />
+              <span
+                className="text-lg font-medium text-gray-800 leading-snug"
+                style={bodyFont}
               >
                 {outcome}
-              </p>
-            </motion.div>
+              </span>
+            </li>
           ))}
-        </div>
+        </motion.ul>
       </div>
     </section>
   );

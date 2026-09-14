@@ -1,4 +1,4 @@
-// WhatsApp number listed in the site footer. Swap REGISTRATION_URL for a
+// WhatsApp number listed in the site footer. Swap registrationUrl for a
 // payment/registration link once one is available.
 const WHATSAPP_NUMBER = "917603892152";
 
@@ -9,9 +9,15 @@ export const CONSULTATION_URL = whatsappLink(
   "Hi Anne, I'd like to book a free POSH consultation.",
 );
 
-export const REGISTRATION_URL = whatsappLink(
-  "Hi Anne, I'd like to secure my seat for the 120-minute POSH workshop.",
-);
+export const registrationUrl = (seats: number) =>
+  whatsappLink(
+    `Hi Anne, I'd like to secure ${seats === 1 ? "1 seat" : `${seats} seats`} for the 120-minute POSH workshop.`,
+  );
+
+export const PLANS = [
+  { seats: 1, price: "₹700", label: "for 1" },
+  { seats: 2, price: "₹1,499", label: "for 2" },
+];
 
 // Anchor of the pricing section that the in-page enrolment CTAs scroll to.
 export const PRICING_ANCHOR = "#pricing";
@@ -29,3 +35,5 @@ export const fadeInUp = {
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-50px" },
 };
+
+export const bodyFont = { fontFamily: "Poppins, sans-serif" };

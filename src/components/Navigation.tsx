@@ -17,7 +17,14 @@ const defaultLinks: NavLink[] = [
   { label: "Contact", href: "#contact" },
 ];
 
-const Navigation = ({ links = defaultLinks }: { links?: NavLink[] }) => {
+const Navigation = ({
+  links = defaultLinks,
+  cta,
+}: {
+  links?: NavLink[];
+  // Optional highlighted action shown after the links on desktop
+  cta?: NavLink;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { isOverContrastSection } = useNavBackground();
 
@@ -37,6 +44,10 @@ const Navigation = ({ links = defaultLinks }: { links?: NavLink[] }) => {
   const mobileButtonClasses = isOverContrastSection
     ? "text-foreground hover:text-primary hover:bg-primary/10"
     : "text-white hover:text-nav-hover hover:bg-white/10";
+
+  const ctaClasses = isOverContrastSection
+    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+    : "bg-white text-primary hover:bg-white/90";
 
   return (
     <nav
@@ -65,6 +76,14 @@ const Navigation = ({ links = defaultLinks }: { links?: NavLink[] }) => {
                   {link.label}
                 </a>
               ))}
+              {cta && (
+                <a
+                  href={cta.href}
+                  className={`${ctaClasses} text-sm font-semibold uppercase tracking-wider px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
+                >
+                  {cta.label}
+                </a>
+              )}
             </div>
 
             {/* Social Icons */}

@@ -5,8 +5,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { fadeInUp } from "./constants";
-import { SectionTitle } from "./shared";
+import { bodyFont, fadeInUp } from "./constants";
+import { SectionHeader } from "./shared";
 
 const faqs = [
   {
@@ -27,30 +27,29 @@ const PoshFaqs = () => {
   return (
     <section id="faqs" className="section-padding bg-background w-full">
       <div className="max-w-3xl mx-auto">
-        <SectionTitle>FAQs</SectionTitle>
+        <SectionHeader title="FAQs" />
 
         <motion.div {...fadeInUp} transition={{ duration: 0.6 }}>
           <Accordion
-            type="single"
-            collapsible
-            defaultValue="item-0"
-            className="space-y-4"
+            type="multiple"
+            defaultValue={["item-0"]}
+            className="space-y-3"
           >
             {faqs.map((faq, index) => (
               <AccordionItem
                 key={faq.question}
                 value={`item-${index}`}
-                className="bg-white/60 border border-primary/10 px-6 shadow-[0_4px_20px_hsl(75_35%_25%/_0.08)]"
+                className="bg-white border border-primary/10 px-5 md:px-6"
               >
                 <AccordionTrigger
-                  className="text-left text-lg font-bold text-primary hover:no-underline py-5"
+                  className="min-h-[56px] text-left text-lg font-bold text-primary hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   style={{ fontFamily: "Vinila, Inter, sans-serif" }}
                 >
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent
                   className="text-base text-gray-600 leading-relaxed pb-5"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
+                  style={bodyFont}
                 >
                   {faq.answer}
                 </AccordionContent>

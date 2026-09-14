@@ -5,50 +5,13 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { fadeInUp } from "./constants";
 
-export const SectionTitle = ({
-  children,
-  className,
-  light = false,
-}: {
-  children: ReactNode;
-  className?: string;
-  light?: boolean;
-}) => (
-  <motion.h2
-    className={cn(
-      "text-2xl sm:text-[2.5rem] font-normal section-header-spacing text-center leading-tight tracking-wider",
-      light && "text-primary-foreground",
-      className,
-    )}
-    style={{
-      fontFamily: "Vinila, Inter, sans-serif",
-      letterSpacing: "0.01em",
-      fontWeight: "700",
-    }}
-    {...fadeInUp}
-    transition={{ duration: 0.8 }}
-  >
-    {children}
-  </motion.h2>
-);
-
-type CtaVariant = "primary" | "gold";
-
-const ctaVariants: Record<CtaVariant, string> = {
-  primary:
-    "bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg",
-  gold: "bg-[#D4AF37] hover:bg-[#B8941F] text-primary shadow-md hover:shadow-lg",
-};
-
 export const CtaButton = ({
   href,
   children,
-  variant = "primary",
   className,
 }: {
   href: string;
   children: ReactNode;
-  variant?: CtaVariant;
   className?: string;
 }) => {
   const isExternal = href.startsWith("http");
@@ -58,8 +21,8 @@ export const CtaButton = ({
       asChild
       size="lg"
       className={cn(
-        "text-base px-8 py-4 h-auto whitespace-normal text-center",
-        ctaVariants[variant],
+        "text-base px-8 py-4 h-auto min-h-[48px] whitespace-normal text-center",
+        "bg-primary hover:bg-primary/90 text-primary-foreground",
         className,
       )}
       style={{ fontFamily: "Poppins, sans-serif" }}
@@ -69,8 +32,35 @@ export const CtaButton = ({
         {...(isExternal && { target: "_blank", rel: "noopener noreferrer" })}
       >
         {children}
-        <ArrowRight className="w-5 h-5" />
+        <ArrowRight className="w-5 h-5" aria-hidden="true" />
       </a>
     </Button>
   );
 };
+
+// Centered section heading used by the reading-focused (non-bento) sections,
+// matching the home page section titles.
+export const SectionHeader = ({
+  title,
+  children,
+}: {
+  title: ReactNode;
+  children?: ReactNode;
+}) => (
+  <motion.div
+    className="text-center max-w-3xl mx-auto section-header-spacing"
+    {...fadeInUp}
+    transition={{ duration: 0.6 }}
+  >
+    <h2
+      className="text-2xl sm:text-[2.5rem] font-bold leading-tight text-foreground"
+      style={{
+        fontFamily: "Vinila, Inter, sans-serif",
+        letterSpacing: "0.01em",
+      }}
+    >
+      {title}
+    </h2>
+    {children && <div className="mt-5">{children}</div>}
+  </motion.div>
+);

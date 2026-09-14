@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
 import { Briefcase, Building2, Crown, Rocket } from "lucide-react";
-import { PRICING_ANCHOR, fadeInUp, goldGradientText } from "./constants";
-import { CtaButton, SectionTitle } from "./shared";
+import { BentoGrid, Tile, TileHeading } from "./bento";
+import { PRICING_ANCHOR, bodyFont } from "./constants";
+import { CtaButton } from "./shared";
 
 const audiences = [
   {
@@ -30,66 +30,59 @@ const audiences = [
   },
 ];
 
+const RoleTile = ({
+  audience,
+  index,
+}: {
+  audience: (typeof audiences)[number];
+  index: number;
+}) => {
+  const Icon = audience.icon;
+
+  return (
+    <Tile
+      index={index}
+      className="sm:col-span-1 md:col-span-3 lg:col-span-3 flex flex-col gap-4"
+    >
+      <span className="w-11 h-11 rounded-2xl border border-primary/15 flex items-center justify-center">
+        <Icon className="w-5 h-5 text-primary" aria-hidden="true" />
+      </span>
+      <h3
+        className="text-xl font-bold text-foreground"
+        style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+      >
+        {audience.role}
+      </h3>
+      <p className="text-gray-600 leading-relaxed" style={bodyFont}>
+        {audience.description}
+      </p>
+    </Tile>
+  );
+};
+
 const WhoIsItFor = () => {
   return (
-    <section
-      id="audience"
-      data-nav-contrast
-      className="section-padding bg-primary text-primary-foreground w-full"
-    >
-      <div className="container-width">
-        <SectionTitle light>
-          This Masterclass Is For You{" "}
-          <span style={goldGradientText}>If You Are A...</span>
-        </SectionTitle>
+    <BentoGrid id="audience" className="pt-4 md:pt-8 pb-12 md:pb-16">
+      <Tile className="md:col-span-6 lg:col-span-6 flex items-end min-h-[180px]">
+        <TileHeading className="text-foreground">
+          This Masterclass Is For You If You Are A...
+        </TileHeading>
+      </Tile>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {audiences.map((audience, index) => {
-            const Icon = audience.icon;
-            return (
-              <motion.div
-                key={audience.role}
-                className="bg-white/5 backdrop-blur-sm border border-white/15 p-6 lg:p-8 text-center transition-all duration-300 hover:bg-white/10 hover:-translate-y-2"
-                {...fadeInUp}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <div className="w-16 h-16 bg-[#D4AF37]/15 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                  <Icon className="w-8 h-8 text-[#D4AF37]" />
-                </div>
-                <h3
-                  className="text-xl font-bold mb-3 text-[#D4AF37]"
-                  style={{ fontFamily: "Vinila, Inter, sans-serif" }}
-                >
-                  {audience.role}
-                </h3>
-                <p
-                  className="text-primary-foreground/80 leading-relaxed"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  {audience.description}
-                </p>
-              </motion.div>
-            );
-          })}
-        </div>
+      {audiences.map((audience, index) => (
+        <RoleTile key={audience.role} audience={audience} index={index + 1} />
+      ))}
 
-        <motion.div
-          className="mt-12 flex flex-col items-center gap-3 text-center"
-          {...fadeInUp}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <CtaButton href={PRICING_ANCHOR} variant="gold">
-            Become a POSH Expert
-          </CtaButton>
-          <p
-            className="text-primary-foreground/80 text-sm"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            Get Free Consultation after Workshop
-          </p>
-        </motion.div>
-      </div>
-    </section>
+      <Tile
+        index={5}
+        className="md:col-span-6 lg:col-span-6 flex flex-col justify-center items-start gap-3"
+      >
+        <CtaButton href={PRICING_ANCHOR}>Become a POSH Expert</CtaButton>
+        <p className="text-gray-600" style={bodyFont}>
+          Get Free Consultation after Workshop
+        </p>
+      </Tile>
+    </BentoGrid>
   );
 };
 

@@ -1,30 +1,47 @@
 import { motion } from "framer-motion";
+import {
+  Compass,
+  HeartHandshake,
+  Presentation,
+  ShieldCheck,
+  UsersRound,
+} from "lucide-react";
 import anne from "@/assets/anne.svg";
-import { fadeInUp } from "./constants";
-import { SectionTitle } from "./shared";
+import { bodyFont, fadeInUp } from "./constants";
+
+const credentials = [
+  "Certified POSH & POCSO Coach",
+  "Leadership Coach",
+  "Soft-Skills Trainer",
+];
 
 const expertise = [
   {
+    icon: ShieldCheck,
     title: "POSH Compliance & Workplace Safety",
     description:
       "Building awareness of statutory requirements, organisational responsibilities and appropriate workplace processes.",
   },
   {
+    icon: UsersRound,
     title: "Internal Committee Awareness",
     description:
       "Helping organisations understand the importance of effective IC structure, roles and responsibilities.",
   },
   {
+    icon: Compass,
     title: "Leadership & People Management",
     description:
       "Enabling leaders to navigate workplace situations with clarity, fairness and accountability.",
   },
   {
+    icon: HeartHandshake,
     title: "POCSO Awareness",
     description:
       "Supporting organisations and institutions in understanding their responsibilities towards child safety and protection.",
   },
   {
+    icon: Presentation,
     title: "Corporate Training & Facilitation",
     description:
       "Delivering structured, practical learning experiences for leaders, professionals and teams.",
@@ -32,72 +49,69 @@ const expertise = [
 ];
 
 const paragraphClasses = "text-lg text-gray-600 leading-relaxed";
-const bodyFont = { fontFamily: "Poppins, sans-serif" };
 
 const Facilitator = () => {
   return (
-    <section
-      id="facilitator"
-      className="section-padding bg-gradient-to-b from-[hsl(40_25%_96%)] to-[hsl(45_35%_88%)] w-full"
-    >
-      <div className="container-width">
-        <SectionTitle>Meet Your Facilitator</SectionTitle>
+    <section id="facilitator" className="section-padding bg-background w-full">
+      <div className="container-width grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        {/* Photo - space reserved with aspect ratio so the page doesn't jump */}
+        <motion.div
+          className="lg:col-span-5 lg:sticky lg:top-24"
+          {...fadeInUp}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="relative aspect-[4/5] max-h-[560px] lg:max-h-none w-full overflow-hidden border border-primary/10">
+            <img
+              src={anne}
+              alt="Anne Anshumathi Raj, Founder of MpowHR"
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover object-top"
+            />
+          </div>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-5 grid-spacing items-start">
-          {/* Image */}
-          <motion.div
-            className="lg:col-span-2 lg:sticky lg:top-24 relative"
-            {...fadeInUp}
-            transition={{ duration: 0.8 }}
+        <motion.div
+          className="lg:col-span-7"
+          {...fadeInUp}
+          transition={{ duration: 0.8, delay: 0.15 }}
+        >
+          <h2
+            className="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-primary/80"
+            style={bodyFont}
           >
-            <div className="overflow-hidden shadow-[0_8px_32px_hsl(75_35%_25%/_0.15)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_8px_30px_hsl(75_35%_25%/_0.12)]">
-              <img
-                src={anne}
-                alt="Anne Anshumathi Raj, Founder of MpowHR"
-                loading="lazy"
-                className="w-full h-[480px] lg:h-[640px] object-cover object-top"
-              />
-            </div>
-
-            {/* Background Elements */}
-            <div className="absolute -top-8 -right-8 w-32 h-32 bg-accent/20 rounded-full blur-3xl -z-10"></div>
-            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10"></div>
-          </motion.div>
-
-          {/* Content */}
-          <motion.div
-            className="lg:col-span-3 space-y-6"
-            {...fadeInUp}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            Meet Your Facilitator
+          </h2>
+          <h3
+            className="mt-3 text-3xl md:text-[2.5rem] font-bold text-primary leading-tight"
+            style={{ fontFamily: "Vinila, Inter, sans-serif" }}
           >
-            <div>
-              <h3
-                className="text-3xl md:text-4xl font-bold text-primary mb-2"
-                style={{ fontFamily: "Vinila, Inter, sans-serif" }}
-              >
-                Anne Anshumathi Raj
-              </h3>
-              <p
-                className="text-base md:text-lg font-medium text-[#8B6914]"
+            Anne Anshumathi Raj
+          </h3>
+          <ul className="mt-4 flex flex-wrap gap-2" aria-label="Credentials">
+            {credentials.map((credential) => (
+              <li
+                key={credential}
+                className="bg-white border border-primary/20 text-primary px-3 py-1.5 text-sm font-medium"
                 style={bodyFont}
               >
-                Certified POSH & POCSO Coach | Leadership Coach | Soft-Skills
-                Trainer
-              </p>
-            </div>
+                {credential}
+              </li>
+            ))}
+          </ul>
 
-            <p className={paragraphClasses} style={bodyFont}>
+          <div className="mt-8 space-y-5 max-w-prose" style={bodyFont}>
+            <p className={paragraphClasses}>
               Anne Anshumathi Raj is the Founder of MpowHR, with over 15 years
               of professional experience across people management, leadership
               development, behavioural skills and corporate training.
             </p>
-            <p className={paragraphClasses} style={bodyFont}>
+            <p className={paragraphClasses}>
               A Certified POSH and POCSO Coach, Anne specialises in helping
               organisations and leaders develop a clear understanding of
               workplace safety, statutory responsibilities and responsible
               organisational practices.
             </p>
-            <p className={paragraphClasses} style={bodyFont}>
+            <p className={paragraphClasses}>
               Her experience as a Senior People Manager and Entrepreneur gives
               her a practical perspective on the intersection of people, policy
               and business. She brings this perspective into her POSH sessions,
@@ -105,46 +119,46 @@ const Facilitator = () => {
               practical insights that leaders can apply within their
               organisations.
             </p>
+          </div>
 
-            <div className="bg-white/60 border border-primary/10 p-6 lg:p-8">
-              <h4
-                className="text-xl font-bold text-primary mb-5"
-                style={{ fontFamily: "Vinila, Inter, sans-serif" }}
-              >
-                Areas of Expertise
-              </h4>
-              <ul className="space-y-4">
-                {expertise.map((area) => (
-                  <li
-                    key={area.title}
-                    className="flex items-start gap-3 text-gray-600 leading-relaxed"
-                    style={bodyFont}
-                  >
-                    <span className="text-primary flex-shrink-0">●</span>
-                    <span>
-                      <span className="font-semibold text-gray-800">
-                        {area.title}
-                      </span>{" "}
-                      – {area.description}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="mt-10 bg-white border border-primary/10 p-6 md:p-8">
+            <h4
+              className="text-xl font-bold text-primary mb-6"
+              style={{ fontFamily: "Vinila, Inter, sans-serif" }}
+            >
+              Areas of Expertise
+            </h4>
+            <ul className="space-y-6" style={bodyFont}>
+              {expertise.map(({ icon: Icon, title, description }) => (
+                <li key={title} className="flex items-start gap-4">
+                  <span className="w-11 h-11 rounded-2xl border border-primary/15 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-primary" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-gray-900">{title}</p>
+                    <p className="mt-1 text-gray-600 leading-relaxed">
+                      {description}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <p className={paragraphClasses} style={bodyFont}>
+          <div className="mt-10 space-y-5 max-w-prose" style={bodyFont}>
+            <p className={paragraphClasses}>
               Anne's approach combines industry experience, structured learning
               and practical application, enabling participants to understand not
               only what the law requires, but also how responsible leadership
               can translate those requirements into action.
             </p>
-            <p className={paragraphClasses} style={bodyFont}>
+            <p className={paragraphClasses}>
               Through her work, she continues to help organisations strengthen
               their people practices, build awareness and foster workplaces
               founded on safety, dignity, accountability and trust.
             </p>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

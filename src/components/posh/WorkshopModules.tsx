@@ -1,91 +1,122 @@
 import { motion } from "framer-motion";
-import {
-  Award,
-  BookOpen,
-  Scale,
-  ShieldCheck,
-  Timer,
-  UsersRound,
-} from "lucide-react";
-import { fadeInUp } from "./constants";
-import { SectionTitle } from "./shared";
+import { Award, Clock, Radio } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { bodyFont } from "./constants";
+import { SectionHeader } from "./shared";
 
 const modules = [
   {
-    icon: Scale,
     title: "The Business Owner's Legal Exposure",
     detail: "Statutory Mandate & Fines",
   },
   {
-    icon: BookOpen,
     title: "Complete Gist of the POSH Act",
     detail: "Scope, Definitions & Extended Workplace",
   },
   {
-    icon: UsersRound,
     title: "IC Setup, Mandatory Compliances & Role of the External Member",
   },
   {
-    icon: Timer,
     title: "Inquiry Procedures, Timelines, Filing Windows & Conciliation",
   },
   {
-    icon: ShieldCheck,
     title: "De-risking Leadership",
     detail: "Section 14 & False Allegation Shields",
   },
   {
-    icon: Award,
     title: "Executive Assessment, Live Q&A, Certification",
   },
 ];
+
+// Quick facts drawn from the workshop details elsewhere on the page.
+const facts = [
+  { icon: Clock, label: "120 minutes" },
+  { icon: Radio, label: "Live Workshop" },
+  { icon: Award, label: "Certificate" },
+];
+
+// On desktop the list flows down two columns (1–3, then 4–6).
+const COLUMN_BREAK = 2;
 
 const WorkshopModules = () => {
   return (
     <section id="modules" className="section-padding bg-background w-full">
       <div className="container-width">
-        <SectionTitle>What will you learn in this Workshop?</SectionTitle>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {modules.map((module, index) => {
-            const Icon = module.icon;
-            return (
-              <motion.div
-                key={module.title}
-                className="bg-[hsl(40_25%_96%/0.9)] backdrop-blur-lg border border-primary/10 shadow-[0_8px_32px_hsl(75_35%_25%/_0.15)] p-6 lg:p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_8px_30px_hsl(75_35%_25%/_0.12)] flex flex-col"
-                {...fadeInUp}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+        <SectionHeader title="What will you learn in this Workshop?">
+          <ul
+            className="flex flex-wrap justify-center gap-3"
+            aria-label="Workshop format"
+          >
+            {facts.map(({ icon: Icon, label }) => (
+              <li
+                key={label}
+                className="inline-flex items-center gap-2 bg-white border border-primary/15 text-gray-700 px-4 py-2 text-sm font-medium"
+                style={bodyFont}
               >
-                <div className="flex items-center justify-between mb-5">
-                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center">
-                    <Icon className="w-7 h-7 text-primary" />
-                  </div>
-                  <span
-                    className="text-sm font-medium text-primary tracking-wider"
-                    style={{ fontFamily: "Poppins, sans-serif" }}
-                  >
-                    MODULE {index + 1}
-                  </span>
-                </div>
+                <Icon className="w-4 h-4 text-primary" aria-hidden="true" />
+                {label}
+              </li>
+            ))}
+          </ul>
+        </SectionHeader>
 
+        <ol className="max-w-5xl mx-auto bg-white border border-primary/10 p-6 md:p-10 grid lg:grid-cols-2 lg:grid-rows-3 lg:grid-flow-col gap-x-14">
+          {modules.map((module, index) => {
+            const isLast = index === modules.length - 1;
+            const endsColumn = index === COLUMN_BREAK;
+
+            return (
+              <motion.li
+                key={module.title}
+                className={cn(
+                  "relative pl-16",
+                  isLast ? "pb-0" : "pb-8",
+                  endsColumn && "lg:pb-0",
+                )}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: index * 0.06 }}
+              >
+                {/* Timeline connector */}
+                {!isLast && (
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "absolute left-[1.375rem] top-12 bottom-1 w-px bg-primary/15",
+                      endsColumn && "lg:hidden",
+                    )}
+                  />
+                )}
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 top-0 w-11 h-11 rounded-full bg-white border border-primary/25 text-primary flex items-center justify-center text-lg font-semibold"
+                  style={bodyFont}
+                >
+                  {index + 1}
+                </span>
+
+                <p
+                  className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/70 pt-0.5"
+                  style={bodyFont}
+                >
+                  Module {index + 1}
+                </p>
                 <h3
-                  className="text-lg lg:text-xl font-bold leading-snug"
+                  className="mt-1 text-lg md:text-xl font-bold text-foreground leading-snug"
                   style={{ fontFamily: "Vinila, Inter, sans-serif" }}
                 >
                   {module.title}
                 </h3>
                 {module.detail && (
-                  <p
-                    className="text-gray-600 text-sm mt-2 leading-relaxed"
-                    style={{ fontFamily: "Poppins, sans-serif" }}
-                  >
-                    ({module.detail})
+                  <p className="mt-1 text-base text-gray-600" style={bodyFont}>
+                    {module.detail}
                   </p>
                 )}
-              </motion.div>
+              </motion.li>
             );
           })}
-        </div>
+        </ol>
       </div>
     </section>
   );
