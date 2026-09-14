@@ -7,7 +7,7 @@ interface CounterProps {
   target: number;
 }
 
-const AnimatedCounter = ({ target }: CounterProps) => {
+export const AnimatedCounter = ({ target }: CounterProps) => {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {

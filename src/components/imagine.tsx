@@ -55,6 +55,7 @@ export default function Imagine() {
   return (
     <motion.div
       id="imagine-section"
+      data-nav-contrast
       ref={ref}
       className="bg-primary text-primary-foreground w-full min-h-[85vh] flex flex-col items-center justify-center px-4 py-16"
       initial={{ opacity: 0 }}

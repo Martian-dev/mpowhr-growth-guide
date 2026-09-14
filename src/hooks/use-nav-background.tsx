@@ -1,29 +1,20 @@
 import { useState, useEffect } from "react";
 
+// Sections marked with `data-nav-contrast` have a dark green background, so the
+// navigation switches to its light variant while scrolling over them.
 export const useNavBackground = () => {
-  const [isInImagineSection, setIsInImagineSection] = useState(false);
-  const [isInTaglineSection, setIsInTaglineSection] = useState(false);
+  const [isOverContrastSection, setIsOverContrastSection] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const imagineSection = document.getElementById("imagine-section");
-      const taglineSection = document.getElementById("tagline-section");
       const navHeight = 80; // Approximate navigation height
+      const sections = document.querySelectorAll("[data-nav-contrast]");
 
-      // Check if in imagine section
-      if (imagineSection) {
-        const rect = imagineSection.getBoundingClientRect();
-        const isVisible = rect.top <= navHeight && rect.bottom >= navHeight;
-        setIsInImagineSection(isVisible);
-      }
-
-      // Check if currently in tagline section (not past it)
-      if (taglineSection) {
-        const rect = taglineSection.getBoundingClientRect();
-        // We're in tagline if the top has passed nav but bottom hasn't passed nav yet
-        const isInSection = rect.top <= navHeight && rect.bottom >= navHeight;
-        setIsInTaglineSection(isInSection);
-      }
+      const isOver = Array.from(sections).some((section) => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= navHeight && rect.bottom >= navHeight;
+      });
+      setIsOverContrastSection(isOver);
     };
 
     // Add scroll listener
@@ -36,5 +27,5 @@ export const useNavBackground = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return { isInImagineSection, isInTaglineSection };
+  return { isOverContrastSection };
 };
