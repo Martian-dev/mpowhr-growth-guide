@@ -1,0 +1,134 @@
+import { createHmac, timingSafeEqual } from "node:crypto";
+
+const PLAN_AMOUNTS = new Set([70000, 149900]);
+
+type RazorpayPayment = {
+  order_id?: unknown;
+  status?: unknown;
+  currency?: unknown;
+  amount?: unknown;
+};
+
+type RazorpayOrder = {
+  id?: unknown;
+  currency?: unknown;
+  amount?: unknown;
+  notes?: { product?: unknown };
+};
+
+// Vercel function: confirms a Checkout response by checking its signature and
+// then confirming the matching Razorpay order and captured payment.
+
+export async function POST(request: Request) {
+  const keyId = process.env.RAZORPAY_KEY_ID;
+  const keySecret = process.env.RAZORPAY_KEY_SECRET;
+  if (!keyId || !keySecret) {
+    return Response.json(
+      { error: "Payments are not configured yet." },
+      { status: 500 },
+    );
+  }
+
+  const raw = await request.text().catch(() => "");
+  if (raw.length > 10_000) {
+    return Response.json({ verified: false }, { status: 400 });
+  }
+
+  let body: unknown;
+  try {
+    body = JSON.parse(raw) as unknown;
+  } catch {
+    return Response.json({ verified: false }, { status: 400 });
+  }
+
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return Response.json({ verified: false }, { status: 400 });
+  }
+
+  const payload = body as Record<string, unknown>;
+  const orderId = payload.razorpay_order_id;
+  const paymentId = payload.razorpay_payment_id;
+  const signature = payload.razorpay_signature;
+
+  if (
+    typeof orderId !== "string" ||
+    typeof paymentId !== "string" ||
+    typeof signature !== "string"
+  ) {
+    return Response.json({ verified: false }, { status: 400 });
+  }
+
+  const expected = createHmac("sha256", keySecret)
+    .update(`${orderId}|${paymentId}`)
+    .digest("hex");
+
+  const verified =
+    expected.length === signature.length &&
+    timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+
+  if (!verified) {
+    return Response.json({ verified: false }, { status: 400 });
+  }
+
+  const authorization = `Basic ${Buffer.from(`${keyId}:${keySecret}`).toString(
+    "base64",
+  )}`;
+  let paymentResponse: Response;
+  let orderResponse: Response;
+  try {
+    [paymentResponse, orderResponse] = await Promise.all([
+      fetch(
+        `https://api.razorpay.com/v1/payments/${encodeURIComponent(paymentId)}`,
+        { headers: { Authorization: authorization } },
+      ),
+      fetch(`https://api.razorpay.com/v1/orders/${encodeURIComponent(orderId)}`, {
+        headers: { Authorization: authorization },
+      }),
+    ]);
+  } catch {
+    return Response.json(
+      { verified: false, error: "Payment status could not be confirmed." },
+      { status: 502 },
+    );
+  }
+
+  if (!paymentResponse.ok || !orderResponse.ok) {
+    return Response.json(
+      { verified: false, error: "Payment status could not be confirmed." },
+      { status: 502 },
+    );
+  }
+
+  let payment: RazorpayPayment;
+  let order: RazorpayOrder;
+  try {
+    [payment, order] = await Promise.all([
+      paymentResponse.json(),
+      orderResponse.json(),
+    ]);
+  } catch {
+    return Response.json(
+      { verified: false, error: "Payment status could not be confirmed." },
+      { status: 502 },
+    );
+  }
+  const capturedPayment =
+    payment?.order_id === orderId &&
+    payment?.status === "captured" &&
+    payment?.currency === "INR" &&
+    PLAN_AMOUNTS.has(payment?.amount);
+  const expectedOrder =
+    order?.id === orderId &&
+    order?.currency === "INR" &&
+    PLAN_AMOUNTS.has(order?.amount) &&
+    order?.notes?.product === "POSH Workshop";
+
+  if (!capturedPayment || !expectedOrder || payment.amount !== order.amount) {
+    return Response.json(
+      { verified: false, error: "Payment status could not be confirmed." },
+      { status: 400 },
+    );
+  }
+
+  return Response.json({ verified: true, paymentId });
+}

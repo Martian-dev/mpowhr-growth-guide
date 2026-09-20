@@ -1,5 +1,5 @@
-// WhatsApp number listed in the site footer. Swap registrationUrl for a
-// payment/registration link once one is available.
+// WhatsApp number listed in the site footer. Seats are paid for through
+// Razorpay (see BookingDialog); WhatsApp stays as an alternative way to book.
 const WHATSAPP_NUMBER = "917603892152";
 
 const whatsappLink = (message: string) =>
@@ -14,6 +14,7 @@ export const registrationUrl = (seats: number) =>
     `Hi Anne, I'd like to secure ${seats === 1 ? "1 seat" : `${seats} seats`} for the 120-minute POSH workshop.`,
   );
 
+// Prices charged are set server-side in api/razorpay/order.ts; keep them in sync.
 export const PLANS = [
   { seats: 1, price: "₹700", label: "for 1" },
   { seats: 2, price: "₹1,499", label: "for 2" },

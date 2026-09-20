@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Gift } from "lucide-react";
+import { ArrowRight, Check, Gift } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PLANS, bodyFont, headingFont, registrationUrl } from "./constants";
-import { CtaButton, Highlight } from "./shared";
+import { Highlight } from "./shared";
+import BookingDialog from "./BookingDialog";
 
 // Everything a seat includes, as described in the modules, Before/After section
 // and FAQs.
@@ -17,6 +19,7 @@ const included = [
 
 const Pricing = () => {
   const [seats, setSeats] = useState(PLANS[0].seats);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
     <section
@@ -134,15 +137,32 @@ const Pricing = () => {
             </div>
           </fieldset>
 
-          <CtaButton
-            href={registrationUrl(seats)}
-            className="mt-6 w-full text-lg"
+          <Button
+            type="button"
+            size="lg"
+            onClick={() => setIsBookingOpen(true)}
+            className="mt-6 w-full text-lg px-8 py-4 h-auto min-h-[48px] whitespace-normal bg-primary hover:bg-primary/90 text-primary-foreground"
           >
             Secure your Seat
-          </CtaButton>
+            <ArrowRight className="w-5 h-5" aria-hidden="true" />
+          </Button>
           <p className="mt-3 text-center text-sm text-slate-500">
-            You’ll continue on WhatsApp to confirm your booking.
+            Pay securely online with Razorpay, or{" "}
+            <a
+              href={registrationUrl(seats)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground underline decoration-[#D4AF37] underline-offset-4 hover:decoration-[#8B6914]"
+            >
+              book on WhatsApp
+            </a>
+            .
           </p>
+          <BookingDialog
+            seats={seats}
+            open={isBookingOpen}
+            onOpenChange={setIsBookingOpen}
+          />
         </motion.div>
       </div>
     </section>
