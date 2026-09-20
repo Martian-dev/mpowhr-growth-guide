@@ -145,7 +145,7 @@ const Impact = () => {
         </motion.div>{" "}
       </motion.div>
 
-      <style jsx>{`
+      <style>{`
         .scrolling-wrapper {
           animation: scroll 40s linear infinite;
         }

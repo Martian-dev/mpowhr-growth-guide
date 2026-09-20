@@ -3,6 +3,13 @@
 // Needs RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in the Vercel project env.
 
 import { randomUUID } from "node:crypto";
+import {
+  allowOrderRequest,
+  attachOrder,
+  cancelRegistration,
+  isRegistrationStoreConfigured,
+  reserveRegistration,
+} from "./db";
 
 // Amounts in paise. Keep in sync with PLANS in src/components/posh/constants.ts.
 const PLAN_AMOUNTS: Record<number, number> = {
@@ -68,6 +75,37 @@ export async function POST(request: Request) {
     );
   }
 
+  if (!isRegistrationStoreConfigured()) {
+    return Response.json(
+      { error: "Registration storage is not configured yet." },
+      { status: 500 },
+    );
+  }
+
+  if (!(await allowOrderRequest(request))) {
+    return Response.json(
+      { error: "Too many payment attempts. Please wait a few minutes and try again." },
+      { status: 429 },
+    );
+  }
+
+  let registration: Awaited<ReturnType<typeof reserveRegistration>>;
+  try {
+    registration = await reserveRegistration({ seats, amount, name, email, phone });
+  } catch (error) {
+    console.error("Could not reserve POSH workshop seats", error);
+    return Response.json(
+      { error: "Could not reserve your seats. Please try again." },
+      { status: 502 },
+    );
+  }
+  if (!registration) {
+    return Response.json(
+      { error: "Those seats are no longer available. Please try another option." },
+      { status: 409 },
+    );
+  }
+
   let response: Response;
   try {
     response = await fetch("https://api.razorpay.com/v1/orders", {
@@ -81,10 +119,18 @@ export async function POST(request: Request) {
         currency: "INR",
         receipt: `posh_${Date.now()}_${randomUUID().slice(0, 8)}`,
         // Notes show up against the payment in the Razorpay dashboard
-        notes: { product: "POSH Workshop", seats: String(seats), name, email, phone },
+        notes: {
+          product: "POSH Workshop",
+          registration_id: registration.id,
+          seats: String(seats),
+          name,
+          email,
+          phone,
+        },
       }),
     });
   } catch {
+    await cancelRegistration(registration.id);
     return Response.json(
       { error: "Could not start the payment. Please try again." },
       { status: 502 },
@@ -92,6 +138,7 @@ export async function POST(request: Request) {
   }
 
   if (!response.ok) {
+    await cancelRegistration(registration.id);
     console.error("Razorpay order creation failed", await response.text());
     return Response.json(
       { error: "Could not start the payment. Please try again." },
@@ -103,6 +150,7 @@ export async function POST(request: Request) {
   try {
     order = await response.json();
   } catch {
+    await cancelRegistration(registration.id);
     return Response.json(
       { error: "Could not start the payment. Please try again." },
       { status: 502 },
@@ -113,7 +161,25 @@ export async function POST(request: Request) {
     order.amount !== amount ||
     order.currency !== "INR"
   ) {
+    await cancelRegistration(registration.id);
     console.error("Razorpay returned an unexpected order response");
+    return Response.json(
+      { error: "Could not start the payment. Please try again." },
+      { status: 502 },
+    );
+  }
+
+  try {
+    if (!(await attachOrder(registration.id, order.id))) {
+      await cancelRegistration(registration.id);
+      return Response.json(
+        { error: "Could not start the payment. Please try again." },
+        { status: 502 },
+      );
+    }
+  } catch (error) {
+    console.error("Could not attach Razorpay order to registration", error);
+    await cancelRegistration(registration.id);
     return Response.json(
       { error: "Could not start the payment. Please try again." },
       { status: 502 },

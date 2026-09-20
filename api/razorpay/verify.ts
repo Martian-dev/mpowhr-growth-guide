@@ -1,4 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { applyProcessedRefunds, findRegistrationByOrder, markPaid } from "./db";
+import { sendConfirmation } from "./email";
 
 const PLAN_AMOUNTS = new Set([70000, 149900]);
 
@@ -13,7 +15,7 @@ type RazorpayOrder = {
   id?: unknown;
   currency?: unknown;
   amount?: unknown;
-  notes?: { product?: unknown };
+  notes?: { product?: unknown; registration_id?: unknown };
 };
 
 // Vercel function: confirms a Checkout response by checking its signature and
@@ -25,6 +27,12 @@ export async function POST(request: Request) {
   if (!keyId || !keySecret) {
     return Response.json(
       { error: "Payments are not configured yet." },
+      { status: 500 },
+    );
+  }
+  if (!process.env.DATABASE_URL && !process.env.POSTGRES_URL) {
+    return Response.json(
+      { error: "Registration storage is not configured yet." },
       { status: 500 },
     );
   }
@@ -116,10 +124,12 @@ export async function POST(request: Request) {
     payment?.order_id === orderId &&
     payment?.status === "captured" &&
     payment?.currency === "INR" &&
+    typeof payment?.amount === "number" &&
     PLAN_AMOUNTS.has(payment?.amount);
   const expectedOrder =
     order?.id === orderId &&
     order?.currency === "INR" &&
+    typeof order?.amount === "number" &&
     PLAN_AMOUNTS.has(order?.amount) &&
     order?.notes?.product === "POSH Workshop";
 
@@ -128,6 +138,47 @@ export async function POST(request: Request) {
       { verified: false, error: "Payment status could not be confirmed." },
       { status: 400 },
     );
+  }
+  const paymentAmount = payment.amount as number;
+  const paymentCurrency = payment.currency as string;
+
+  let registration;
+  try {
+    registration = await findRegistrationByOrder(orderId);
+  } catch (error) {
+    console.error("Could not load POSH registration", error);
+    return Response.json(
+      { verified: false, error: "Registration could not be confirmed." },
+      { status: 502 },
+    );
+  }
+  if (
+    !registration ||
+    registration.expected_amount !== paymentAmount ||
+    registration.currency !== paymentCurrency ||
+    order.notes?.registration_id !== registration.id
+  ) {
+    return Response.json(
+      { verified: false, error: "Registration could not be confirmed." },
+      { status: 400 },
+    );
+  }
+
+  let paidRegistration = await markPaid({
+    orderId,
+    paymentId,
+    amount: paymentAmount,
+    currency: paymentCurrency,
+  });
+  if (!paidRegistration) {
+    return Response.json(
+      { verified: false, error: "Registration could not be confirmed." },
+      { status: 409 },
+    );
+  }
+  paidRegistration = (await applyProcessedRefunds(paymentId)) ?? paidRegistration;
+  if (paidRegistration.status === "paid") {
+    await sendConfirmation(paidRegistration);
   }
 
   return Response.json({ verified: true, paymentId });
