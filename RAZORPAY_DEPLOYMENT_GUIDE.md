@@ -101,11 +101,12 @@ verified for both environments.
 Create one webhook for Test Mode and one for Live Mode:
 
 ```text
-https://YOUR_PRODUCTION_DOMAIN/api/razorpay/webhook
+https://YOUR_PREVIEW_OR_PRODUCTION_DOMAIN/api/razorpay/webhook
 ```
 
-Use the same secret as that environment's `RAZORPAY_WEBHOOK_SECRET`. Subscribe
-to:
+Point the Test Mode webhook at the Preview URL you are testing and the Live
+Mode webhook at the production URL. Use the matching secret as that
+environment's `RAZORPAY_WEBHOOK_SECRET`. Subscribe to:
 
 - `payment.captured`
 - `payment.failed`
