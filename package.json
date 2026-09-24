@@ -10,6 +10,8 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "db:migrate": "bun --env-file=.env.local scripts/migrate-neon.ts",
+    "dev:vercel": "bun --env-file=.env.local scripts/vercel-dev.ts",
     "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.api.json",
     "lint": "eslint .",
     "preview": "vite preview"

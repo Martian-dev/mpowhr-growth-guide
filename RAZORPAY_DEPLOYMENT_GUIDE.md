@@ -48,20 +48,18 @@ this local test.
 
 2. Run [`db/001_posh_registrations.sql`](db/001_posh_registrations.sql) once
    in the SQL editor for the Neon database referenced by `DATABASE_URL`.
-   If `psql` is installed, this does the same thing:
+   Or run the bundled command, which reads the connection string safely from
+   `.env.local`:
 
    ```bash
-   set -a
-   source .env.local
-   set +a
-   psql "$DATABASE_URL" -f db/001_posh_registrations.sql
+   bun run db:migrate
    ```
 
 3. Start the app through Vercel's local runtime so the `/api/razorpay/*`
    functions run alongside Vite:
 
    ```bash
-   bunx vercel dev --listen 8080
+   bun run dev:vercel
    ```
 
    Link the directory if the CLI asks. If you prefer to keep secrets in Vercel
