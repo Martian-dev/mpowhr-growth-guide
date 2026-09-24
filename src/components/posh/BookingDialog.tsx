@@ -97,7 +97,7 @@ const BookingDialog = ({
             </DialogTitle>
             <DialogDescription className="mt-3 text-base text-slate-600">
               Your {seatLabel} for the POSH workshop {seats === 1 ? "is" : "are"}{" "}
-              confirmed. We’ll share the workshop details with you at {details.email}.
+              confirmed. We’ll share the workshop details with you separately.
             </DialogDescription>
             <p className="mt-4 text-xs text-slate-500">
               Payment ID: {paymentId}

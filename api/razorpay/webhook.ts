@@ -9,7 +9,7 @@ import {
   updateWebhookRegistration,
   type Registration,
 } from "./db";
-import { sendConfirmation } from "./email";
+import { isConfirmationEmailConfigured, sendConfirmation } from "./email";
 
 type WebhookPayload = {
   event?: unknown;
@@ -100,7 +100,7 @@ export async function POST(request: Request) {
       registration = await applyProcessedRefunds(refund.payment_id);
     }
 
-    if (registration?.status === "paid") {
+    if (registration?.status === "paid" && isConfirmationEmailConfigured()) {
       const sent = await sendConfirmation(registration);
       if (!sent) throw new Error("Confirmation email was not sent");
     }

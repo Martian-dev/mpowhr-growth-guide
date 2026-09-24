@@ -1,7 +1,7 @@
 # POSH Workshop payments: deployment checklist
 
-This is the production checklist for the POSH workshop registration flow at
-`/posh`.
+This guide covers a local Razorpay Test Mode check first, then the production
+launch checklist for the POSH workshop registration flow at `/posh`.
 
 ## What is implemented
 
@@ -14,7 +14,7 @@ This is the production checklist for the POSH workshop registration flow at
 - Razorpay webhook at `POST /api/razorpay/webhook`.
 - Webhook signature validation against the raw request body.
 - Duplicate webhook protection using `x-razorpay-event-id`.
-- Resend confirmation email after a payment is recorded as captured.
+- Optional Resend confirmation email after a payment is recorded as captured.
 - Failed and fully processed refunded payment statuses.
 - Neon-backed rate limiting for the public order endpoint.
 - Vercel SPA rewrites that leave `/api/*` routes available.
@@ -23,14 +23,85 @@ The two-seat plan currently reserves two seats for one purchaser. The flow does
 not collect a second attendee name. Change that before launch if group buyers
 must provide named attendees.
 
+## Local test: Razorpay Test Mode + Neon only
+
+You can test the complete browser checkout, server-side payment verification,
+and Neon registration flow now. Resend and the webhook are not required for
+this local test.
+
+1. Copy the example environment file and set only these values in `.env.local`:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   ```text
+   RAZORPAY_KEY_ID=rzp_test_...
+   RAZORPAY_KEY_SECRET=...
+   DATABASE_URL=<your Neon connection string>
+   POSH_WORKSHOP_CAPACITY=50
+   ```
+
+   Remove the `RESEND_*` and `RAZORPAY_WEBHOOK_SECRET` lines, or leave them
+   blank. They are deliberately optional for this stage. Keep `.env.local`
+   private; it is ignored by Git.
+
+2. Run [`db/001_posh_registrations.sql`](db/001_posh_registrations.sql) once
+   in the SQL editor for the Neon database referenced by `DATABASE_URL`.
+   If `psql` is installed, this does the same thing:
+
+   ```bash
+   set -a
+   source .env.local
+   set +a
+   psql "$DATABASE_URL" -f db/001_posh_registrations.sql
+   ```
+
+3. Start the app through Vercel's local runtime so the `/api/razorpay/*`
+   functions run alongside Vite:
+
+   ```bash
+   bunx vercel dev --listen 8080
+   ```
+
+   Link the directory if the CLI asks. If you prefer to keep secrets in Vercel
+   Development instead of `.env.local`, run `bunx vercel pull` after linking;
+   `vercel dev` uses those locally cached values.
+
+4. Open `http://localhost:8080/posh`, choose a plan, and complete a Razorpay
+   **Test Mode** payment. Razorpay serves a mock checkout in this mode: select
+   a configured method and use its Success path. No real money is deducted.
+   The confirmation dialog means the server checked the Checkout signature plus
+   Razorpay's captured payment and order records, then wrote the registration
+   to Neon.
+
+5. Confirm the result in Neon:
+
+   ```sql
+   SELECT id, status, seats, email, razorpay_order_id, razorpay_payment_id,
+          expected_amount, created_at
+   FROM posh_registrations
+   ORDER BY created_at DESC
+   LIMIT 10;
+   ```
+
+   The successful row should have `status = 'paid'` and matching Razorpay order
+   and payment IDs. Razorpay's Test Mode dashboard should show the same payment
+   as captured.
+
+Without a webhook, a customer closing the tab after payment but before the
+browser callback finishes will not immediately mark the row paid. That is fine
+for this controlled local test; add the webhook before opening payment to real
+customers.
+
 ## Why Resend is here
 
 Razorpay confirms and moves money. Resend delivers email. After the server has
-confirmed a captured payment and written the registration to Neon, Resend sends
-the purchaser a confirmation containing their name, seat count, and payment ID.
-This keeps the promise on the success screen backed by a real server-side
-workflow. If Resend is unavailable, the payment remains recorded and the email
-can be retried through the webhook delivery.
+confirmed a captured payment and written the registration to Neon, Resend can
+send the purchaser a confirmation containing their name, seat count, and
+payment ID. It is a follow-up channel, so its absence does not change payment
+verification or the registration record. Once configured, a failed delivery can
+be retried through the webhook delivery.
 
 ## Files
 
@@ -79,24 +150,24 @@ values only** in Production.
 | --- | --- | --- |
 | `RAZORPAY_KEY_ID` | Yes | Razorpay API key ID for that environment |
 | `RAZORPAY_KEY_SECRET` | Yes | Matching Razorpay API secret |
-| `RAZORPAY_WEBHOOK_SECRET` | Yes | Separate secret created for the Razorpay webhook |
+| `RAZORPAY_WEBHOOK_SECRET` | When webhook is enabled | Separate secret created for the Razorpay webhook |
 | `DATABASE_URL` | Yes | Neon connection string; `POSTGRES_URL` is also supported |
 | `POSH_WORKSHOP_CAPACITY` | Yes | Maximum seats for this workshop, for example `50` |
 | `POSH_ORDER_RATE_LIMIT` | No | Order attempts per IP in ten minutes; defaults to `5` |
-| `RESEND_API_KEY` | Yes | Resend server-side API key |
-| `RESEND_FROM_EMAIL` | Yes | Sender on a verified Resend domain, for example `MpowHR <workshops@example.com>` |
+| `RESEND_API_KEY` | When email is enabled | Resend server-side API key |
+| `RESEND_FROM_EMAIL` | When email is enabled | Sender on a verified Resend domain, for example `MpowHR <workshops@example.com>` |
 
 Never use `VITE_` for any of these values. Never commit a real value. Vercel
 requires a new deployment after environment variables change.
 
-### 4. Configure Resend
+### 4. Configure Resend when you want automated email
 
 In Resend, add and verify the sending domain you will use in
 `RESEND_FROM_EMAIL`, then create an API key with permission to send mail. Use
 the same sender address in Preview and Production only if the domain is
 verified for both environments.
 
-### 5. Configure the Razorpay webhook
+### 5. Configure the Razorpay webhook before public sales
 
 Create one webhook for Test Mode and one for Live Mode:
 
@@ -119,7 +190,7 @@ status updates are idempotent.
 
 ### 6. Redeploy and test Preview
 
-After adding Test Mode, Neon, and Resend Preview values:
+After adding Test Mode and Neon Preview values:
 
 1. Deploy a Vercel Preview.
 2. Open `/posh`.
@@ -127,9 +198,9 @@ After adding Test Mode, Neon, and Resend Preview values:
 4. Complete a Test Mode payment.
 5. Confirm the payment is captured in Razorpay.
 6. Confirm one `paid` row exists in Neon with the matching order and payment IDs.
-7. Confirm the Resend email arrives.
-8. In Razorpay webhook logs, resend the same event and confirm the row and email
-   are not duplicated.
+7. If Resend is enabled, confirm the confirmation email arrives.
+8. If the webhook is enabled, resend the same event in Razorpay webhook logs and
+   confirm the row and email are not duplicated.
 
 ## Production launch
 
@@ -185,6 +256,7 @@ no errors.
 
 - [Razorpay webhook validation and idempotency](https://razorpay.com/docs/webhooks/validate-test/?preferred-country=SG)
 - [Razorpay payment webhooks](https://razorpay.com/docs/payments/payment-button/subscription-buttons/subscribe-to-webhooks/?preferred-country=US)
+- [Razorpay Test Mode payments](https://razorpay.com/docs/server-integration/python/test-app/)
 - [Razorpay processed refunds](https://razorpay.com/docs/payments/refunds/faqs/?preferred-country=SG)
 - [Neon serverless driver](https://neon.com/blog/serverless-driver-for-postgres/)
 - [Resend Node.js integration](https://resend.com/nodejs)

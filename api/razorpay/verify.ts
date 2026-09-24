@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { applyProcessedRefunds, findRegistrationByOrder, markPaid } from "./db";
-import { sendConfirmation } from "./email";
+import { isConfirmationEmailConfigured, sendConfirmation } from "./email";
 
 const PLAN_AMOUNTS = new Set([70000, 149900]);
 
@@ -177,7 +177,7 @@ export async function POST(request: Request) {
     );
   }
   paidRegistration = (await applyProcessedRefunds(paymentId)) ?? paidRegistration;
-  if (paidRegistration.status === "paid") {
+  if (paidRegistration.status === "paid" && isConfirmationEmailConfigured()) {
     await sendConfirmation(paidRegistration);
   }
 
