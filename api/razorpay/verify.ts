@@ -2,7 +2,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { applyProcessedRefunds, findRegistrationByOrder, markPaid } from "./db";
 import { isConfirmationEmailConfigured, sendConfirmation } from "./email";
 
-const PLAN_AMOUNTS = new Set([70000, 149900]);
+const PLAN_AMOUNTS = new Set([80000, 149900]);
 
 type RazorpayPayment = {
   order_id?: unknown;

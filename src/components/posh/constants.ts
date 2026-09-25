@@ -16,7 +16,7 @@ export const registrationUrl = (seats: number) =>
 
 // Prices charged are set server-side in api/razorpay/order.ts; keep them in sync.
 export const PLANS = [
-  { seats: 1, price: "₹700", label: "for 1" },
+  { seats: 1, price: "₹800", label: "for 1" },
   { seats: 2, price: "₹1,499", label: "for 2" },
 ];
 
