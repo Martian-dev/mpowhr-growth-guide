@@ -61,7 +61,7 @@ export type CheckoutResult =
 // window; rejects with a readable message on any failure.
 export const payWithRazorpay = async (
   details: CheckoutDetails,
-  display: {
+  checkoutOptions: {
     name: string;
     description: string;
     themeColor: string;
@@ -82,11 +82,11 @@ export const payWithRazorpay = async (
       order_id: order.data.orderId,
       amount: order.data.amount,
       currency: order.data.currency,
-      name: display.name,
-      description: display.description,
+      name: checkoutOptions.name,
+      description: checkoutOptions.description,
       prefill: { name: details.name, email: details.email, contact: details.phone },
       notes: { seats: String(details.seats) },
-      theme: { color: display.themeColor },
+      theme: { color: checkoutOptions.themeColor },
       modal: { ondismiss: () => resolve({ status: "dismissed" }) },
       handler: async (response: RazorpaySuccess) => {
         const verification = await postJson("/api/razorpay/verify", response).catch(
@@ -106,6 +106,6 @@ export const payWithRazorpay = async (
     // Failed attempts are retried inside the Razorpay window itself, so the
     // promise only settles on a verified payment or when the window is closed.
     checkout.open();
-    display.onOpen?.();
+    checkoutOptions.onOpen?.();
   });
 };

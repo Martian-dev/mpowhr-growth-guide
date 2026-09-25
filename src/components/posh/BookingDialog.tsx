@@ -94,12 +94,12 @@ const BookingDialog = ({
               aria-hidden="true"
             />
             <div
-              className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF37]/40 bg-[#0F3257]/5"
+              className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF37]/40 bg-primary/5"
               aria-hidden="true"
             >
-              <Loader2 className="h-7 w-7 animate-spin text-[#0F3257] motion-reduce:animate-none" />
+              <Loader2 className="h-7 w-7 animate-spin text-primary motion-reduce:animate-none" />
             </div>
-            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-[#0F3257]">
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               Secure checkout
             </p>
             <DialogTitle className="mt-2 text-2xl font-bold" style={headingFont}>
