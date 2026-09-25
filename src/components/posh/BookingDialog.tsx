@@ -46,13 +46,13 @@ const BookingDialog = ({
     event.preventDefault();
     setStep("paying");
     try {
-      onOpenChange(false);
       const result = await payWithRazorpay(
         { seats, ...details },
         {
           name: "MpowHR",
           description: `POSH Workshop, ${seatLabel}`,
           themeColor: CHECKOUT_THEME_COLOR,
+          onOpen: () => onOpenChange(false),
         },
       );
       if (result.status === "paid") {
@@ -83,7 +83,33 @@ const BookingDialog = ({
         className="theme-corporate bg-white text-foreground border-t-4 border-t-[#D4AF37] max-w-[calc(100%-2rem)] sm:max-w-md"
         style={bodyFont}
       >
-        {step === "paid" ? (
+        {step === "paying" ? (
+          <div
+            className="relative overflow-hidden py-8 text-center"
+            role="status"
+            aria-live="polite"
+          >
+            <div
+              className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent"
+              aria-hidden="true"
+            />
+            <div
+              className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF37]/40 bg-[#0F3257]/5"
+              aria-hidden="true"
+            >
+              <Loader2 className="h-7 w-7 animate-spin text-[#0F3257] motion-reduce:animate-none" />
+            </div>
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-[#0F3257]">
+              Secure checkout
+            </p>
+            <DialogTitle className="mt-2 text-2xl font-bold" style={headingFont}>
+              Opening Razorpay
+            </DialogTitle>
+            <DialogDescription className="mx-auto mt-3 max-w-xs text-base leading-relaxed text-slate-600">
+              Creating your order and connecting you to the secure payment window.
+            </DialogDescription>
+          </div>
+        ) : step === "paid" ? (
           <div className="text-center py-4">
             <CheckCircle2
               className="w-14 h-14 mx-auto text-[#D4AF37]"
@@ -155,14 +181,9 @@ const BookingDialog = ({
             <Button
               type="submit"
               size="lg"
-              disabled={step === "paying"}
               className="w-full min-h-[48px] text-base bg-primary hover:bg-primary/90 text-primary-foreground"
             >
-              {step === "paying" ? (
-                <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
-              ) : (
-                <Lock className="w-4 h-4" aria-hidden="true" />
-              )}
+              <Lock className="w-4 h-4" aria-hidden="true" />
               Pay {plan.price}
             </Button>
             <p className="text-center text-xs text-slate-500">
