@@ -8,13 +8,10 @@ import {
 } from "@/components/ui/accordion";
 import {
   CONSULTATION_URL,
-  PLANS,
-  PRICING_ANCHOR,
   bodyFont,
   fadeInUp,
   headingFont,
 } from "./constants";
-import { CtaButton } from "./shared";
 
 const faqs = [
   {
@@ -30,10 +27,6 @@ const faqs = [
     answer: "Yes, a Certificate will be provided.",
   },
 ];
-
-const priceSummary = PLANS.map((plan) => `${plan.price} ${plan.label}`).join(
-  " | ",
-);
 
 const PoshFaqs = () => {
   return (
@@ -99,22 +92,6 @@ const PoshFaqs = () => {
             </Accordion>
           </motion.div>
         </div>
-
-        {/* Closing call to action */}
-        <motion.div
-          className="mt-16 md:mt-20 bg-primary text-primary-foreground p-8 md:p-12 flex flex-col items-center gap-6 text-center"
-          {...fadeInUp}
-          transition={{ duration: 0.7 }}
-        >
-          <p className="text-white/75">
-            {priceSummary} · Free Consultation from Anne After workshop
-          </p>
-          <div>
-            <CtaButton href={PRICING_ANCHOR} variant="gold" className="w-full">
-              Secure your seat now
-            </CtaButton>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
