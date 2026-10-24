@@ -1,5 +1,6 @@
-import { FormEvent, useState } from "react";
-import { CheckCircle2, Loader2, Lock } from "lucide-react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, ArrowRight, Loader2, Lock } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,185 +10,334 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { payWithRazorpay } from "@/lib/razorpay";
-import { PLANS, bodyFont, headingFont } from "./constants";
+import { bookingRequest, getBooking, payWithRazorpay } from "@/lib/razorpay";
+import {
+  audienceSchema,
+  contactSchema,
+  selectionSchema,
+  PLANS,
+  type ContactDetails,
+} from "../../../shared/posh";
+import AttendeeFields, { AudienceField } from "./AttendeeFields";
+import { bodyFont, headingFont } from "./constants";
 
-// Navy primary of the theme-corporate palette, used to tint the Razorpay window.
-const CHECKOUT_THEME_COLOR = "#0F3257";
-
-type Step = "details" | "paying" | "paid";
-
-// Collects attendee details, then hands over to Razorpay Checkout. The dialog
-// closes while Razorpay is open, since its focus trap would block the payment
-// window, and reopens to confirm a successful booking.
+type Step = "details" | "audience" | "seats";
+const empty: ContactDetails = { name: "", email: "", phone: "" };
 const BookingDialog = ({
-  seats,
   open,
   onOpenChange,
 }: {
-  seats: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) => {
+  const navigate = useNavigate();
+  const active = useRef(false);
+  const skipRestore = useRef(false);
   const [step, setStep] = useState<Step>("details");
-  const [details, setDetails] = useState({ name: "", email: "", phone: "" });
-  const [paymentId, setPaymentId] = useState("");
-  const plan = PLANS.find((p) => p.seats === seats) ?? PLANS[0];
-  const seatLabel = seats === 1 ? "1 seat" : `${seats} seats`;
+  const [details, setDetails] = useState(empty);
+  const [audience, setAudience] = useState("");
+  const [seats, setSeats] = useState<1 | 2>(1);
+  const [second, setSecond] = useState(empty);
+  const [secondAudience, setSecondAudience] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [locked, setLocked] = useState(false);
+  const [error, setError] = useState("");
+  const plan = PLANS.find((p) => p.seats === seats)!;
+  const stepIndex = ["details", "audience", "seats"].indexOf(step);
 
-  const handleOpenChange = (next: boolean) => {
-    if (!next && step === "paid") setStep("details");
-    onOpenChange(next);
-  };
+  useEffect(() => {
+    if (open && skipRestore.current) {
+      skipRestore.current = false;
+      return;
+    }
+    if (!open || active.current) return;
+    const abort = new AbortController();
+    setLoading(true);
+    setError("");
+    getBooking(abort.signal)
+      .then(({ booking: b }) => {
+        if (!b) return;
+        if (["paid", "refunded", "payment_review"].includes(b.status)) {
+          navigate("/posh/thank-you");
+          return;
+        }
+        setDetails({ name: b.name, email: b.email, phone: b.phone });
+        setAudience(b.audience ?? "");
+        setSeats(b.seats ?? 1);
+        setLocked(b.hasPendingOrder);
+        const other = b.attendees[1];
+        if (other) {
+          setSecond(other);
+          setSecondAudience(other.audience ?? "");
+        }
+        setStep(b.audience ? "seats" : "audience");
+      })
+      .catch((e) => {
+        if (!abort.signal.aborted) setError(e.message);
+      })
+      .finally(() => {
+        if (!abort.signal.aborted) setLoading(false);
+      });
+    return () => abort.abort();
+  }, [open, navigate]);
 
-  const handleSubmit = async (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
-    setStep("paying");
+    if (active.current) return;
+    active.current = true;
+    setBusy(true);
+    setError("");
     try {
-      const result = await payWithRazorpay(
-        { seats, ...details },
-        {
-          name: "MpowHR",
-          description: `POSH Workshop, ${seatLabel}`,
-          themeColor: CHECKOUT_THEME_COLOR,
-          onOpen: () => onOpenChange(false),
-        },
-      );
-      if (result.status === "paid") {
-        setPaymentId(result.paymentId);
-        setStep("paid");
-        onOpenChange(true);
+      if (step === "details") {
+        const parsed = contactSchema.safeParse(details);
+        if (!parsed.success) throw new Error(parsed.error.issues[0].message);
+        await bookingRequest("/api/posh/registration", "POST", parsed.data);
+        setDetails(parsed.data);
+        setStep("audience");
+      } else if (step === "audience") {
+        const parsed = audienceSchema.safeParse(audience);
+        if (!parsed.success)
+          throw new Error("Please select your classification.");
+        await bookingRequest("/api/posh/registration", "PATCH", {
+          step: "audience",
+          audience: parsed.data,
+        });
+        setStep("seats");
       } else {
-        setStep("details");
-        onOpenChange(true);
+        if (!locked) {
+          const parsed = selectionSchema.safeParse({
+            seats,
+            ...(seats === 2
+              ? { secondAttendee: { ...second, audience: secondAudience } }
+              : {}),
+          });
+          if (!parsed.success) throw new Error(parsed.error.issues[0].message);
+          await bookingRequest("/api/posh/registration", "PATCH", {
+            step: "selection",
+            selection: parsed.data,
+          });
+        }
+        const result = await payWithRazorpay(() => onOpenChange(false));
+        if (result.status === "dismissed") {
+          setLocked(true);
+          skipRestore.current = true;
+          onOpenChange(true);
+          setError(
+            "Payment window closed. Your details are saved. You can resume the same payment below.",
+          );
+        } else {
+          if (result.status === "paid")
+            toast.success("Your registration is confirmed.");
+          navigate("/posh/thank-you");
+        }
       }
-    } catch (error) {
-      setStep("details");
+    } catch (e) {
+      if (step === "seats") {
+        const saved = await getBooking().catch(() => null);
+        if (saved?.booking?.status === "paid") {
+          navigate("/posh/thank-you");
+          return;
+        }
+        if (saved?.booking) setLocked(saved.booking.hasPendingOrder);
+      }
+      setError(e instanceof Error ? e.message : "Please try again.");
       onOpenChange(true);
-      toast.error(
-        error instanceof Error ? error.message : "Payment could not be completed.",
-      );
+    } finally {
+      active.current = false;
+      setBusy(false);
     }
   };
 
-  const update =
-    (field: keyof typeof details) => (event: React.ChangeEvent<HTMLInputElement>) =>
-      setDetails((current) => ({ ...current, [field]: event.target.value }));
-
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      {/* The dialog renders in a portal, so it needs the page theme re-applied */}
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (!busy) onOpenChange(next);
+      }}
+    >
       <DialogContent
-        className="theme-corporate bg-white text-foreground border-t-4 border-t-[#D4AF37] max-w-[calc(100%-2rem)] sm:max-w-md"
+        className="theme-corporate max-h-[90dvh] max-w-[calc(100%-2rem)] overflow-y-auto border-t-4 border-t-[#D4AF37] bg-white text-foreground sm:max-w-lg"
         style={bodyFont}
+        onInteractOutside={(e) => {
+          if (busy) e.preventDefault();
+        }}
+        onEscapeKeyDown={(e) => {
+          if (busy) e.preventDefault();
+        }}
       >
-        {step === "paying" ? (
-          <div
-            className="relative overflow-hidden py-8 text-center"
+        <DialogHeader>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8B6914]">
+            POSH live workshop
+          </p>
+          <DialogTitle className="text-2xl font-bold" style={headingFont}>
+            Secure your seat
+          </DialogTitle>
+          <DialogDescription>
+            {step === "details"
+              ? "Start with your contact details."
+              : step === "audience"
+                ? "Help us understand your professional background."
+                : "Choose who’s joining the workshop."}
+          </DialogDescription>
+        </DialogHeader>
+        <ol
+          aria-label="Registration progress"
+          className="grid grid-cols-3 gap-2 text-xs"
+        >
+          {["Your details", "Classification", "Booking"].map((label, i) => (
+            <li
+              key={label}
+              aria-current={i === stepIndex ? "step" : undefined}
+              className={`border-t-2 pt-2 ${i <= stepIndex ? "border-[#D4AF37] font-semibold text-primary" : "border-slate-200 text-slate-500"}`}
+            >
+              {i + 1}. {label}
+            </li>
+          ))}
+        </ol>
+        {loading ? (
+          <p
             role="status"
-            aria-live="polite"
+            className="flex items-center justify-center gap-3 py-12"
           >
-            <div
-              className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent"
-              aria-hidden="true"
-            />
-            <div
-              className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[#D4AF37]/40 bg-primary/5"
-              aria-hidden="true"
-            >
-              <Loader2 className="h-7 w-7 animate-spin text-primary motion-reduce:animate-none" />
-            </div>
-            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              Secure checkout
-            </p>
-            <DialogTitle className="mt-2 text-2xl font-bold" style={headingFont}>
-              Opening Razorpay
-            </DialogTitle>
-            <DialogDescription className="mx-auto mt-3 max-w-xs text-base leading-relaxed text-slate-600">
-              Creating your order and connecting you to the secure payment window.
-            </DialogDescription>
-          </div>
-        ) : step === "paid" ? (
-          <div className="text-center py-4">
-            <CheckCircle2
-              className="w-14 h-14 mx-auto text-[#D4AF37]"
-              aria-hidden="true"
-            />
-            <DialogTitle
-              className="mt-4 text-2xl font-bold"
-              style={headingFont}
-            >
-              You’re booked!
-            </DialogTitle>
-            <DialogDescription className="mt-3 text-base text-slate-600">
-              Your {seatLabel} for the POSH workshop {seats === 1 ? "is" : "are"}{" "}
-              confirmed. We’ll share the workshop details with you separately.
-            </DialogDescription>
-            <p className="mt-4 text-xs text-slate-500">
-              Payment ID: {paymentId}
-            </p>
-          </div>
+            <Loader2 className="h-5 w-5 animate-spin motion-reduce:animate-none" />
+            Loading your booking…
+          </p>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold" style={headingFont}>
-                Secure your seat
-              </DialogTitle>
-              <DialogDescription className="text-slate-600">
-                POSH Workshop, {seatLabel} · {plan.price}
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="space-y-2">
-              <Label htmlFor="booking-name">Full name</Label>
-              <Input
-                id="booking-name"
-                autoComplete="name"
-                required
-                maxLength={100}
-                value={details.name}
-                onChange={update("name")}
+          <form onSubmit={submit} className="space-y-5">
+            {step === "details" && (
+              <AttendeeFields
+                prefix="primary"
+                value={details}
+                onChange={setDetails}
+                disabled={busy}
               />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="booking-email">Email</Label>
-              <Input
-                id="booking-email"
-                type="email"
-                autoComplete="email"
-                required
-                maxLength={100}
-                value={details.email}
-                onChange={update("email")}
+            )}
+            {step === "audience" && (
+              <AudienceField
+                prefix="primary"
+                value={audience}
+                onChange={setAudience}
+                disabled={busy}
               />
+            )}
+            {step === "seats" && (
+              <>
+                <fieldset disabled={busy || locked}>
+                  <legend className="mb-3 text-sm font-medium">
+                    How many people are joining?
+                  </legend>
+                  <div className="grid grid-cols-2 gap-3">
+                    {PLANS.map((p) => (
+                      <label
+                        key={p.seats}
+                        className={`cursor-pointer border p-4 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary ${seats === p.seats ? "border-primary bg-primary/5" : "border-slate-200"}`}
+                      >
+                        <input
+                          type="radio"
+                          name="booking-seats"
+                          checked={seats === p.seats}
+                          onChange={() => setSeats(p.seats)}
+                          className="mr-2 accent-[#0F3257]"
+                        />
+                        <span className="text-sm">
+                          {p.seats === 1 ? "One person" : "Two people"}
+                        </span>
+                        <span className="mt-2 block text-2xl font-bold">
+                          {p.price}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                {seats === 2 && (
+                  <div className="space-y-4 border-t border-slate-200 pt-5">
+                    <h3 className="font-semibold">Second attendee</h3>
+                    <AttendeeFields
+                      prefix="second"
+                      value={second}
+                      onChange={setSecond}
+                      disabled={busy || locked}
+                    />
+                    <AudienceField
+                      prefix="second"
+                      value={secondAudience}
+                      onChange={setSecondAudience}
+                      disabled={busy || locked}
+                    />
+                  </div>
+                )}
+                <div className="flex justify-between border-y border-slate-200 py-4">
+                  <span>
+                    Total for {seats} {seats === 1 ? "person" : "people"}
+                  </span>
+                  <strong>{plan.price}</strong>
+                </div>
+                {locked && (
+                  <p className="text-sm text-slate-600">
+                    Your checkout has started with these details. Resume it
+                    below, or check your payment status.
+                  </p>
+                )}
+              </>
+            )}
+            {error && (
+              <p
+                role="alert"
+                className="border-l-2 border-red-600 bg-red-50 p-3 text-sm text-red-800"
+              >
+                {error}
+              </p>
+            )}
+            <div className="flex gap-3">
+              {step !== "details" && !locked && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={busy}
+                  onClick={() => {
+                    setStep(step === "seats" ? "audience" : "details");
+                    setError("");
+                  }}
+                  className="min-h-12"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Back
+                </Button>
+              )}
+              <Button
+                type="submit"
+                disabled={busy}
+                className="min-h-12 flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+              >
+                {busy ? (
+                  <Loader2 className="h-4 w-4 animate-spin motion-reduce:animate-none" />
+                ) : step === "seats" ? (
+                  <Lock className="h-4 w-4" />
+                ) : (
+                  <ArrowRight className="h-4 w-4" />
+                )}
+                {busy
+                  ? "Please wait…"
+                  : step === "seats"
+                    ? `${locked ? "Resume payment ·" : "Pay"} ${plan.price}`
+                    : "Save and continue"}
+              </Button>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="booking-phone">Phone</Label>
-              <Input
-                id="booking-phone"
-                type="tel"
-                autoComplete="tel"
-                inputMode="tel"
-                required
-                pattern="^\+?[0-9 \-]{10,15}$"
-                title="Enter a valid phone number"
-                value={details.phone}
-                onChange={update("phone")}
-              />
-            </div>
-
-            <Button
-              type="submit"
-              size="lg"
-              className="w-full min-h-[48px] text-base bg-primary hover:bg-primary/90 text-primary-foreground"
-            >
-              <Lock className="w-4 h-4" aria-hidden="true" />
-              Pay {plan.price}
-            </Button>
-            <p className="text-center text-xs text-slate-500">
-              Secure payment via Razorpay: UPI, cards, net banking and wallets.
+            {locked && (
+              <Button
+                type="button"
+                variant="link"
+                className="w-full"
+                onClick={() => navigate("/posh/thank-you")}
+              >
+                Check payment status
+              </Button>
+            )}
+            <p className="text-center text-xs leading-relaxed text-slate-500">
+              {step === "seats"
+                ? "Secure payment via Razorpay. UPI, cards, net banking and wallets."
+                : "We’ll use these details for your registration and workshop updates."}
             </p>
           </form>
         )}
@@ -195,5 +345,4 @@ const BookingDialog = ({
     </Dialog>
   );
 };
-
 export default BookingDialog;

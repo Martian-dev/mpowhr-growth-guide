@@ -1,260 +1,210 @@
-# POSH Workshop payments: deployment checklist
+# POSH registration, payments and Google Sheets
 
-This guide covers a local Razorpay Test Mode check first, then the production
-launch checklist for the POSH workshop registration flow at `/posh`.
+The application runs as a Vite SPA with Vercel functions and Neon Postgres.
+Neon owns registration and payment state; Google Sheets is a one-way reporting copy.
 
-## What is implemented
+## Registration flow
 
-- Razorpay Standard Checkout in the browser.
-- Server-side Razorpay order creation. The browser sends a seat count; it never
-  controls the amount.
-- Neon/Postgres registration records, linked to the Razorpay order and payment.
-- Transactional seat reservation using `POSH_WORKSHOP_CAPACITY`.
-- Server-side signature, order, amount, currency, and captured-status checks.
-- Razorpay webhook at `POST /api/razorpay/webhook`.
-- Webhook signature validation against the raw request body.
-- Duplicate webhook protection using `x-razorpay-event-id`.
-- Optional Resend confirmation email after a payment is recorded as captured.
-- Failed and fully processed refunded payment statuses.
-- Neon-backed rate limiting for the public order endpoint.
-- Vercel SPA rewrites that leave `/api/*` routes available.
+Every workshop booking CTA opens one dialog:
 
-The two-seat plan currently reserves two seats for one purchaser. The flow does
-not collect a second attendee name. Change that before launch if group buyers
-must provide named attendees.
+1. Save name, email and phone to Neon before continuing.
+2. Save one classification: Top management, Corporate professionals, Business owners, Team leaders or Students.
+3. Select one or two people. For two, collect the second attendee's contact details and classification.
+4. Save the selection, create a server-priced Razorpay order, and open Checkout.
+5. Verify a captured payment on the server, then redirect to `/posh/thank-you`.
 
-## Local test: Razorpay Test Mode + Neon only
+The thank-you page independently loads server state, including after refresh.
+It shows success only for `paid`; pending payments are polled for one minute and
+can be checked again manually. Refunds and payments needing review show their own messages.
+The WhatsApp **Join community** button is disabled until its invite is configured.
 
-You can test the complete browser checkout, server-side payment verification,
-and Neon registration flow now. Resend and the webhook are not required for
-this local test.
+Prices and input validation live in `shared/posh.ts`: **79,900 paise for one person**,
+**149,900 paise for two**, INR. `/api/razorpay/order` accepts only an empty JSON
+object. It loads contact details and price from the session's stored selection.
 
-1. Copy the example environment file and set only these values in `.env.local`:
-
-   ```bash
-   cp .env.example .env.local
-   ```
-
-   ```text
-   RAZORPAY_KEY_ID=rzp_test_...
-   RAZORPAY_KEY_SECRET=...
-   DATABASE_URL=<your Neon connection string>
-   POSH_WORKSHOP_CAPACITY=50
-   ```
-
-   Remove the `RESEND_*` and `RAZORPAY_WEBHOOK_SECRET` lines, or leave them
-   blank. They are deliberately optional for this stage. Keep `.env.local`
-   private; it is ignored by Git.
-
-2. Run [`db/001_posh_registrations.sql`](db/001_posh_registrations.sql) once
-   in the SQL editor for the Neon database referenced by `DATABASE_URL`.
-   Or run the bundled command, which reads the connection string safely from
-   `.env.local`:
-
-   ```bash
-   bun run db:migrate
-   ```
-
-3. Start the app through Vercel's local runtime so the `/api/razorpay/*`
-   functions run alongside Vite:
-
-   ```bash
-   bun run dev:vercel
-   ```
-
-   Link the directory if the CLI asks. If you prefer to keep secrets in Vercel
-   Development instead of `.env.local`, run `bunx vercel pull` after linking;
-   `vercel dev` uses those locally cached values.
-
-4. Open `http://localhost:8080/posh`, choose a plan, and complete a Razorpay
-   **Test Mode** payment. Razorpay serves a mock checkout in this mode: select
-   a configured method and use its Success path. No real money is deducted.
-   The confirmation dialog means the server checked the Checkout signature plus
-   Razorpay's captured payment and order records, then wrote the registration
-   to Neon.
-
-5. Confirm the result in Neon:
-
-   ```sql
-   SELECT id, status, seats, email, razorpay_order_id, razorpay_payment_id,
-          expected_amount, created_at
-   FROM posh_registrations
-   ORDER BY created_at DESC
-   LIMIT 10;
-   ```
-
-   The successful row should have `status = 'paid'` and matching Razorpay order
-   and payment IDs. Razorpay's Test Mode dashboard should show the same payment
-   as captured.
-
-Without a webhook, a customer closing the tab after payment but before the
-browser callback finishes will not immediately mark the row paid. That is fine
-for this controlled local test; add the webhook before opening payment to real
-customers.
-
-## Why Resend is here
-
-Razorpay confirms and moves money. Resend delivers email. After the server has
-confirmed a captured payment and written the registration to Neon, Resend can
-send the purchaser a confirmation containing their name, seat count, and
-payment ID. It is a follow-up channel, so its absence does not change payment
-verification or the registration record. Once configured, a failed delivery can
-be retried through the webhook delivery.
-
-## Files
-
-| File | Responsibility |
-| --- | --- |
-| `src/components/posh/BookingDialog.tsx` | Collects attendee details and starts Checkout |
-| `src/lib/razorpay.ts` | Loads Checkout and calls the API functions |
-| `api/razorpay/order.ts` | Reserves seats and creates the Razorpay order |
-| `api/razorpay/verify.ts` | Verifies Checkout, confirms capture, writes paid status |
-| `api/razorpay/webhook.ts` | Handles captured, failed, and processed refund events |
-| `api/razorpay/db.ts` | Neon registration and webhook-event operations |
-| `api/razorpay/email.ts` | Resend confirmation email |
-| `db/001_posh_registrations.sql` | Neon schema migration |
-| `.env.example` | Required environment variable names |
-
-## Your setup steps
-
-### 1. Push the code
-
-```bash
-git push origin main
-```
-
-The production Vercel project must deploy this commit and use the repository
-root as its root directory. Configure Vercel to use Bun for installation and
-use `bun run build` as the build command so it matches the repository workflow.
-
-### 2. Run the Neon migration
-
-Open the Neon SQL editor for the production database and run:
-
-```text
-db/001_posh_registrations.sql
-```
-
-The migration creates `posh_registrations` and
-`razorpay_webhook_events`. Run it once per database branch. If Vercel Preview
-uses separate Neon branches, run it on each branch where you test.
-
-### 3. Add Vercel environment variables
-
-Use **Test Mode Razorpay values** in Preview and Development. Use **Live Mode
-values only** in Production.
-
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `RAZORPAY_KEY_ID` | Yes | Razorpay API key ID for that environment |
-| `RAZORPAY_KEY_SECRET` | Yes | Matching Razorpay API secret |
-| `RAZORPAY_WEBHOOK_SECRET` | When webhook is enabled | Separate secret created for the Razorpay webhook |
-| `DATABASE_URL` | Yes | Neon connection string; `POSTGRES_URL` is also supported |
-| `POSH_WORKSHOP_CAPACITY` | Yes | Maximum seats for this workshop, for example `50` |
-| `POSH_ORDER_RATE_LIMIT` | No | Order attempts per IP in ten minutes; defaults to `5` |
-| `RESEND_API_KEY` | When email is enabled | Resend server-side API key |
-| `RESEND_FROM_EMAIL` | When email is enabled | Sender on a verified Resend domain, for example `MpowHR <workshops@example.com>` |
-
-Never use `VITE_` for any of these values. Never commit a real value. Vercel
-requires a new deployment after environment variables change.
-
-### 4. Configure Resend when you want automated email
-
-In Resend, add and verify the sending domain you will use in
-`RESEND_FROM_EMAIL`, then create an API key with permission to send mail. Use
-the same sender address in Preview and Production only if the domain is
-verified for both environments.
-
-### 5. Configure the Razorpay webhook before public sales
-
-Create one webhook for Test Mode and one for Live Mode:
-
-```text
-https://YOUR_PREVIEW_OR_PRODUCTION_DOMAIN/api/razorpay/webhook
-```
-
-Point the Test Mode webhook at the Preview URL you are testing and the Live
-Mode webhook at the production URL. Use the matching secret as that
-environment's `RAZORPAY_WEBHOOK_SECRET`. Subscribe to:
-
-- `payment.captured`
-- `payment.failed`
-- `refund.processed`
-
-Razorpay signs the raw body with HMAC-SHA256 and sends a unique
-`x-razorpay-event-id`; the endpoint validates both. Razorpay documents that
-webhooks can arrive more than once or out of order, so the event table and
-status updates are idempotent.
-
-### 6. Redeploy and test Preview
-
-After adding Test Mode and Neon Preview values:
-
-1. Deploy a Vercel Preview.
-2. Open `/posh`.
-3. Confirm `POST /api/razorpay/order` is a function response, not `index.html`.
-4. Complete a Test Mode payment.
-5. Confirm the payment is captured in Razorpay.
-6. Confirm one `paid` row exists in Neon with the matching order and payment IDs.
-7. If Resend is enabled, confirm the confirmation email arrives.
-8. If the webhook is enabled, resend the same event in Razorpay webhook logs and
-   confirm the row and email are not duplicated.
-
-## Production launch
-
-1. Confirm the production Neon database has the migration.
-2. Confirm the real workshop capacity in `POSH_WORKSHOP_CAPACITY`.
-3. Add Live Mode Razorpay keys to **Production** only.
-4. Add the Live webhook URL and Live webhook secret in Razorpay.
-5. Redeploy production.
-6. Make one controlled real payment.
-7. Confirm the paid Neon row, captured status, and Resend email.
-8. Refund that controlled payment if it was only a smoke test.
-
-## Operational behavior
-
-- A registration is created before the Razorpay order is requested.
-- A failed order request cancels that registration.
-- Created and failed reservations count toward capacity for 30 minutes; paid
-  reservations count permanently. Set the capacity to the real event limit.
-- A browser payment callback alone is not enough. The server checks Razorpay's
-  payment and order APIs, and the webhook remains the recovery path if the
-  browser closes.
-- A failed payment attempt does not prevent a later successful attempt on the
-  same order from being recorded.
-- A fully processed refund changes a paid registration to `refunded`.
-- Partial processed refunds are accumulated; the registration becomes
-  `refunded` when the accumulated amount reaches the expected amount.
-- Resend confirmations use a per-registration idempotency key and a retry-safe
-  claim in Neon.
-
-## Privacy and retention decision
-
-The flow stores attendee name, email, phone, Razorpay order/payment IDs, and
-status in Neon, and attendee contact details are also sent to Razorpay as order
-notes. Before launch, document who can access the Razorpay and Neon dashboards,
-how long attendee records are retained, and when the final attendee export and
-payment records are deleted or archived. This is an owner decision; the code
-does not delete event records automatically.
-
-## Verification commands
+## Local setup
 
 ```bash
 bun install
-bun run typecheck
-bun run build
-bun run lint
-git diff --check
+# Add actual values to ignored .env.local using .env.example as the reference.
+bun run db:migrate
+bun run dev
 ```
 
-Lint currently has seven existing Fast Refresh warnings in shadcn UI files and
-no errors.
+Open `http://localhost:8080/posh`. `bun run dev` starts Vercel's runtime for both
+the frontend and `/api/*` functions, loading `.env.local`. `bun run dev:vercel`
+is an equivalent command. `bun run dev:frontend` serves only the frontend for
+isolated UI work; registration and payments require the full runtime. Vercel's
+explicit `devCommand` starts Vite internally without recursively running `dev`.
 
-## References
+`db:migrate` applies numbered SQL migrations in a transaction and records each
+filename in `posh_schema_migrations`. Migration 002 preserves existing registration
+records and backfills orders and known primary attendees. Historical registrations
+cannot supply second-attendee details or classifications that were never collected.
+Do not edit a migration after deployment: introduce a new numbered migration.
 
-- [Razorpay webhook validation and idempotency](https://razorpay.com/docs/webhooks/validate-test/?preferred-country=SG)
-- [Razorpay payment webhooks](https://razorpay.com/docs/payments/payment-button/subscription-buttons/subscribe-to-webhooks/?preferred-country=US)
-- [Razorpay Test Mode payments](https://razorpay.com/docs/server-integration/python/test-app/)
-- [Razorpay processed refunds](https://razorpay.com/docs/payments/refunds/faqs/?preferred-country=SG)
-- [Neon serverless driver](https://neon.com/blog/serverless-driver-for-postgres/)
-- [Resend Node.js integration](https://resend.com/nodejs)
+## Server environment
+
+Configure these separately for Vercel Development, Preview and Production as needed:
+
+| Variable | Purpose |
+| --- | --- |
+| `DATABASE_URL` or `POSTGRES_URL` | Neon connection string |
+| `POSH_WORKSHOP_CAPACITY` | Positive integer seat capacity |
+| `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | Matching provider credentials; test keys outside Production |
+| `RAZORPAY_WEBHOOK_SECRET` | Matches the secret configured on the Razorpay webhook |
+| `GOOGLE_SHEETS_SPREADSHEET_ID` | Spreadsheet ID from its URL |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | Complete service-account JSON as one string |
+| `CRON_SECRET` | Long random secret protecting scheduled maintenance |
+| `POSH_ORDER_RATE_LIMIT` | Optional order attempts per IP per ten minutes; defaults to 5 |
+| `POSH_COMMUNITY_URL` | Optional `https://chat.whatsapp.com/...` invite |
+| `RESEND_API_KEY`, `RESEND_FROM_EMAIL` | Optional purchaser confirmation email; verified sending domain required |
+
+In `.env.local`, wrap the single-line service-account JSON in single quotes.
+In Vercel's environment-variable UI, paste the JSON itself without shell quotes.
+Keep all credentials server-only, with no `VITE_` prefix. The original JSON key
+must remain outside the tracked repository. Credentials configured locally do not
+automatically configure a deployed Vercel project.
+
+Use separate Neon branches and Sheets for testing and Production. The current
+local Razorpay configuration uses test keys. No real charge is needed for automated tests.
+
+## Google Sheets setup and operation
+
+1. Enable Google Sheets API in the service account's Google Cloud project.
+2. Share the target spreadsheet with the service-account email as **Editor**.
+3. Configure the two Google environment variables above.
+4. Run `bun run sheets:sync` to initialize tabs and flush pending records.
+
+The initial integration target is spreadsheet
+`1sUsSHvow3NKHOEuSmcwzhbRT_iYU31LVVVFOx6hfy10`.
+The worker creates **Bookings** and **Attendees**, leaving other tabs intact.
+
+**Bookings** columns: Booking ID, Name, Email, Phone, Classification, Seats,
+Booking amount (INR), Status, Payment ID, Registered at, Paid at, Refunded amount (INR), Updated at.
+
+**Attendees** columns: Attendee ID, Booking ID, Name, Email, Phone, Classification,
+Booking status, Active.
+
+A two-person purchase produces one booking amount of ₹1,499 and two attendee rows.
+Draft and unpaid bookings also appear. Revenue calculations should filter paid
+bookings and account for refunds. Timestamps represent the database's UTC time.
+Legacy paid records may lack a paid-at timestamp.
+
+The backend owns those columns, headers, and row positions. **Use filter views**
+or a separate analysis tab; do not insert, delete or sort managed rows. Add internal
+notes in columns after the managed columns or a separate tab. The writer refuses
+to overwrite another record when row identifiers no longer match. Restore row
+order before retrying a job that reports this error.
+
+Each registration/attendee change increments a durable outbox version in the same
+database transaction. A leased worker writes fixed row slots with `RAW` input,
+preserving phone prefixes and preventing user text from becoming spreadsheet formulas.
+Retries write the same slots, including after an uncertain Google response.
+Newer versions remain pending if a registration changes during synchronization.
+
+Requests kick off the worker with Vercel `waitUntil`; the payment response does not
+wait for Google. The worker drains up to 50 updates within a 45-second budget.
+Failed writes remain queued with backoff. A failed sync does not invalidate a booking.
+`bun run sheets:sync` forces another attempt and reports remaining work; repeat it
+for larger backlogs, and inspect failed jobs if it returns errors.
+
+```sql
+SELECT registration_id, version, synced_version, attempts, next_attempt_at, last_error
+FROM posh_sheet_jobs
+WHERE version > synced_version
+ORDER BY next_attempt_at;
+```
+
+## Payment reliability and recovery
+
+The browser callback verifies its HMAC using the **stored** order ID, fetches
+the payment from Razorpay, and checks the captured state, exact amount, currency
+and order membership. Signed webhooks and reconciliation use the same transactional
+confirmation function. Only one payment fulfils a registration.
+
+Checkout creation and seat-capacity checks are serialized in Postgres. Active
+orders reserve seats for 30 minutes; Razorpay's Checkout timeout is 15 minutes.
+During a reservation, contact details and selection are locked. Closing Checkout
+offers the same order again. After expiration the selection can be edited; a late
+capture restores its original immutable attendee/price snapshot.
+
+Unknown order-creation results are recovered using the unique provider receipt.
+The server does not blindly retry an ambiguous creation request. Failed payment
+attempts remain retryable and cannot regress a paid/refunded registration.
+Captured payments reaching a second order for an already-paid registration, or
+late captures exceeding available capacity, are recorded as `payment_review`.
+They are never silently discarded or shown as successful fulfilment.
+
+Review those records in Neon and Razorpay before deciding on fulfilment or refunds:
+
+```sql
+SELECT id, status, seats, razorpay_payment_id
+FROM posh_registrations WHERE status = 'payment_review';
+
+SELECT registration_id, razorpay_order_id, razorpay_payment_id, amount, status, refunded_amount
+FROM posh_payment_orders WHERE registration_id = 'BOOKING_ID';
+```
+
+Processed refunds are deduplicated by refund ID. Partial amounts accumulate;
+full refunds update the registration. Refunds arriving before capture are applied
+when capture is recorded. No automatic refund is issued by this application.
+
+## Webhook and maintenance configuration
+
+Before taking real payments, configure a publicly reachable Razorpay webhook:
+
+```text
+POST https://YOUR_DOMAIN/api/razorpay/webhook
+```
+
+Subscribe to **payment.captured**, **payment.failed**, and **refund.processed**.
+Set the same secret in `RAZORPAY_WEBHOOK_SECRET`. Enable automatic payment capture
+in Razorpay. Configure Test and Live webhooks against their corresponding environments.
+Localhost cannot receive provider webhooks directly; use a public test deployment.
+
+`vercel.json` schedules `GET /api/posh/maintenance` daily at 03:00 UTC as a fallback.
+Vercel sends `Authorization: Bearer <CRON_SECRET>`. Cron runs on Production deployments.
+The endpoint also reconciles pending orders and retries purchaser confirmation
+emails. Payment and Sheet requests provide the usual immediate path; daily cron
+is the recovery cadence when no further traffic arrives. Bounded batches may need
+multiple invocations for a large backlog.
+
+For faster unattended recovery, use a plan supporting a more frequent Vercel cron
+(for example `*/5 * * * *`), or an external scheduler calling the same protected
+endpoint. Vercel Hobby permits only daily cron; changing the expression without
+checking the plan can prevent deployment.
+
+## Validation and rollout
+
+```bash
+bun run test
+bun run typecheck
+bun run lint
+bun run build
+bunx playwright install --with-deps chromium
+bun run test:e2e
+bun run test:runtime
+```
+
+Backend tests use an isolated PostgreSQL engine (PGlite) with fake provider and
+Sheets adapters. Browser tests cover both desktop and mobile, using fake Checkout
+and HTTP responses. They do not send email, touch the configured Neon/Sheet, or charge money.
+
+`test:runtime` additionally loads the real Vercel development server, verifies the
+workshop renders, and opens the registration dialog without submitting it. It
+catches routing failures that frontend-only tests cannot detect. Keep `shared/`
+out of the SPA catch-all rewrite so Vite can serve the registration module imports.
+
+Before Production rollout, migrate the target database, configure its environment
+variables, deploy the code, register the webhook, and verify both payment plans
+in Razorpay Test Mode. Confirm the registration survives a thank-you-page refresh,
+the webhook completes payment without a browser callback, and the booking/attendee
+rows reach the intended spreadsheet. Then select the correct live credentials
+and webhook for the live environment.
+
+References: [Razorpay Checkout integration](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/),
+[Razorpay webhook validation](https://razorpay.com/docs/webhooks/validate-test/),
+[Google service accounts](https://developers.google.com/workspace/guides/create-credentials),
+[Google Sheets quotas](https://developers.google.com/workspace/sheets/api/limits),
+[Vercel cron operation](https://vercel.com/docs/cron-jobs/manage-cron-jobs).

@@ -1,7 +1,9 @@
 {
+  "devCommand": "bun run dev:frontend --port $PORT",
+  "crons": [{ "path": "/api/posh/maintenance", "schedule": "0 3 * * *" }],
   "rewrites": [
     {
-      "source": "/((?!api/|src/|node_modules/|@).*)",
+      "source": "/((?!api/|src/|shared/|node_modules/|@).*)",
       "destination": "/index.html"
     }
   ]

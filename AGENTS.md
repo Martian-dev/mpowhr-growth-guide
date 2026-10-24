@@ -33,7 +33,8 @@ Empowering individuals and organizations to unlock their full potential through 
 - **State Management**: TanStack React Query 5.83.0
 - **Form Handling**: React Hook Form 7.61.1 with Zod validation
 - **Package Manager**: Bun (evidenced by bun.lockb)
-- **Deployment**: Lovable platform
+- **Deployment**: Vercel (Vite SPA and serverless functions)
+- **Persistence**: Neon Postgres; Google Sheets is a reporting copy
 
 ### Key Dependencies Analysis
 
@@ -219,14 +220,30 @@ The project uses a sophisticated **Olive Green & Beige** professional palette:
 - Components live in `src/components/posh/`; the page uses the scoped navy and gold `theme-corporate` palette.
 - Navigation contains **Secure your seat**, LinkedIn, and Instagram on desktop and in the mobile menu. FAQs remain on the page.
 - The banner portrait uses a square, right-aligned crop to retain Anne's full arm and side. The banner CTA reads **Secure your seat**, without a price, beside **Book Free Consultation**.
-- Program Overview is a single column with one body paragraph and a centered CTA below it. Lower workshop CTAs use **Secure your seat now** and link to `#pricing`.
+- Program Overview is a single column with one body paragraph and a centered CTA below it. All workshop booking CTAs open the same registration dialog; `#pricing` links are intercepted within the POSH page for this purpose.
 - Selected booking CTAs have a subtle shake, disabled for reduced-motion preferences and paused during hover or keyboard focus.
 - Module 6 covers **Live Q&A and Certification**. Audience roles are grouped in one section, followed by a centered **Become a POSH expert** heading and CTA.
 - Keep Key Outcomes, facilitator certifications, and FAQs. The footer follows the FAQs without a closing offer block; the leadership-responsibility headline appears only in the banner.
 - Pricing is **₹799 for one person** and **₹1,499 for two people**; keep display prices, Razorpay order amounts, and verification amounts in sync.
 - Banner Date and Time values remain blank until confirmed; Mode is **Live**. Update `WORKSHOP_DETAILS` in `src/components/posh/constants.ts` when the schedule is supplied.
 - Credentials are **15+ years of experience** and **1,000+ professional students**. The contact email is **compliance@empire.com**.
-- Pending assets: replace the current About/facilitator image with previous webinar photos once the user shares them; retain existing images until then.
+- The facilitator image uses `src/assets/posh_about_image.jpg` in a square frame with `object-contain object-center` to keep the full photo visible and centered.
+
+### POSH Registration Backend
+
+- Shared validation, audience options and prices live in `shared/posh.ts`. Amounts are integer paise; checkout accepts no browser price/contact overrides.
+- The dialog saves contact details first, then classification, then one/two seats. Two-seat bookings require the second attendee's name, email, phone and classification.
+- `api/posh/registration.ts` exposes session-authorized GET/POST/PATCH. A random HttpOnly cookie identifies the booking; Neon stores its hash. Mutations require the same Origin.
+- Business logic lives in `server/posh/`; only HTTP entrypoints belong in `api/`. Server code is checked by `tsconfig.api.json`.
+- Registrations, attendees and immutable payment-order snapshots are separate tables. Migration 002 preserves existing records.
+- Callbacks, signed webhooks and reconciliation share transactional confirmation. Only captured payments confirm. Duplicate captures and late captures exceeding capacity use `payment_review` for manual resolution.
+- Active checkouts lock edits for their reservation period. Dismissal offers the same order. Unknown creation outcomes are reconciled by receipt.
+- `/posh/thank-you` reads server state on each visit. Pending, refunded and review states never show success. Set server-only `POSH_COMMUNITY_URL` when the WhatsApp invite is supplied; the button is disabled until then.
+- Neon triggers enqueue Google Sheets updates transactionally. A leased worker runs through Vercel `waitUntil`, with a daily fallback cron. The bearer-protected maintenance endpoint also reconciles payments and retries confirmation emails.
+- Sheets tabs are **Bookings** (one row per purchase) and **Attendees** (one row per person). Database-allocated rows make retries safe. Use filter views or another analysis tab; do not insert/delete/sort managed rows or edit their identifiers/headers.
+- Keep service-account JSON, Razorpay secrets and `CRON_SECRET` in server environment variables. Never expose them through `VITE_` variables or commit them. Operations are documented in `RAZORPAY_DEPLOYMENT_GUIDE.md`.
+- Validate with `bun run test`, `bun run test:e2e`, `bun run test:runtime`, `bun run typecheck`, `bun run lint` and `bun run build`. Backend and frontend tests use isolated PostgreSQL and fake external adapters; the runtime smoke test loads the full Vercel server without submitting registrations or payments.
+- Keep `shared/` excluded from the SPA catch-all rewrite in `vercel.json`, alongside `src/`, `node_modules/` and Vite's `@` paths. Browser imports from shared modules must reach Vite during full-stack development; intercepting them prevents React from rendering.
 
 ### UI Component System
 
@@ -500,7 +517,7 @@ cd mpowhr-growth-guide
 # Install dependencies
 bun install
 
-# Start development server
+# Start frontend and backend through Vercel
 bun run dev
 
 # Build for production
@@ -517,7 +534,9 @@ bun run lint
 
 #### Available Commands
 
-- `dev`: Start development server (Vite)
+- `dev`: Start the full application (Vercel functions and Vite) at localhost:8080
+- `dev:vercel`: Equivalent full application command
+- `dev:frontend`: Vite only; booking/payment endpoints are unavailable
 - `build`: Production build
 - `build:dev`: Development build
 - `lint`: Run ESLint

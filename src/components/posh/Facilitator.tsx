@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import anne from "@/assets/anne.svg";
+import anne from "@/assets/posh_about_image.jpg";
 import posh from "@/assets/mpowhr_certificates/proTouch.jpeg";
 import cpd from "@/assets/mpowhr_certificates/cpdCert.png";
 import coaches from "@/assets/mpowhr_certificates/coachesCert.png";
@@ -42,12 +42,12 @@ const Facilitator = () => {
             className="absolute -bottom-4 -right-4 w-full h-full border border-[#D4AF37]/60"
             aria-hidden="true"
           />
-          <div className="relative aspect-[4/5] w-full overflow-hidden">
+          <div className="relative aspect-square w-full overflow-hidden">
             <img
               src={anne}
-              alt="Anne Anshumathi Raj, Founder of MpowHR"
+              alt="Anne Anshumathi Raj, Founder of MpowHR, leading an online session"
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover object-top"
+              className="absolute inset-0 w-full h-full object-contain object-center"
             />
           </div>
         </motion.div>

@@ -14,11 +14,7 @@ export const registrationUrl = (seats: number) =>
     `Hi Anne, I'd like to secure ${seats === 1 ? "1 seat" : `${seats} seats`} for the 120-minute POSH workshop.`,
   );
 
-// Prices charged are set server-side in api/razorpay/order.ts; keep them in sync.
-export const PLANS = [
-  { seats: 1, price: "₹799", label: "for 1" },
-  { seats: 2, price: "₹1,499", label: "for 2" },
-];
+export { PLANS } from "../../../shared/posh";
 
 // Leave the schedule blank until the webinar date and time are confirmed.
 export const WORKSHOP_DETAILS = { date: "", time: "", mode: "Live" };

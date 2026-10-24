@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MotionConfig } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -14,8 +14,12 @@ import Pricing from "@/components/posh/Pricing";
 import PoshFaqs from "@/components/posh/PoshFaqs";
 import MobileStickyCta from "@/components/posh/MobileStickyCta";
 import { PRICING_ANCHOR } from "@/components/posh/constants";
+import BookingDialog from "@/components/posh/BookingDialog";
 
 const Posh = () => {
+  const [bookingOpen, setBookingOpen] = useState(() =>
+    new URLSearchParams(window.location.search).has("booking"),
+  );
   useEffect(() => {
     const previousTitle = document.title;
     document.title = "POSH Workshop for Business Leaders | MpowHR";
@@ -36,7 +40,17 @@ const Posh = () => {
   return (
     <MotionConfig reducedMotion="user">
       {/* theme-corporate swaps the brand colour variables for this page only */}
-      <div className="theme-corporate min-h-screen w-full overflow-x-hidden bg-background text-foreground">
+      <div
+        className={`theme-corporate min-h-screen w-full overflow-x-hidden bg-background text-foreground ${bookingOpen ? "[&_.nav-always-visible]:!z-40" : ""}`}
+        onClickCapture={(event) => {
+          const target =
+            event.target instanceof Element ? event.target.closest("a") : null;
+          if (target?.getAttribute("href") === PRICING_ANCHOR) {
+            event.preventDefault();
+            setBookingOpen(true);
+          }
+        }}
+      >
         <Navigation
           links={[]}
           cta={{ label: "Secure your seat", href: PRICING_ANCHOR }}
@@ -52,13 +66,14 @@ const Posh = () => {
           <KeyOutcomes />
           <BeforeAfter />
           <Facilitator />
-          <Pricing />
+          <Pricing onBook={() => setBookingOpen(true)} />
           <PoshFaqs />
         </main>
         <Footer />
         {/* Room for the phone booking bar so it never covers the footer */}
         <div className="h-20 bg-primary md:hidden" aria-hidden="true" />
         <MobileStickyCta />
+        <BookingDialog open={bookingOpen} onOpenChange={setBookingOpen} />
       </div>
     </MotionConfig>
   );

@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { PLANS, bodyFont, headingFont, registrationUrl } from "./constants";
 import { Highlight } from "./shared";
-import BookingDialog from "./BookingDialog";
 
 // Everything a seat includes, as described in the modules, Before/After section
 // and FAQs.
@@ -17,9 +16,8 @@ const included = [
   "Free 1-1 Consultation with Anne after the workshop",
 ];
 
-const Pricing = () => {
-  const [seats, setSeats] = useState(PLANS[0].seats);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
+const Pricing = ({ onBook }: { onBook: () => void }) => {
+  const [seats, setSeats] = useState<number>(PLANS[0].seats);
 
   return (
     <section
@@ -140,7 +138,7 @@ const Pricing = () => {
           <Button
             type="button"
             size="lg"
-            onClick={() => setIsBookingOpen(true)}
+            onClick={onBook}
             className="posh-cta-attention mt-8 w-full text-lg px-8 py-4 h-auto min-h-[48px] whitespace-normal bg-primary hover:bg-primary/90 text-primary-foreground"
           >
             Secure your seat now
@@ -158,11 +156,6 @@ const Pricing = () => {
             </a>
             .
           </p>
-          <BookingDialog
-            seats={seats}
-            open={isBookingOpen}
-            onOpenChange={setIsBookingOpen}
-          />
         </motion.div>
       </div>
     </section>
