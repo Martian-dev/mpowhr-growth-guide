@@ -133,7 +133,7 @@ const BookingDialog = ({
           <form onSubmit={handleSubmit} className="space-y-5">
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold" style={headingFont}>
-                Secure your Seat
+                Secure your seat
               </DialogTitle>
               <DialogDescription className="text-slate-600">
                 POSH Workshop, {seatLabel} · {plan.price}

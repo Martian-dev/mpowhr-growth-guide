@@ -34,12 +34,14 @@ export const CtaButton = ({
   children,
   variant = "primary",
   showArrow = true,
+  attention = false,
   className,
 }: {
   href: string;
   children: ReactNode;
   variant?: CtaVariant;
   showArrow?: boolean;
+  attention?: boolean;
   className?: string;
 }) => {
   const isExternal = href.startsWith("http");
@@ -51,6 +53,7 @@ export const CtaButton = ({
       className={cn(
         "text-base px-8 py-4 h-auto min-h-[48px] whitespace-normal text-center",
         ctaVariants[variant],
+        attention && "posh-cta-attention",
         className,
       )}
       style={bodyFont}

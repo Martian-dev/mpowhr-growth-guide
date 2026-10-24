@@ -13,7 +13,7 @@ import {
 
 // Amounts in paise. Keep in sync with PLANS in src/components/posh/constants.ts.
 const PLAN_AMOUNTS: Record<number, number> = {
-  1: 80000, // ₹800
+  1: 79900, // ₹799
   2: 149900, // ₹1,499
 };
 

@@ -51,7 +51,7 @@ const MobileStickyCta = () => {
           tabIndex={isVisible ? 0 : -1}
           className="inline-flex items-center gap-2 min-h-[44px] px-5 bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          Secure your Seat
+          Secure your seat
           <ArrowRight className="w-4 h-4" aria-hidden="true" />
         </a>
       </div>

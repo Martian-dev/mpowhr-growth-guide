@@ -4,19 +4,21 @@ import { AnimatedCounter } from "@/components/our-impact";
 import bannerBW from "@/assets/banner-bw.svg";
 import {
   CONSULTATION_URL,
-  PLANS,
   PRICING_ANCHOR,
+  WORKSHOP_DETAILS,
   bodyFont,
   goldGradientText,
 } from "./constants";
 import { CtaButton, Highlight } from "./shared";
 
 const stats = [
-  { value: 14, label: "Years of Expertise" },
+  { value: 15, label: "Years of Experience" },
   { value: 5, label: "Certifications" },
   { value: 25, label: "Sessions Conducted" },
-  { value: 100, label: "Professionals Trained" },
+  { value: 1000, label: "Professional Students" },
 ];
+
+const formatCount = (value: number) => value.toLocaleString("en-IN");
 
 // Offer facts taken from the FAQs and pricing details.
 const offerFacts = [
@@ -70,12 +72,36 @@ const PoshHero = () => {
               <Highlight>120 minutes</Highlight>.
             </motion.p>
 
+            <motion.dl
+              className="mt-6 grid grid-cols-3 gap-6 border-y border-white/15 py-4 text-sm md:text-base"
+              style={bodyFont}
+              {...reveal(0.25)}
+              aria-label="Webinar details"
+            >
+              <div>
+                <dt className="text-white/65">Date</dt>
+                <dd className="mt-1 min-h-6 border-b border-white/30 font-semibold">
+                  {WORKSHOP_DETAILS.date}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-white/65">Time</dt>
+                <dd className="mt-1 min-h-6 border-b border-white/30 font-semibold">
+                  {WORKSHOP_DETAILS.time}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-white/65">Mode</dt>
+                <dd className="mt-1 min-h-6 font-semibold">{WORKSHOP_DETAILS.mode}</dd>
+              </div>
+            </motion.dl>
+
             <motion.div
               className="mt-8 flex flex-col sm:flex-row gap-3"
               {...reveal(0.3)}
             >
               <CtaButton href={PRICING_ANCHOR} variant="gold">
-                Secure your Seat · {PLANS[0].price}
+                Secure your seat
               </CtaButton>
               <CtaButton
                 href={CONSULTATION_URL}
@@ -121,12 +147,11 @@ const PoshHero = () => {
               className="absolute -bottom-4 -left-4 w-full h-full border border-[#D4AF37]/60"
               aria-hidden="true"
             />
-            <div className="relative aspect-[4/5] overflow-hidden">
+            <div className="relative aspect-square overflow-hidden">
               <img
                 src={bannerBW}
                 alt="Anne Anshumathi Raj, POSH facilitator"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectPosition: "72% 30%" }}
+                className="absolute inset-0 w-full h-full object-cover object-right"
               />
             </div>
           </motion.div>
@@ -163,6 +188,7 @@ const PoshHero = () => {
                 <dd className="flex items-baseline">
                   <AnimatedCounter
                     target={stat.value}
+                    formatValue={formatCount}
                     className="text-foreground md:text-5xl"
                   />
                   <span className="text-4xl md:text-5xl font-bold ml-1 text-[#D4AF37]">

@@ -134,7 +134,7 @@ const BeforeAfter = () => {
         </motion.div>
 
         <div className="mt-10 flex justify-center">
-          <CtaButton href={PRICING_ANCHOR}>I’m Ready to Learn</CtaButton>
+          <CtaButton href={PRICING_ANCHOR}>Secure your seat now</CtaButton>
         </div>
       </div>
     </section>

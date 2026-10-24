@@ -24,7 +24,7 @@ const modules = [
     detail: "Section 14 & False Allegation Shields",
   },
   {
-    title: "Executive Assessment, Live Q&A, Certification",
+    title: "Live Q&A and Certification",
   },
 ];
 

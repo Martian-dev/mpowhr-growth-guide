@@ -16,9 +16,12 @@ export const registrationUrl = (seats: number) =>
 
 // Prices charged are set server-side in api/razorpay/order.ts; keep them in sync.
 export const PLANS = [
-  { seats: 1, price: "₹800", label: "for 1" },
+  { seats: 1, price: "₹799", label: "for 1" },
   { seats: 2, price: "₹1,499", label: "for 2" },
 ];
+
+// Leave the schedule blank until the webinar date and time are confirmed.
+export const WORKSHOP_DETAILS = { date: "", time: "", mode: "Live" };
 
 // Anchor of the pricing section that the in-page enrolment CTAs scroll to.
 export const PRICING_ANCHOR = "#pricing";

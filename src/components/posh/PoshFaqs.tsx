@@ -12,7 +12,6 @@ import {
   PRICING_ANCHOR,
   bodyFont,
   fadeInUp,
-  goldGradientText,
   headingFont,
 } from "./constants";
 import { CtaButton } from "./shared";
@@ -103,27 +102,16 @@ const PoshFaqs = () => {
 
         {/* Closing call to action */}
         <motion.div
-          className="mt-16 md:mt-20 bg-primary text-primary-foreground p-8 md:p-12 grid md:grid-cols-12 gap-8 items-center"
+          className="mt-16 md:mt-20 bg-primary text-primary-foreground p-8 md:p-12 flex flex-col items-center gap-6 text-center"
           {...fadeInUp}
           transition={{ duration: 0.7 }}
         >
-          <div className="md:col-span-8">
-            <p
-              className="text-2xl md:text-4xl font-bold leading-tight"
-              style={{ ...bodyFont, fontWeight: 700 }}
-            >
-              <span className="block">POSH isn’t just an HR matter.</span>
-              <span className="block pb-1" style={goldGradientText}>
-                It’s a Leadership Responsibility.
-              </span>
-            </p>
-            <p className="mt-4 text-white/75">
-              {priceSummary} · Free Consultation from Anne After workshop
-            </p>
-          </div>
-          <div className="md:col-span-4 md:justify-self-end">
+          <p className="text-white/75">
+            {priceSummary} · Free Consultation from Anne After workshop
+          </p>
+          <div>
             <CtaButton href={PRICING_ANCHOR} variant="gold" className="w-full">
-              Secure your Seat
+              Secure your seat now
             </CtaButton>
           </div>
         </motion.div>

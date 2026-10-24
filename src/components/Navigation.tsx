@@ -92,6 +92,7 @@ const Navigation = ({
                 href="https://www.linkedin.com/in/anne-anshumathi-raj-b9b90848/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 className="text-[#D4AF37] hover:text-[#B8941F] transition-colors p-2"
               >
                 <Linkedin className="w-6 h-6" />
@@ -100,6 +101,7 @@ const Navigation = ({
                 href="https://www.instagram.com/mpowhr_restart"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram"
                 className="text-[#D4AF37] hover:text-[#B8941F] transition-colors p-2"
               >
                 <Instagram className="w-6 h-6" />
@@ -113,6 +115,9 @@ const Navigation = ({
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
               className={mobileButtonClasses}
             >
               {isOpen ? <X /> : <Menu />}
@@ -123,6 +128,7 @@ const Navigation = ({
         {/* Mobile Navigation */}
         {isOpen && (
           <div
+            id="mobile-navigation"
             className={`md:hidden border-t ${mobileMenuClasses} absolute top-full left-0 right-0 w-full max-h-[calc(100vh-3.5rem)] overflow-y-auto`}
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
@@ -136,6 +142,37 @@ const Navigation = ({
                   {link.label}
                 </a>
               ))}
+              {cta && (
+                <div className="p-3">
+                  <a
+                    href={cta.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`${ctaClasses} inline-flex items-center justify-center min-h-[44px] text-sm font-semibold px-4 py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
+                  >
+                    {cta.label}
+                  </a>
+                </div>
+              )}
+              <div className="flex items-center gap-3 px-3 py-2">
+                <a
+                  href="https://www.linkedin.com/in/anne-anshumathi-raj-b9b90848/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] text-[#D4AF37] hover:text-[#B8941F] transition-colors"
+                >
+                  <Linkedin className="w-6 h-6" aria-hidden="true" />
+                </a>
+                <a
+                  href="https://www.instagram.com/mpowhr_restart"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] text-[#D4AF37] hover:text-[#B8941F] transition-colors"
+                >
+                  <Instagram className="w-6 h-6" aria-hidden="true" />
+                </a>
+              </div>
             </div>
           </div>
         )}

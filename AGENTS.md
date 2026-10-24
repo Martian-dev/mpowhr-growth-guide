@@ -214,6 +214,20 @@ The project uses a sophisticated **Olive Green & Beige** professional palette:
 - **Social**: LinkedIn, Instagram, Twitter placeholders
 - **Legal**: Privacy, Terms, Cookie policy links
 
+### POSH Workshop Page (`/posh`)
+
+- Components live in `src/components/posh/`; the page uses the scoped navy and gold `theme-corporate` palette.
+- Navigation contains **Secure your seat**, LinkedIn, and Instagram on desktop and in the mobile menu. FAQs remain on the page.
+- The banner portrait uses a square, right-aligned crop to retain Anne's full arm and side. The banner CTA reads **Secure your seat**, without a price, beside **Book Free Consultation**.
+- Program Overview is a single column with one body paragraph and a centered CTA below it. Lower workshop CTAs use **Secure your seat now** and link to `#pricing`.
+- Selected booking CTAs have a subtle shake, disabled for reduced-motion preferences and paused during hover or keyboard focus.
+- Module 6 covers **Live Q&A and Certification**. Audience roles are grouped in one section, followed by a centered **Become a POSH expert** heading and CTA.
+- Keep Key Outcomes, facilitator certifications, FAQs, and the final offer; the leadership-responsibility headline appears only in the banner.
+- Pricing is **₹799 for one person** and **₹1,499 for two people**; keep display prices, Razorpay order amounts, and verification amounts in sync.
+- Banner Date and Time values remain blank until confirmed; Mode is **Live**. Update `WORKSHOP_DETAILS` in `src/components/posh/constants.ts` when the schedule is supplied.
+- Credentials are **15+ years of experience** and **1,000+ professional students**. The contact email is **compliance@empire.com**.
+- Pending assets: replace the current About/facilitator image with previous webinar photos once the user shares them; retain existing images until then.
+
 ### UI Component System
 
 The project uses **shadcn/ui** components (40+ components available):

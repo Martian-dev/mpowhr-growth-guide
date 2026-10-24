@@ -6,11 +6,13 @@ import AnimatedTitle2 from "@/components/ui/AnimatedTitle2";
 interface CounterProps {
   target: number;
   className?: string;
+  formatValue?: (value: number) => string;
 }
 
 export const AnimatedCounter = ({
   target,
   className = "text-black",
+  formatValue = String,
 }: CounterProps) => {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
@@ -27,12 +29,12 @@ export const AnimatedCounter = ({
   }, [motionValue, isInView, target]);
 
   useEffect(() => {
-    springValue.on("change", (latest) => {
+    return springValue.on("change", (latest) => {
       if (ref.current) {
-        ref.current.textContent = Math.floor(latest).toString();
+        ref.current.textContent = formatValue(Math.floor(latest));
       }
     });
-  }, [springValue]);
+  }, [springValue, formatValue]);
   return (
     <motion.span
       ref={ref}

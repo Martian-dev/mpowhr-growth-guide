@@ -13,7 +13,7 @@ const included = [
   "120-minute Live Workshop",
   "All 6 modules, including Live Q&A",
   "IC Setup Checklist",
-  "Executive Assessment & Certificate",
+  "Certificate",
   "Free 1-1 Consultation with Anne after the workshop",
 ];
 
@@ -50,7 +50,7 @@ const Pricing = () => {
             className="mt-4 text-3xl sm:text-5xl font-bold leading-tight"
             style={headingFont}
           >
-            Secure your Seat
+            Secure your seat
           </h2>
           <p className="mt-4 flex items-start gap-3 text-lg md:text-xl text-white/85">
             <Gift
@@ -141,9 +141,9 @@ const Pricing = () => {
             type="button"
             size="lg"
             onClick={() => setIsBookingOpen(true)}
-            className="mt-6 w-full text-lg px-8 py-4 h-auto min-h-[48px] whitespace-normal bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="posh-cta-attention mt-8 w-full text-lg px-8 py-4 h-auto min-h-[48px] whitespace-normal bg-primary hover:bg-primary/90 text-primary-foreground"
           >
-            Secure your Seat
+            Secure your seat now
             <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Button>
           <p className="mt-3 text-center text-sm text-slate-500">

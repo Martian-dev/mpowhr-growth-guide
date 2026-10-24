@@ -94,9 +94,10 @@ const Facilitator = () => {
           <div className="mt-8 space-y-5 max-w-prose">
             <p className={paragraphClasses}>
               Anne Anshumathi Raj is the Founder of MpowHR, with{" "}
-              <Highlight>over 15 years of professional experience</Highlight>{" "}
+              <Highlight>15+ years of experience</Highlight>{" "}
               across people management, leadership development, behavioural
-              skills and corporate training.
+              skills and corporate training. She has trained{" "}
+              <Highlight>1,000+ professional students</Highlight>.
             </p>
             <p className={paragraphClasses}>
               A <Highlight>Certified POSH and POCSO Coach</Highlight>, Anne

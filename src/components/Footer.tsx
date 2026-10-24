@@ -87,9 +87,12 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-gradient" />
-                <span className="text-primary-foreground/80 text-sm">
-                  anne@mpowhrglobal.com
-                </span>
+                <a
+                  href="mailto:compliance@empire.com"
+                  className="text-primary-foreground/80 text-sm hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  compliance@empire.com
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-gradient" />
