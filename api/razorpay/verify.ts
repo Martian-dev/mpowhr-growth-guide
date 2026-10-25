@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { allowRequest, requireSession } from "../../server/posh/db";
+import { allowRequest, requireSession } from "../../server/posh/db.js";
 import {
   errorResponse,
   HttpError,
@@ -7,12 +7,12 @@ import {
   readBody,
   sameOrigin,
   sessionToken,
-} from "../../server/posh/http";
-import { verifyCheckout } from "../../server/posh/payments";
+} from "../../server/posh/http.js";
+import { verifyCheckout } from "../../server/posh/payments.js";
 import {
   scheduleSync,
   scheduleConfirmation,
-} from "../../server/posh/maintenance";
+} from "../../server/posh/maintenance.js";
 const schema = z
   .object({
     razorpay_order_id: z.string().regex(/^order_[a-zA-Z0-9]+$/),

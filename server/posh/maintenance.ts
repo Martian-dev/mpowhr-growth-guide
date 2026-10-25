@@ -1,9 +1,9 @@
 import { randomUUID } from "node:crypto";
 import { waitUntil } from "@vercel/functions";
-import { getDatabase, type Registration, type PaymentOrder } from "./db";
-import { initializeSheets, sheetsConfigured, syncRegistration } from "./sheets";
-import { reconcileOrder } from "./payments";
-import { isConfirmationEmailConfigured, sendConfirmation } from "./email";
+import { getDatabase, type Registration, type PaymentOrder } from "./db.js";
+import { initializeSheets, sheetsConfigured, syncRegistration } from "./sheets.js";
+import { reconcileOrder } from "./payments.js";
+import { isConfirmationEmailConfigured, sendConfirmation } from "./email.js";
 
 export const runSheetSync = async (force = false) => {
   if (!sheetsConfigured()) return { configured: false, synced: 0 };

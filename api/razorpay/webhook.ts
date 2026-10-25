@@ -8,18 +8,18 @@ import {
   recordWebhookEvent,
   getDatabase,
   attachOrder,
-} from "../../server/posh/db";
+} from "../../server/posh/db.js";
 import {
   errorResponse,
   HttpError,
   json,
   signaturesMatch,
-} from "../../server/posh/http";
-import { confirmProviderPayment, razorpay } from "../../server/posh/payments";
+} from "../../server/posh/http.js";
+import { confirmProviderPayment, razorpay } from "../../server/posh/payments.js";
 import {
   scheduleSync,
   scheduleConfirmation,
-} from "../../server/posh/maintenance";
+} from "../../server/posh/maintenance.js";
 const paymentSchema = z.object({
   id: z.string(),
   order_id: z.string(),

@@ -1,4 +1,4 @@
-import { runSheetSync } from "../server/posh/maintenance";
+import { runSheetSync } from "../server/posh/maintenance.js";
 const result = await runSheetSync(true);
 console.log(result);
 if (

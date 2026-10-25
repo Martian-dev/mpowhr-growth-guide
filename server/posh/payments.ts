@@ -8,8 +8,8 @@ import {
   claimCheckout,
   type PaymentOrder,
   type Registration,
-} from "./db";
-import { HttpError, signaturesMatch } from "./http";
+} from "./db.js";
+import { HttpError, signaturesMatch } from "./http.js";
 
 type ProviderOrder = {
   id: string;

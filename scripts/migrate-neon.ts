@@ -1,6 +1,6 @@
 import { readFile, readdir } from "node:fs/promises";
 import { neon } from "@neondatabase/serverless";
-import { sqlStatements } from "./sql-statements";
+import { sqlStatements } from "./sql-statements.js";
 
 const connectionString = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
 if (!connectionString)

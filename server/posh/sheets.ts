@@ -1,5 +1,5 @@
 import { GoogleAuth } from "google-auth-library";
-import { attendeesFor, type Registration, type Attendee } from "./db";
+import { attendeesFor, type Registration, type Attendee } from "./db.js";
 
 export const BOOKING_HEADERS = [
   "Booking ID",

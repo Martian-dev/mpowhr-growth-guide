@@ -1,6 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
-import { runMaintenance } from "../../server/posh/maintenance";
-import { errorResponse, json } from "../../server/posh/http";
+import { runMaintenance } from "../../server/posh/maintenance.js";
+import { errorResponse, json } from "../../server/posh/http.js";
 export const maxDuration = 120;
 export async function GET(request: Request) {
   const expected = process.env.CRON_SECRET

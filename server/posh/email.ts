@@ -4,7 +4,7 @@ import {
   markConfirmationSent,
   releaseConfirmationClaim,
   type Registration,
-} from "./db";
+} from "./db.js";
 
 export const isConfirmationEmailConfigured = () =>
   Boolean(process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL);

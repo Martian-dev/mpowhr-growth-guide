@@ -5,9 +5,9 @@ import type {
   ContactDetails,
   Selection,
   AttendeeDetails,
-} from "../../shared/posh";
-import { PLANS } from "../../shared/posh";
-import { HttpError, tokenHash } from "./http";
+} from "../../shared/posh.js";
+import { PLANS } from "../../shared/posh.js";
+import { HttpError, tokenHash } from "./http.js";
 
 export type Registration = ContactDetails & {
   id: string;

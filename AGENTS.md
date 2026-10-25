@@ -234,7 +234,7 @@ The project uses a sophisticated **Olive Green & Beige** professional palette:
 - Shared validation, audience options and prices live in `shared/posh.ts`. Amounts are integer paise; checkout accepts no browser price/contact overrides.
 - The dialog saves contact details first, then classification, then one/two seats. Two-seat bookings require the second attendee's name, email, phone and classification.
 - `api/posh/registration.ts` exposes session-authorized GET/POST/PATCH. A random HttpOnly cookie identifies the booking; Neon stores its hash. Mutations require the same Origin.
-- Business logic lives in `server/posh/`; only HTTP entrypoints belong in `api/`. Server code is checked by `tsconfig.api.json`.
+- Business logic lives in `server/posh/`; only HTTP entrypoints belong in `api/`. Server code is checked by `tsconfig.api.json` using strict NodeNext resolution, including during production builds. Vercel's per-function compiler reads the root `tsconfig.json`; keep its `strictNullChecks` enabled so Zod required-field inference agrees with the backend check. Relative backend/script imports must include `.js` extensions, which TypeScript resolves to the source `.ts` files. Keep Node pinned to `24.x` in `package.json`.
 - Registrations, attendees and immutable payment-order snapshots are separate tables. Migration 002 preserves existing records.
 - Callbacks, signed webhooks and reconciliation share transactional confirmation. Only captured payments confirm. Duplicate captures and late captures exceeding capacity use `payment_review` for manual resolution.
 - Active checkouts lock edits for their reservation period. Dismissal offers the same order. Unknown creation outcomes are reconciled by receipt.

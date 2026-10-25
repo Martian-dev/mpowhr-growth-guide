@@ -2,6 +2,12 @@
 
 The application runs as a Vite SPA with Vercel functions and Neon Postgres.
 Neon owns registration and payment state; Google Sheets is a one-way reporting copy.
+The deployed Node major is pinned to `24.x`. Backend modules use explicit `.js`
+relative imports and are checked with TypeScript's NodeNext resolution before
+the frontend production build. This matches Node ESM requirements and catches
+missing import extensions locally instead of only during Vercel function compilation.
+Vercel's per-function compiler reads the root `tsconfig.json`. Its
+`strictNullChecks` must remain enabled for correct Zod required-field inference.
 
 ## Registration flow
 
@@ -195,6 +201,11 @@ and HTTP responses. They do not send email, touch the configured Neon/Sheet, or 
 workshop renders, and opens the registration dialog without submitting it. It
 catches routing failures that frontend-only tests cannot detect. Keep `shared/`
 out of the SPA catch-all rewrite so Vite can serve the registration module imports.
+
+For deployment compiler checks, run `bunx vercel build --yes --environment preview`
+with the linked project's Vercel credentials. This builds the actual function
+artifacts locally without publishing a deployment. Run it under Node 24 to match
+the pinned production major and inspect its output for TypeScript diagnostics.
 
 Before Production rollout, migrate the target database, configure its environment
 variables, deploy the code, register the webhook, and verify both payment plans

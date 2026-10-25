@@ -4,7 +4,7 @@ import {
   contactSchema,
   selectionSchema,
   type BookingView,
-} from "../../shared/posh";
+} from "../../shared/posh.js";
 import {
   allowRequest,
   attendeesFor,
@@ -14,7 +14,7 @@ import {
   saveAudience,
   saveContact,
   saveSelection,
-} from "../../server/posh/db";
+} from "../../server/posh/db.js";
 import {
   cookie,
   errorResponse,
@@ -24,12 +24,12 @@ import {
   readBody,
   sameOrigin,
   sessionToken,
-} from "../../server/posh/http";
-import { reconcileBooking } from "../../server/posh/payments";
+} from "../../server/posh/http.js";
+import { reconcileBooking } from "../../server/posh/payments.js";
 import {
   scheduleSync,
   scheduleConfirmation,
-} from "../../server/posh/maintenance";
+} from "../../server/posh/maintenance.js";
 
 const communityUrl = () => {
   try {

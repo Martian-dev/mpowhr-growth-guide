@@ -1,4 +1,4 @@
-import { allowRequest, requireSession } from "../../server/posh/db";
+import { allowRequest, requireSession } from "../../server/posh/db.js";
 import {
   errorResponse,
   HttpError,
@@ -6,9 +6,9 @@ import {
   readBody,
   sameOrigin,
   sessionToken,
-} from "../../server/posh/http";
-import { createCheckout } from "../../server/posh/payments";
-import { scheduleSync } from "../../server/posh/maintenance";
+} from "../../server/posh/http.js";
+import { createCheckout } from "../../server/posh/payments.js";
+import { scheduleSync } from "../../server/posh/maintenance.js";
 
 export async function POST(request: Request) {
   try {
