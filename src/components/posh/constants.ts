@@ -16,8 +16,11 @@ export const registrationUrl = (seats: number) =>
 
 export { PLANS } from "../../../shared/posh";
 
-// Leave the schedule blank until the webinar date and time are confirmed.
-export const WORKSHOP_DETAILS = { date: "", time: "", mode: "Live" };
+export const WORKSHOP_DETAILS = {
+  date: "28th October",
+  time: "7:00 PM – 9:00 PM",
+  mode: "Live",
+};
 
 // Anchor of the pricing section that the in-page enrolment CTAs scroll to.
 export const PRICING_ANCHOR = "#pricing";

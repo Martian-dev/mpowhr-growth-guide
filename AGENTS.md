@@ -225,7 +225,7 @@ The project uses a sophisticated **Olive Green & Beige** professional palette:
 - Module 6 covers **Live Q&A and Certification**. Audience roles are grouped in one section, followed by a centered **Become a POSH expert** heading and CTA.
 - Keep Key Outcomes, facilitator certifications, and FAQs. The footer follows the FAQs without a closing offer block; the leadership-responsibility headline appears only in the banner.
 - Pricing is **₹799 for one person** and **₹1,499 for two people**; keep display prices, Razorpay order amounts, and verification amounts in sync.
-- Banner Date and Time values remain blank until confirmed; Mode is **Live**. Update `WORKSHOP_DETAILS` in `src/components/posh/constants.ts` when the schedule is supplied.
+- The banner schedule is **28th October, 7:00 PM – 9:00 PM**; Mode is **Live**. Keep `WORKSHOP_DETAILS` in `src/components/posh/constants.ts` in sync with confirmed schedule updates.
 - Credentials are **15+ years of experience** and **1,000+ professional students**. The contact email is **compliance@empire.com**.
 - The facilitator image uses `src/assets/posh_about_image.jpg` in a square frame with `object-contain object-center` to keep the full photo visible and centered.
 
